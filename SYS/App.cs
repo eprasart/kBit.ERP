@@ -46,6 +46,7 @@ namespace kPrasat
         {
             setting.Path = Path.Combine(Application.StartupPath, "setting.ini");
             Database.ConnectionString = setting.Get("ConnectionString", @"server=localhost;uid=kcheckout;pwd=kcheckout");
+            //todo: test connection
         }
 
         public static void SaveSettings()
