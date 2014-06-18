@@ -1,9 +1,4 @@
-﻿/* TODO
- * Pwd encrypt
- * Reset pwd
- * 
-*/
-using System;
+﻿using System;
 using System.Collections.Generic;
 using ServiceStack.OrmLite;
 using ServiceStack.DataAnnotations;
@@ -13,39 +8,28 @@ using Npgsql;
 
 namespace kPrasat.SM
 {
-    [Alias("SmUser")]
-    class User
+    [Alias("SmSession")]
+    class Session
     {
         [AutoIncrement]
         public long Id { get; set; }
         [Required]
         public string Username { get; set; }
-        public string FullName { get; set; }
-        public string Pwd { get; set; }
-        public DateTime? PwdChangeOn { get; set; }
-        public bool PwdChangeForce { get; set; }
-        public int TimeLevel { get; set; }
-        public DateTime? StartOn { get; set; }
-        public DateTime? EndOn { get; set; }
-        public int Success { get; set; }
-        public int Fail { get; set; }
-        public bool Locked { get; set; }
-        public string Right { get; set; }
-        public string SecurityNo { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public string Note { get; set; }
+        [Default(typeof(DateTime), "now()")]
+        public DateTime LoginAt { get; set; }
+        public DateTime LougoutAt { get; set; }
+        public string Version { get; set; }
+        public string ComputerName { get; set; }
+        public string ComputerUserName { get; set; }
         public String Status { get; set; }
         public string LockBy { get; set; }
         public DateTime? LockAt { get; set; }
         public string InsertBy { get; set; }
         [Default(typeof(DateTime), "now()")]
         public DateTime? InsertAt { get; set; }
-        public string ChangeBy { get; set; }
-        public DateTime? ChangeAt { get; set; }
     }
 
-    static class UserFacade
+    static class SessionFacade
     {
         public static List<User> Select(string filter = "")
         {
@@ -82,8 +66,6 @@ namespace kPrasat.SM
                 m.Status = StatusType.Active;
                 m.InsertBy = Login.Username;
                 m.InsertAt = ts;
-                string sqlPwd = "select crypt('" + m.Pwd + "', gen_salt('bf'))";
-                m.Pwd = Database.ExcuteString(sqlPwd);
                 seq = Database.Connection.Insert(m, true);
             }
             else
@@ -91,7 +73,7 @@ namespace kPrasat.SM
                 m.ChangeBy = Login.Username;
                 m.ChangeAt = ts;
 
-                Database.Connection.UpdateOnly(m, p => new { p.Username, p.FullName, p.Phone, p.Email, p.Note, p.ChangeBy, p.ChangeAt },
+                Database.Connection.UpdateOnly(m, p => new { p.Username, p.FullName, p.Phone, p.Email, p.Note, ChangeBy = p.ChangeBy, ChangeAt = p.ChangeAt },
                     p => p.Id == m.Id);
                 // If record is lock then unlock
                 if (IsLocked(m.Id)) ReleaseLock(m.Id);
@@ -141,13 +123,6 @@ namespace kPrasat.SM
         public static bool IsExist(string Username, long Id = 0)
         {
             return Database.Connection.Exists<User>("Id <> @Id and Username = @Username", new { Id = Id, Username = Username });
-        }
-
-        public static void UpdatePwd(User m)
-        {
-            string sqlPwd = "select crypt('" + m.Pwd + "', gen_salt('bf'))";
-            m.Pwd = Database.ExcuteString(sqlPwd);
-            Database.Connection.UpdateOnly(m, p => new { p.Pwd }, p => p.Id == m.Id);
         }
     }
 }

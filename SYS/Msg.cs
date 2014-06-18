@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace ERP
+namespace kPrasat
 {
     public partial class frmMsg : Form
     {

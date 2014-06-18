@@ -1,4 +1,4 @@
-﻿namespace ERP
+﻿namespace kPrasat
 {
     partial class frmMsg
     {

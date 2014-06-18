@@ -1,4 +1,4 @@
-﻿namespace ERP
+﻿namespace kPrasat.SM
 {
     partial class frmUserList
     {
@@ -41,8 +41,15 @@
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.btnActive = new System.Windows.Forms.ToolStripButton();
             this.btnDelete = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnPwdReset = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dgvList = new Kredit.UI.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colUsername = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFullName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtSearch = new Kredit.UI.TextBox(this.components);
             this.imgExpand = new System.Windows.Forms.PictureBox();
@@ -53,32 +60,27 @@
             this.mnuShowA = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuShowI = new System.Windows.Forms.ToolStripMenuItem();
             this.label3 = new System.Windows.Forms.Label();
+            this.dtpEnd = new Kredit.UI.DateTimePicker(this.components);
+            this.dtpStart = new Kredit.UI.DateTimePicker(this.components);
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupLabel2 = new Kredit.UI.GroupLabel();
             this.groupLabel1 = new Kredit.UI.GroupLabel();
             this.txtNote = new System.Windows.Forms.TextBox();
             this.groupLabel3 = new Kredit.UI.GroupLabel();
+            this.txtPwdAgain = new Kredit.UI.TextBox(this.components);
             this.txtPwd = new Kredit.UI.TextBox(this.components);
+            this.txtEmail = new Kredit.UI.TextBox(this.components);
+            this.txtPhone = new Kredit.UI.TextBox(this.components);
             this.txtUsernane = new Kredit.UI.TextBox(this.components);
+            this.label9 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.txtFullName = new Kredit.UI.TextBox(this.components);
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtPwdConfirm = new Kredit.UI.TextBox(this.components);
-            this.dtpStart = new Kredit.UI.DateTimePicker(this.components);
-            this.label7 = new System.Windows.Forms.Label();
-            this.dtpEnd = new Kredit.UI.DateTimePicker(this.components);
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtPhone = new Kredit.UI.TextBox(this.components);
-            this.txtEmail = new Kredit.UI.TextBox(this.components);
-            this.label9 = new System.Windows.Forms.Label();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colUsername = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFullName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -100,7 +102,9 @@
             this.btnSaveNew,
             this.toolStripSeparator,
             this.btnActive,
-            this.btnDelete});
+            this.btnDelete,
+            this.toolStripSeparator1,
+            this.btnPwdReset});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(983, 25);
@@ -119,7 +123,7 @@
             // 
             // btnCopy
             // 
-            this.btnCopy.Image = global::ERP.Properties.Resources.Copy;
+            this.btnCopy.Image = global::kPrasat.Properties.Resources.Copy;
             this.btnCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(55, 22);
@@ -139,7 +143,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Image = global::ERP.Properties.Resources.Save;
+            this.btnSave.Image = global::kPrasat.Properties.Resources.Save;
             this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(51, 22);
@@ -149,7 +153,7 @@
             // 
             // btnSaveNew
             // 
-            this.btnSaveNew.Image = global::ERP.Properties.Resources.SaveNew;
+            this.btnSaveNew.Image = global::kPrasat.Properties.Resources.SaveNew;
             this.btnSaveNew.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSaveNew.Name = "btnSaveNew";
             this.btnSaveNew.Size = new System.Drawing.Size(101, 22);
@@ -182,6 +186,21 @@
             this.btnDelete.ToolTipText = "Delete (Del)";
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnPwdReset
+            // 
+            this.btnPwdReset.Image = ((System.Drawing.Image)(resources.GetObject("btnPwdReset.Image")));
+            this.btnPwdReset.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPwdReset.Name = "btnPwdReset";
+            this.btnPwdReset.Size = new System.Drawing.Size(108, 22);
+            this.btnPwdReset.Text = "Reset Password";
+            this.btnPwdReset.ToolTipText = "Delete (Del)";
+            this.btnPwdReset.Click += new System.EventHandler(this.btnPwdReset_Click);
+            // 
             // splitContainer1
             // 
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -205,7 +224,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.groupLabel1);
             this.splitContainer1.Panel2.Controls.Add(this.txtNote);
             this.splitContainer1.Panel2.Controls.Add(this.groupLabel3);
-            this.splitContainer1.Panel2.Controls.Add(this.txtPwdConfirm);
+            this.splitContainer1.Panel2.Controls.Add(this.txtPwdAgain);
             this.splitContainer1.Panel2.Controls.Add(this.txtPwd);
             this.splitContainer1.Panel2.Controls.Add(this.txtEmail);
             this.splitContainer1.Panel2.Controls.Add(this.txtPhone);
@@ -264,6 +283,46 @@
             this.dgvList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellDoubleClick);
             this.dgvList.SelectionChanged += new System.EventHandler(this.dgvList_SelectionChanged);
             this.dgvList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvList_KeyDown);
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "Id";
+            this.Column1.HeaderText = "Id";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Visible = false;
+            // 
+            // colUsername
+            // 
+            this.colUsername.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colUsername.DataPropertyName = "Username";
+            this.colUsername.HeaderText = "Username";
+            this.colUsername.Name = "colUsername";
+            this.colUsername.ReadOnly = true;
+            this.colUsername.Width = 80;
+            // 
+            // colFullName
+            // 
+            this.colFullName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colFullName.DataPropertyName = "Full_Name";
+            this.colFullName.HeaderText = "Full Name";
+            this.colFullName.Name = "colFullName";
+            this.colFullName.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            this.Column4.DataPropertyName = "Phone";
+            this.Column4.HeaderText = "Phone";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            // 
+            // Column7
+            // 
+            this.Column7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column7.DataPropertyName = "Email";
+            this.Column7.HeaderText = "Email";
+            this.Column7.Name = "Column7";
+            this.Column7.ReadOnly = true;
             // 
             // panel1
             // 
@@ -337,7 +396,7 @@
             this.lblFilter.TabIndex = 1;
             this.lblFilter.TabStop = true;
             this.lblFilter.Text = "Filter";
-            this.lblFilter.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.lblFilter.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblFilter_LinkClicked);
             // 
             // lblRefresh
             // 
@@ -363,7 +422,6 @@
             this.mnuShowI});
             this.mnuShow.Name = "contextMenuStrip1";
             this.mnuShow.Size = new System.Drawing.Size(148, 48);
-            this.mnuShow.Opening += new System.ComponentModel.CancelEventHandler(this.mnuShow_Opening);
             // 
             // mnuShowA
             // 
@@ -374,7 +432,6 @@
             this.mnuShowA.Size = new System.Drawing.Size(147, 22);
             this.mnuShowA.Text = "Show Active";
             this.mnuShowA.CheckedChanged += new System.EventHandler(this.mnuShow_CheckedChanged);
-            this.mnuShowA.Click += new System.EventHandler(this.mnuShowA_Click);
             // 
             // mnuShowI
             // 
@@ -393,6 +450,30 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Search";
             // 
+            // dtpEnd
+            // 
+            this.dtpEnd.Checked = false;
+            this.dtpEnd.CustomFormat = "ddd dd-MM-yy";
+            this.dtpEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpEnd.Location = new System.Drawing.Point(451, 111);
+            this.dtpEnd.Name = "dtpEnd";
+            this.dtpEnd.ShowCheckBox = true;
+            this.dtpEnd.Size = new System.Drawing.Size(200, 21);
+            this.dtpEnd.TabIndex = 17;
+            this.dtpEnd.TabOnEnter = true;
+            // 
+            // dtpStart
+            // 
+            this.dtpStart.Checked = false;
+            this.dtpStart.CustomFormat = "ddd dd-MM-yy";
+            this.dtpStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpStart.Location = new System.Drawing.Point(451, 84);
+            this.dtpStart.Name = "dtpStart";
+            this.dtpStart.ShowCheckBox = true;
+            this.dtpStart.Size = new System.Drawing.Size(200, 21);
+            this.dtpStart.TabIndex = 15;
+            this.dtpStart.TabOnEnter = true;
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -407,7 +488,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Tomato;
-            this.label5.Location = new System.Drawing.Point(18, 32);
+            this.label5.Location = new System.Drawing.Point(17, 32);
             this.label5.Margin = new System.Windows.Forms.Padding(0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(16, 18);
@@ -456,6 +537,15 @@
             this.groupLabel3.TabIndex = 18;
             this.groupLabel3.TabStop = false;
             // 
+            // txtPwdAgain
+            // 
+            this.txtPwdAgain.Location = new System.Drawing.Point(451, 57);
+            this.txtPwdAgain.Name = "txtPwdAgain";
+            this.txtPwdAgain.Size = new System.Drawing.Size(200, 21);
+            this.txtPwdAgain.TabIndex = 13;
+            this.txtPwdAgain.TabOnEnter = true;
+            this.txtPwdAgain.UseSystemPasswordChar = true;
+            // 
             // txtPwd
             // 
             this.txtPwd.Location = new System.Drawing.Point(451, 30);
@@ -463,6 +553,25 @@
             this.txtPwd.Size = new System.Drawing.Size(200, 21);
             this.txtPwd.TabIndex = 11;
             this.txtPwd.TabOnEnter = true;
+            this.txtPwd.UseSystemPasswordChar = true;
+            // 
+            // txtEmail
+            // 
+            this.txtEmail.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEmail.Location = new System.Drawing.Point(90, 111);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(200, 21);
+            this.txtEmail.TabIndex = 8;
+            this.txtEmail.TabOnEnter = true;
+            // 
+            // txtPhone
+            // 
+            this.txtPhone.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPhone.Location = new System.Drawing.Point(90, 84);
+            this.txtPhone.Name = "txtPhone";
+            this.txtPhone.Size = new System.Drawing.Size(200, 21);
+            this.txtPhone.TabIndex = 6;
+            this.txtPhone.TabOnEnter = true;
             // 
             // txtUsernane
             // 
@@ -473,14 +582,50 @@
             this.txtUsernane.TabIndex = 2;
             this.txtUsernane.TabOnEnter = true;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(53, 117);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(31, 13);
+            this.label9.TabIndex = 7;
+            this.label9.Text = "Email";
+            // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(47, 85);
+            this.label13.Location = new System.Drawing.Point(47, 87);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(37, 13);
             this.label13.TabIndex = 5;
             this.label13.Text = "Phone";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(405, 117);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(40, 13);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "End on";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(399, 90);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(46, 13);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Start on";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(363, 60);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(82, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Password again";
             // 
             // txtFullName
             // 
@@ -493,7 +638,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(363, 33);
+            this.label2.Location = new System.Drawing.Point(392, 33);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 10;
@@ -507,132 +652,6 @@
             this.label1.Size = new System.Drawing.Size(52, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Full name";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(363, 60);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(82, 13);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "Password again";
-            // 
-            // txtPwdConfirm
-            // 
-            this.txtPwdConfirm.Location = new System.Drawing.Point(451, 57);
-            this.txtPwdConfirm.Name = "txtPwdConfirm";
-            this.txtPwdConfirm.Size = new System.Drawing.Size(200, 21);
-            this.txtPwdConfirm.TabIndex = 13;
-            this.txtPwdConfirm.TabOnEnter = true;
-            // 
-            // dtpStart
-            // 
-            this.dtpStart.Checked = false;
-            this.dtpStart.CustomFormat = "ddd dd-MM-yy";
-            this.dtpStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpStart.Location = new System.Drawing.Point(451, 84);
-            this.dtpStart.Name = "dtpStart";
-            this.dtpStart.ShowCheckBox = true;
-            this.dtpStart.Size = new System.Drawing.Size(200, 21);
-            this.dtpStart.TabIndex = 15;
-            this.dtpStart.TabOnEnter = true;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(367, 90);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(46, 13);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "Start on";
-            // 
-            // dtpEnd
-            // 
-            this.dtpEnd.Checked = false;
-            this.dtpEnd.CustomFormat = "ddd dd-MM-yy";
-            this.dtpEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpEnd.Location = new System.Drawing.Point(451, 111);
-            this.dtpEnd.Name = "dtpEnd";
-            this.dtpEnd.ShowCheckBox = true;
-            this.dtpEnd.Size = new System.Drawing.Size(200, 21);
-            this.dtpEnd.TabIndex = 17;
-            this.dtpEnd.TabOnEnter = true;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(370, 117);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(40, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "End on";
-            // 
-            // txtPhone
-            // 
-            this.txtPhone.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPhone.Location = new System.Drawing.Point(90, 82);
-            this.txtPhone.Name = "txtPhone";
-            this.txtPhone.Size = new System.Drawing.Size(200, 21);
-            this.txtPhone.TabIndex = 6;
-            this.txtPhone.TabOnEnter = true;
-            // 
-            // txtEmail
-            // 
-            this.txtEmail.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEmail.Location = new System.Drawing.Point(90, 112);
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(200, 21);
-            this.txtEmail.TabIndex = 8;
-            this.txtEmail.TabOnEnter = true;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(53, 115);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(31, 13);
-            this.label9.TabIndex = 7;
-            this.label9.Text = "Email";
-            // 
-            // Column1
-            // 
-            this.Column1.DataPropertyName = "Id";
-            this.Column1.HeaderText = "Id";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Visible = false;
-            // 
-            // colUsername
-            // 
-            this.colUsername.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colUsername.DataPropertyName = "Username";
-            this.colUsername.HeaderText = "Username";
-            this.colUsername.Name = "colUsername";
-            this.colUsername.ReadOnly = true;
-            this.colUsername.Width = 80;
-            // 
-            // colFullName
-            // 
-            this.colFullName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colFullName.DataPropertyName = "Full_Name";
-            this.colFullName.HeaderText = "Full Name";
-            this.colFullName.Name = "colFullName";
-            this.colFullName.ReadOnly = true;
-            // 
-            // Column4
-            // 
-            this.Column4.DataPropertyName = "Phone";
-            this.Column4.HeaderText = "Phone";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            // 
-            // Column7
-            // 
-            this.Column7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column7.DataPropertyName = "Email";
-            this.Column7.HeaderText = "Email";
-            this.Column7.Name = "Column7";
-            this.Column7.ReadOnly = true;
             // 
             // frmUserList
             // 
@@ -702,7 +721,7 @@
         private Kredit.UI.TextBox txtSearch;
         private Kredit.UI.DateTimePicker dtpEnd;
         private Kredit.UI.DateTimePicker dtpStart;
-        private Kredit.UI.TextBox txtPwdConfirm;
+        private Kredit.UI.TextBox txtPwdAgain;
         private Kredit.UI.TextBox txtEmail;
         private Kredit.UI.TextBox txtPhone;
         private System.Windows.Forms.Label label9;
@@ -713,7 +732,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colUsername;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFullName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;        
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.ToolStripButton btnPwdReset;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;        
     }
 }
 

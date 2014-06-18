@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using ServiceStack.OrmLite;
 using ServiceStack.DataAnnotations;
 
-namespace ERP
+namespace kPrasat.SM
 {
     [Alias("SM_Company")]
     class Company

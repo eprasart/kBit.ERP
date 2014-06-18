@@ -7,7 +7,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace ERP
+namespace kPrasat.IC
 {
     public partial class frmLocationList : Form
     {

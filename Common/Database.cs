@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ERP
+namespace kPrasat
 {
     class Database
     {
@@ -16,14 +16,21 @@ namespace ERP
 
         public static void PrepareDatabase()
         {
-            Connection.CreateTableIfNotExists(typeof(Location), typeof(User));
+            Connection.CreateTableIfNotExists();          
+            //Connection.CreateTableIfNotExists(typeof(Location), typeof(User));
             //db.CreateTableIfNotExists<Vendor>();
             //db.CreateTableIfNotExists<Location>();
+
         }
 
         public static DateTime GetCurrentTimeStamp()
         {
             return Connection.Scalar<DateTime>("select now()");
+        }
+
+        public static string ExcuteString(string sql)
+        {
+            return Connection.Scalar<string>(sql);
         }
     }
 }

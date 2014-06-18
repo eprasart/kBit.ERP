@@ -7,7 +7,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace ERP
+namespace kPrasat.SM
 {
     public partial class frmUserList : Form
     {
@@ -19,6 +19,7 @@ namespace ERP
         public frmUserList()
         {
             InitializeComponent();
+            //MessageBox.Show(Environment.MachineName + "\n" + Environment.UserDomainName + "\n" + Environment.UserName);
         }
 
         private string GetStatus()
@@ -61,7 +62,11 @@ namespace ERP
                     ((TextBox)c).ReadOnly = l;
                 else if (c is ComboBox)
                     ((ComboBox)c).Enabled = !l;
+                else if (c is DateTimePicker)
+                    ((DateTimePicker)c).Enabled = !l;
             }
+            txtPwd.Enabled = false;
+            txtPwdAgain.Enabled = false;
             btnNew.Enabled = l;
             btnCopy.Enabled = l;
             //btnUnlock.Enabled = !l;
@@ -95,18 +100,19 @@ namespace ERP
             string Code = txtUsernane.Text.Trim();
             if (Code.Length == 0)
             {
-                Common.ShowMsg("Code cannot be empty.", "Save");
+                Common.ShowMsg("Username cannot be empty.", "Save");
                 txtUsernane.Focus();
                 return false;
             }
             if (UserFacade.IsExist(Code, Id))
             {
-                Common.ShowMsg("Code already exists. Code must be unique.", "Save");
+                Common.ShowMsg("Username already exists. It must be unique.", "Save");
                 txtUsernane.Focus();
                 txtUsernane.SelectAll();
                 return false;
             }
             //todo: prevent duplicate
+            //todo: pwd matching
             return true;
         }
 
@@ -119,7 +125,7 @@ namespace ERP
             txtFullName.Text = m.FullName;
             txtPhone.Text = m.Phone;
             txtEmail.Text = m.Email;
-            txtPwd.Text = m.Pwd;
+            //txtPwd.Text = m.Pwd;
             dtpStart.Checked = (m.StartOn != null);
             if (dtpStart.Checked) dtpStart.Value = (DateTime)m.StartOn;
             dtpEnd.Checked = (m.EndOn != null);
@@ -156,6 +162,8 @@ namespace ERP
                 dgvList.CurrentRow.Selected = false;
             Id = 0;
             LockControls(false);
+            txtPwd.Enabled = true; 
+            txtPwdAgain.Enabled = true;            
             if (dgvList.RowCount > 0) rowIndex = dgvList.CurrentRow.Index;
         }
 
@@ -280,8 +288,7 @@ namespace ERP
             var lInfo = UserFacade.GetLockInfo(Id);
             if (lInfo.IsLocked)
             {
-                string msg = "Account is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'" +
-                    "\nទិន្នន័យ​នេះ​កំពុង​ប្រើ​ប្រាស់​ដោយ '" + lInfo.LockBy + "' តាំងពី '" + lInfo.LockAt + "'";
+                string msg = "Account is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
                 new frmMsg(msg).ShowDialog();
                 return;
             }
@@ -369,19 +376,16 @@ namespace ERP
             RefreshGrid();
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void lblFilter_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             mnuShow.Show(lblFilter, 0, 15);
         }
 
-        private void mnuShow_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        private void btnPwdReset_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void mnuShowA_Click(object sender, EventArgs e)
-        {
-
-        }
+            var fPwdReset = new SM.frmPwdReset(txtUsernane.Text, txtFullName.Text);
+            fPwdReset.Id = dgvList.Id;
+            fPwdReset.ShowDialog();
+        } 
     }
 }

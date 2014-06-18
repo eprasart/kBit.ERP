@@ -7,7 +7,7 @@ using System.Linq;
 using System.Data;
 using Npgsql;
 
-namespace ERP
+namespace kPrasat.IC
 {
     [Alias("IcLocation")]
     class Location

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ERP
+namespace kPrasat
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace ERP
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);            
-            Application.Run(new frmUserList());
+            Application.Run(new SM.frmUserList());
         }
     }
 }

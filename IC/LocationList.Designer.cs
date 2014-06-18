@@ -1,4 +1,4 @@
-﻿namespace ERP
+﻿namespace kPrasat.IC
 {
     partial class frmLocationList
     {
@@ -113,7 +113,7 @@
             // 
             // btnCopy
             // 
-            this.btnCopy.Image = global::ERP.Properties.Resources.Copy;
+            this.btnCopy.Image = global::kPrasat.Properties.Resources.Copy;
             this.btnCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(55, 22);
@@ -133,7 +133,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Image = global::ERP.Properties.Resources.Save;
+            this.btnSave.Image = global::kPrasat.Properties.Resources.Save;
             this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(51, 22);
@@ -143,7 +143,7 @@
             // 
             // btnSaveNew
             // 
-            this.btnSaveNew.Image = global::ERP.Properties.Resources.SaveNew;
+            this.btnSaveNew.Image = global::kPrasat.Properties.Resources.SaveNew;
             this.btnSaveNew.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSaveNew.Name = "btnSaveNew";
             this.btnSaveNew.Size = new System.Drawing.Size(101, 22);

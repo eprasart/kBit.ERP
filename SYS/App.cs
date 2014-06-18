@@ -9,7 +9,7 @@ using System.Data;
 using ServiceStack.OrmLite;
 using System.Reflection;
  
-namespace ERP
+namespace kPrasat
 {
     public static class App
     {
@@ -45,7 +45,7 @@ namespace ERP
         private static void LoadSettings()
         {
             setting.Path = Path.Combine(Application.StartupPath, "setting.ini");
-            Database.ConnectionString = setting.Get("ConnectionString", @"server=localhost;uid=kprasart;pwd=kprasart");
+            Database.ConnectionString = setting.Get("ConnectionString", @"server=localhost;uid=kcheckout;pwd=kcheckout");
         }
 
         public static void SaveSettings()

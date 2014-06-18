@@ -2,7 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 
-namespace ERP
+namespace kPrasat
 {
     public class Setting
     {

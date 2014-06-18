@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.IO;
 
-namespace ERP
+namespace kPrasat
 {
     public static class Security
     {
