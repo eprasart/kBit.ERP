@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("kCheckout")]
-[assembly: AssemblyDescription("kPrasat Checkout")]
+[assembly: AssemblyTitle("kERP")]
+[assembly: AssemblyDescription("kPrasat ERP")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("kPrasat")]
-[assembly: AssemblyProduct("kPrasat Checkout")]
+[assembly: AssemblyProduct("kPrasat ERP")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("kPrasat")]
 [assembly: AssemblyCulture("")]

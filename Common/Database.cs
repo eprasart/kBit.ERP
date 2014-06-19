@@ -16,7 +16,7 @@ namespace kPrasat
 
         public static void PrepareDatabase()
         {            
-            Connection.CreateTableIfNotExists(typeof(IC.Location), typeof(SM.User), typeof(SM.Session));
+            Connection.CreateTableIfNotExists(typeof(IC.Location), typeof(SM.User), typeof(SM.Session), typeof(SM.SessionLog));
             //db.CreateTableIfNotExists<Vendor>();
             //db.CreateTableIfNotExists<Location>();
 

@@ -17,7 +17,7 @@ namespace kPrasat.SM
         public string Username { get; set; }
         [Default(typeof(DateTime), "now()")]
         public DateTime LoginAt { get; set; }
-        public DateTime LougoutAt { get; set; }
+        public DateTime? LougoutAt { get; set; }
         public string Version { get; set; }
         public string ComputerName { get; set; }
         public string ComputerUserName { get; set; }
@@ -27,6 +27,25 @@ namespace kPrasat.SM
         public string InsertBy { get; set; }
         [Default(typeof(DateTime), "now()")]
         public DateTime? InsertAt { get; set; }
+    }
+
+    [Alias("SmSessionLog")]
+    class SessionLog
+    {
+        [AutoIncrement]
+        public long Id { get; set; }
+        [Default(typeof(DateTime), "now()")]
+        public DateTime LogAt { get; set; }
+        [References(typeof(Session))]
+        public long SessionId { get; set; }
+        [Required]
+        public string Priority { get; set; }
+        [Required]
+        public string Module { get; set; }
+        [Required]
+        public string Type { get; set; }
+        [Required]
+        public string Message { get; set; }
     }
 
     static class SessionFacade

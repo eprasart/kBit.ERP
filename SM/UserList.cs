@@ -162,8 +162,8 @@ namespace kPrasat.SM
                 dgvList.CurrentRow.Selected = false;
             Id = 0;
             LockControls(false);
-            txtPwd.Enabled = true; 
-            txtPwdAgain.Enabled = true;            
+            txtPwd.Enabled = true;
+            txtPwdAgain.Enabled = true;
             if (dgvList.RowCount > 0) rowIndex = dgvList.CurrentRow.Index;
         }
 
@@ -179,6 +179,8 @@ namespace kPrasat.SM
             m.Phone = txtPhone.Text;
             m.Email = txtEmail.Text;
             m.Note = txtNote.Text;
+            if (dtpStart.Checked) m.StartOn = dtpStart.Value;
+            if (dtpEnd.Checked) m.EndOn = dtpEnd.Value;
             long seq = UserFacade.Save(m);
             if (dgvList.RowCount > 0) rowIndex = dgvList.CurrentRow.Index;
             RefreshGrid(seq);
@@ -383,9 +385,10 @@ namespace kPrasat.SM
 
         private void btnPwdReset_Click(object sender, EventArgs e)
         {
+            if (dgvList.Id == 0) return;
             var fPwdReset = new SM.frmPwdReset(txtUsernane.Text, txtFullName.Text);
             fPwdReset.Id = dgvList.Id;
             fPwdReset.ShowDialog();
-        } 
+        }
     }
 }

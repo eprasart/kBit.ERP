@@ -82,7 +82,7 @@ namespace kPrasat.SM
                 m.Status = StatusType.Active;
                 m.InsertBy = Login.Username;
                 m.InsertAt = ts;
-                string sqlPwd = "select crypt('" + m.Pwd + "', gen_salt('bf'))";
+                string sqlPwd = "select crypt('" + m.Pwd + "', gen_salt('bf'))";    // Blowfish algorithm
                 m.Pwd = Database.ExcuteString(sqlPwd);
                 seq = Database.Connection.Insert(m, true);
             }
@@ -91,7 +91,7 @@ namespace kPrasat.SM
                 m.ChangeBy = Login.Username;
                 m.ChangeAt = ts;
 
-                Database.Connection.UpdateOnly(m, p => new { p.Username, p.FullName, p.Phone, p.Email, p.Note, p.ChangeBy, p.ChangeAt },
+                Database.Connection.UpdateOnly(m, p => new { p.Username, p.FullName, p.StartOn, p.EndOn, p.Phone, p.Email, p.Note, p.ChangeBy, p.ChangeAt },
                     p => p.Id == m.Id);
                 // If record is lock then unlock
                 if (IsLocked(m.Id)) ReleaseLock(m.Id);
