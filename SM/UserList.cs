@@ -329,6 +329,13 @@ namespace kPrasat.SM
             }
             LockControls(false);
             UserFacade.Lock(dgvList.Id);
+
+            var log = new SessionLog
+            {
+                Priority="I", Module="UserList", Type="Lock",
+                Message="User " + dgvList.Id + ", lock/unlock"
+            };
+            SessionLogFacade.Save(log);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

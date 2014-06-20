@@ -12,7 +12,7 @@ namespace kPrasat.SM
     public class Session
     {
         [AutoIncrement]
-        public long Id { get; set; }        
+        public long Id { get; set; }
         public string Username { get; set; }
         [Default(typeof(DateTime), "now()")]
         public DateTime? LoginAt { get; set; }
@@ -29,7 +29,7 @@ namespace kPrasat.SM
         [AutoIncrement]
         public long Id { get; set; }
         [Default(typeof(DateTime), "now()")]
-        public DateTime LogAt { get; set; }
+        public DateTime? LogAt { get; set; }
         [References(typeof(Session))]
         public long SessionId { get; set; }
         [Required]
@@ -40,6 +40,7 @@ namespace kPrasat.SM
         public string Type { get; set; }
         [Required]
         public string Message { get; set; }
+        public string Status { get; set; }
     }
 
     static class SessionFacade
@@ -95,6 +96,63 @@ namespace kPrasat.SM
         {
             DateTime? ts = Database.GetCurrentTimeStamp();
             Database.Connection.UpdateOnly(new Session { Status = s }, p => p.Id == Id);
+        }
+    }
+
+    static class SessionLogFacade
+    {
+        public static List<SessionLog> Select(string filter = "")
+        {
+            SqlExpression<SessionLog> e = OrmLiteConfig.DialectProvider.SqlExpression<SessionLog>();
+            e.Where(q => q.Message.Contains(filter) || q.Type.Contains(filter) || q.Module.Contains(filter))
+                .OrderBy(q => q.LogAt);
+            //System.Windows.Forms.MessageBox.Show(e.SelectExpression + "\n" + e.WhereExpression);           
+            return Database.Connection.Select<SessionLog>(e);
+        }
+
+        public static DataTable GetDataTable(string filter = "", string status = "")
+        {
+            var sql = "select id, username, login_at, logout_at, version, machine_name, machine_user_name from sm_session where 1 = 1";
+            if (status.Length > 0)
+                sql += " and status = '" + status + "'";
+            //if (filter.Length > 0)
+            //    sql += " and (username ~* :filter or full_name ~* :filter or phone ~* :filter or email ~* :filter or note ~* :filter)";
+            sql += "\norder by username";
+            var cmd = new NpgsqlCommand(sql, new NpgsqlConnection(Database.ConnectionString));
+            if (filter.Length > 0)
+                cmd.Parameters.AddWithValue(":filter", filter);
+            var da = new NpgsqlDataAdapter(cmd);
+            var dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+        }
+
+        public static long Save(SessionLog m)
+        {
+            DateTime? ts = Database.GetCurrentTimeStamp();
+            long seq = 0;   // New inserted sequence
+            if (m.Id == 0)
+            {
+                m.SessionId = App.sessionId;
+                m.LogAt = ts;                
+                seq = Database.Connection.Insert(m, true);
+            }
+            else
+            {
+                //Database.Connection.UpdateOnly(m, p => new { p.Username }, p => p.Id == m.Id);
+            }
+            return seq;
+        }
+
+        public static SessionLog Select(long Id)
+        {
+            return Database.Connection.SingleById<SessionLog>(Id);
+        }
+
+        public static void SetStatus(long Id, string s)
+        {
+            DateTime? ts = Database.GetCurrentTimeStamp();
+            Database.Connection.UpdateOnly(new SessionLog { Status = s }, p => p.Id == Id);
         }
     }
 }

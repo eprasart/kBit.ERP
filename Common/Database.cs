@@ -15,7 +15,9 @@ namespace kPrasat
         public static IDbConnection Connection = null;
 
         public static void PrepareDatabase()
-        {            
+        {
+            Connection.DropTables(typeof(SM.SessionLog), typeof(SM.Session));
+
             Connection.CreateTableIfNotExists(typeof(IC.Location), typeof(SM.User), typeof(SM.Session), typeof(SM.SessionLog));
             //db.CreateTableIfNotExists<Vendor>();
             //db.CreateTableIfNotExists<Location>();
