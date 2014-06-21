@@ -76,6 +76,12 @@
     <Compile Include="Common\Security.cs" />
     <Compile Include="Common\Setting.cs" />
     <Compile Include="Common\Lock.cs" />
+    <Compile Include="SM\AuditLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SM\AuditLog.Designer.cs">
+      <DependentUpon>AuditLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="SM\Company.cs" />
     <Compile Include="IC\Location.cs" />
     <Compile Include="IC\LocationList.cs">
@@ -128,6 +134,9 @@
     </Compile>
     <EmbeddedResource Include="IC\LocationList.resx">
       <DependentUpon>LocationList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SM\AuditLog.resx">
+      <DependentUpon>AuditLog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SM\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>

@@ -112,11 +112,11 @@ namespace kPrasat.SM
             return Database.Connection.Select<SessionLog>(e);
         }
 
-        public static DataTable GetDataTable(string filter = "", string status = "")
+        public static DataTable GetDataTable(string where, string filter = "")
         {
             var sql = "select id, username, login_at, logout_at, version, machine_name, machine_user_name from sm_session where 1 = 1";
-            if (status.Length > 0)
-                sql += " and status = '" + status + "'";
+            //if (status.Length > 0)
+            //    sql += " and status = '" + status + "'";
             //if (filter.Length > 0)
             //    sql += " and (username ~* :filter or full_name ~* :filter or phone ~* :filter or email ~* :filter or note ~* :filter)";
             sql += "\norder by username";

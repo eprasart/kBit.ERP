@@ -36,5 +36,20 @@ namespace kPrasat.SYS
         {
             new SM.frmUserList().Show();
         }
+
+        private void btnLocation_Click(object sender, EventArgs e)
+        {
+            new IC.frmLocationList().Show();
+        }
+
+        private void btnUser_Click(object sender, EventArgs e)
+        {
+            new SM.frmUserList().Show();
+        }
+
+        private void btnAuditLog_Click(object sender, EventArgs e)
+        {
+            new SM.frmAuditLog().Show();
+        }
     }
 }
