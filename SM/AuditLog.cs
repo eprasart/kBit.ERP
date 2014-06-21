@@ -25,7 +25,7 @@ namespace kPrasat.SM
         private void frmAuditLog_Load(object sender, EventArgs e)
         {
             Icon = Properties.Resources.Icon;
-
+            dgvList.AutoGenerateColumns = true;
             RefreshGrid();
         }
     }

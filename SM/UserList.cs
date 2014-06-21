@@ -136,7 +136,7 @@ namespace kPrasat.SM
         }
 
         private void frmUserList_Load(object sender, EventArgs e)
-        {            
+        {
             Icon = Properties.Resources.Icon;
             dgvList.ShowLessColumns(true);
             RefreshGrid();
@@ -240,6 +240,16 @@ namespace kPrasat.SM
             UserFacade.SetStatus(Id, StatusType.Deleted);
             RefreshGrid();
             if (dgvList.RowCount == 0) btnNew_Click(sender, e);
+
+            // log
+            var log = new SessionLog
+            {
+                Priority = "W",
+                Module = "UserList",
+                Type = "Delete",
+                Message = "User Id " + dgvList.Id + " has been deleted"
+            };
+            SessionLogFacade.Save(log);
         }
 
         private void btnCopy_Click(object sender, EventArgs e)
@@ -330,8 +340,10 @@ namespace kPrasat.SM
 
             var log = new SessionLog
             {
-                Priority="I", Module="UserList", Type="Lock",
-                Message="User " + dgvList.Id + ", lock/unlock"
+                Priority = "I",
+                Module = "UserList",
+                Type = "Lock",
+                Message = "User " + dgvList.Id + ", lock/unlock"
             };
             SessionLogFacade.Save(log);
         }
