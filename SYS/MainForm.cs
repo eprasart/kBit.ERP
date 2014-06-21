@@ -26,5 +26,15 @@ namespace kPrasat.SYS
             //fVendor.Show();
             //fVendor.Focus();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            new IC.frmLocationList().Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            new SM.frmUserList().Show();
+        }
     }
 }
