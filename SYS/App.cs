@@ -10,13 +10,13 @@ using ServiceStack.OrmLite;
 using System.Reflection;
 using kPrasat.SM;
 
-namespace kPrasat
+namespace kPrasat.SYS
 {
     public static class App
     {
         public static Setting setting = new Setting();
         public static String version;
-        public static long sessionId;
+        public static Session session = new Session();
 
         public static void Init()
         {
@@ -35,16 +35,16 @@ namespace kPrasat
             Database.PrepareDatabase();
             SetVersion();
 
-            Login.Company_Id = 1;
-            Login.Username = "Visal";
+            
+            session.Username = "Visal";
 
             // Session
             //session.Username = Login.Username;
-            var session = new Session();
+            
             session.MachineName = Environment.MachineName;
             session.MachinerUserName = Environment.UserName;
             session.Version = version;
-            sessionId = SessionFacade.Save(session);
+            session.Id = SessionFacade.Save(session);
         }
 
         private static void SetVersion()
@@ -55,7 +55,7 @@ namespace kPrasat
         private static void LoadSettings()
         {
             setting.Path = Path.Combine(Application.StartupPath, "setting.ini");
-            Database.ConnectionString = setting.Get("ConnectionString", @"server=localhost;uid=kcheckout;pwd=kcheckout");
+            Database.ConnectionString = setting.Get("ConnectionString", @"server=localhost;uid=erp;pwd=erp");
             //todo: test connection
         }
 

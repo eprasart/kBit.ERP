@@ -136,14 +136,12 @@ namespace kPrasat.SM
         }
 
         private void frmUserList_Load(object sender, EventArgs e)
-        {
-            App.Init();
-
+        {            
             Icon = Properties.Resources.Icon;
             dgvList.ShowLessColumns(true);
             RefreshGrid();
 
-            Text += " v. " + App.version;
+            Text += " v. " + SYS.App.version;
 
             LockControls();
         }
@@ -280,7 +278,7 @@ namespace kPrasat.SM
         {
             if (btnUnlock.Text == "Cance&l")
                 btnUnlock_Click(null, null);
-            App.SaveSettings(); // Move to main form instead
+            SYS.App.SaveSettings(); // Move to main form instead
         }
 
         private void btnActive_Click(object sender, EventArgs e)

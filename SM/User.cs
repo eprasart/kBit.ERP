@@ -10,6 +10,7 @@ using ServiceStack.DataAnnotations;
 using System.Linq;
 using System.Data;
 using Npgsql;
+using kPrasat.SYS;
 
 namespace kPrasat.SM
 {
@@ -80,7 +81,7 @@ namespace kPrasat.SM
             if (m.Id == 0)
             {
                 m.Status = StatusType.Active;
-                m.InsertBy = Login.Username;
+                m.InsertBy = App.session.Username;
                 m.InsertAt = ts;
                 string sqlPwd = "select crypt('" + m.Pwd + "', gen_salt('bf'))";    // Blowfish algorithm
                 m.Pwd = Database.ExcuteString(sqlPwd);
@@ -88,7 +89,7 @@ namespace kPrasat.SM
             }
             else
             {
-                m.ChangeBy = Login.Username;
+                m.ChangeBy = App.session.Username;
                 m.ChangeAt = ts;
 
                 Database.Connection.UpdateOnly(m, p => new { p.Username, p.FullName, p.StartOn, p.EndOn, p.Phone, p.Email, p.Note, p.ChangeBy, p.ChangeAt },
@@ -107,12 +108,12 @@ namespace kPrasat.SM
         public static void SetStatus(long Id, string s)
         {
             DateTime? ts = Database.GetCurrentTimeStamp();
-            Database.Connection.UpdateOnly(new User { Status = s, ChangeBy = Login.Username, ChangeAt = ts }, p => new { p.Status, p.ChangeBy, p.ChangeAt }, p => p.Id == Id);
+            Database.Connection.UpdateOnly(new User { Status = s, ChangeBy = App.session.Username, ChangeAt = ts }, p => new { p.Status, p.ChangeBy, p.ChangeAt }, p => p.Id == Id);
         }
 
         public static bool IsLocked(long Id)
         {
-            return Database.Connection.Exists<User>("Id = @Id and Lock_By = @LockBy", new { Id = Id, LockBy = Login.Username });
+            return Database.Connection.Exists<User>("Id = @Id and Lock_By = @LockBy", new { Id = Id, LockBy = App.session.Username });
         }
 
         public static LockInfo GetLockInfo(long Id)
@@ -128,7 +129,7 @@ namespace kPrasat.SM
         public static void Lock(long Id)
         {
             DateTime ts = Database.GetCurrentTimeStamp();
-            Database.Connection.UpdateOnly(new User { LockBy = Login.Username, LockAt = ts }, p => new { p.LockBy, p.LockAt }, p => p.Id == Id);
+            Database.Connection.UpdateOnly(new User { LockBy = App.session.Username, LockAt = ts }, p => new { p.LockBy, p.LockAt }, p => p.Id == Id);
         }
 
         public static void ReleaseLock(long Id)

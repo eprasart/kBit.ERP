@@ -13,6 +13,8 @@ namespace kPrasat.SM
     {
         [AutoIncrement]
         public long Id { get; set; }
+        [Ignore]
+        public long UserId { get; set; }
         public string Username { get; set; }
         [Default(typeof(DateTime), "now()")]
         public DateTime? LoginAt { get; set; }
@@ -133,8 +135,8 @@ namespace kPrasat.SM
             long seq = 0;   // New inserted sequence
             if (m.Id == 0)
             {
-                m.SessionId = App.sessionId;
-                m.LogAt = ts;                
+                m.SessionId = SYS.App.session.Id;
+                m.LogAt = ts;
                 seq = Database.Connection.Insert(m, true);
             }
             else

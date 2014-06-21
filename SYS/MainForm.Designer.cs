@@ -1,4 +1,4 @@
-﻿namespace kPrasat
+﻿namespace kPrasat.SYS
 {
     partial class frmMain
     {
@@ -34,9 +34,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(802, 491);
+            this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "frmMain";
-            this.Text = "MainForm";
+            this.Text = "kPrasat ERP";
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.ResumeLayout(false);
 

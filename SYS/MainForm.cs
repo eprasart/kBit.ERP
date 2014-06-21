@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace kPrasat
+namespace kPrasat.SYS
 {
     public partial class frmMain : Form
     {
@@ -18,10 +18,13 @@ namespace kPrasat
         }
 
         private void frmMain_Load(object sender, EventArgs e)
-        {            
-            var fVendor = new IC.frmLocationList();
-            fVendor.Show();
-            fVendor.Focus();
+        {
+            Text += " v " + SYS.App.version;
+            Icon = Properties.Resources.Icon;             
+
+            //var fVendor = new IC.frmuser();
+            //fVendor.Show();
+            //fVendor.Focus();
         }
     }
 }

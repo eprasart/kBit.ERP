@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.txtPwdAgain = new Kredit.UI.TextBox(this.components);
-            this.txtPwd = new Kredit.UI.TextBox(this.components);
+            this.txtPwdAgain = new kPrasat.UI.TextBox(this.components);
+            this.txtPwd = new kPrasat.UI.TextBox(this.components);
             this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtUsernane = new Kredit.UI.TextBox(this.components);
-            this.txtFullName = new Kredit.UI.TextBox(this.components);
+            this.txtUsernane = new kPrasat.UI.TextBox(this.components);
+            this.txtFullName = new kPrasat.UI.TextBox(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnSave = new System.Windows.Forms.ToolStripButton();
@@ -165,13 +165,13 @@
 
         #endregion
 
-        private Kredit.UI.TextBox txtPwdAgain;
-        private Kredit.UI.TextBox txtPwd;
+        private kPrasat.UI.TextBox txtPwdAgain;
+        private kPrasat.UI.TextBox txtPwd;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
-        private Kredit.UI.TextBox txtUsernane;
-        private Kredit.UI.TextBox txtFullName;
+        private kPrasat.UI.TextBox txtUsernane;
+        private kPrasat.UI.TextBox txtFullName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btnSave;

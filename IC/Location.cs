@@ -6,6 +6,7 @@ using ServiceStack.DataAnnotations;
 using System.Linq;
 using System.Data;
 using Npgsql;
+using kPrasat.SYS;
 
 namespace kPrasat.IC
 {
@@ -74,13 +75,13 @@ namespace kPrasat.IC
             if (m.Id == 0)
             {
                 mSave.Status = StatusType.Active;
-                mSave.InsertBy = Login.Username;
+                mSave.InsertBy = App.session.Username;
                 mSave.InsertAt = ts;
                 seq = Database.Connection.Insert(mSave, true);
             }
             else
             {
-                mSave.ChangeBy = Login.Username;
+                mSave.ChangeBy = App.session.Username;
                 mSave.ChangeAt = ts;
                 Database.Connection.UpdateOnly(mSave, p => new { p.Code, p.Desc1, p.Desc2, p.Address, p.Note, ChangeBy = p.ChangeBy, ChangeAt = p.ChangeAt },
                     p => p.Id == m.Id);
@@ -98,12 +99,12 @@ namespace kPrasat.IC
         public static void SetStatus(long Id, string s)
         {
             DateTime? ts = Database.GetCurrentTimeStamp();
-            Database.Connection.UpdateOnly(new Location { Status = s, ChangeBy = Login.Username, ChangeAt = ts }, p => new { p.Status, p.ChangeBy, p.ChangeAt }, p => p.Id == Id);
+            Database.Connection.UpdateOnly(new Location { Status = s, ChangeBy = App.session.Username, ChangeAt = ts }, p => new { p.Status, p.ChangeBy, p.ChangeAt }, p => p.Id == Id);
         }
 
         public static bool IsLocked(long Id)
         {
-            return Database.Connection.Exists<Location>("Id = @Id and Lock_By = @LockBy", new { Id = Id, LockBy = Login.Username });
+            return Database.Connection.Exists<Location>("Id = @Id and Lock_By = @LockBy", new { Id = Id, LockBy = App.session.Username });
         }
 
         public static LockInfo GetLockInfo(long Id)
@@ -119,7 +120,7 @@ namespace kPrasat.IC
         public static void Lock(long Id)
         {
             DateTime ts = Database.GetCurrentTimeStamp();
-            Database.Connection.UpdateOnly(new Location { LockBy = Login.Username, LockAt = ts }, p => new { p.LockBy, p.LockAt }, p => p.Id == Id);
+            Database.Connection.UpdateOnly(new Location { LockBy = App.session.Username, LockAt = ts }, p => new { p.LockBy, p.LockAt }, p => p.Id == Id);
         }
 
         public static void ReleaseLock(long Id)
