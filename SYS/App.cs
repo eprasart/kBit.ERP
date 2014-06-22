@@ -18,6 +18,10 @@ namespace kPrasat.SYS
         public static String version;
         public static Session session = new Session();
 
+        public static IC.frmLocationList fLocationList;
+        public static SM.frmUserList fUserList;
+        public static SM.frmAuditLog fAuditLog;
+
         public static void Init()
         {
             LoadSettings();
@@ -35,12 +39,12 @@ namespace kPrasat.SYS
             Database.PrepareDatabase();
             SetVersion();
 
-            
+
             session.Username = "Visal";
 
             // Session
             //session.Username = Login.Username;
-            
+
             session.MachineName = Environment.MachineName;
             session.MachinerUserName = Environment.UserName;
             session.Version = version;

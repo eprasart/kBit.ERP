@@ -28,5 +28,10 @@ namespace kPrasat.SM
             dgvList.AutoGenerateColumns = true;
             RefreshGrid();
         }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            RefreshGrid();
+        }
     }
 }

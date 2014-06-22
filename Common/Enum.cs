@@ -18,4 +18,12 @@ namespace kPrasat
         public static string Locked = "L";
         public static string Unlock = "";
     }
+
+    public static class Priority
+    {
+        public static string Information = "I";
+        public static string Caution = "C";
+        public static string Warning = "W";
+        public static string Error = "E";
+    }
 }

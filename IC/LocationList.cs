@@ -281,6 +281,7 @@ namespace kPrasat.IC
 
         private void btnUnlock_Click(object sender, EventArgs e)
         {
+            if (isExpand) picExpand_Click(sender, e);
             Id = dgvList.Id;
             // Cancel
             if (btnUnlock.Text == "Cance&l")

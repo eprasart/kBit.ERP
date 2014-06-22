@@ -114,12 +114,12 @@ namespace kPrasat.SM
 
         public static DataTable GetDataTable(string where, string filter = "")
         {
-            var sql = "select *\nfrom sm_session s\ninner join sm_session_log l on s.id = l.session_id where 1 = 1";
+            var sql = "select *\nfrom sm_session s\nleft join sm_session_log l on s.id = l.session_id where 1 = 1";
             //if (status.Length > 0)
             //    sql += " and status = '" + status + "'";
-            //if (filter.Length > 0)
-            //    sql += " and (username ~* :filter or full_name ~* :filter or phone ~* :filter or email ~* :filter or note ~* :filter)";
-            sql += "\norder by log_at desc";
+            if (filter.Length > 0)
+                sql += " and (message ~* :filter or type ~* :filter or module ~* :filter)";
+            sql += "\norder by login_at desc, log_at desc";
             var cmd = new NpgsqlCommand(sql, new NpgsqlConnection(Database.ConnectionString));
             if (filter.Length > 0)
                 cmd.Parameters.AddWithValue(":filter", filter);

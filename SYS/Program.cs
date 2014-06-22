@@ -19,10 +19,10 @@ namespace kPrasat
             Application.SetCompatibleTextRenderingDefault(false);
 
             App.Init();
-            if (new SM.frmLogin().ShowDialog() == DialogResult.OK)
+            //if (new SM.frmLogin().ShowDialog() == DialogResult.OK)
                 Application.Run(new frmMain());
-            else
-                Application.Exit();
+            //else
+            //    Application.Exit();
         }
     }
 }
