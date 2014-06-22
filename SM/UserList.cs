@@ -144,6 +144,14 @@ namespace kPrasat.SM
             Text += " v. " + SYS.App.version;
 
             LockControls();
+
+            var log = new SM.SessionLog(Name)
+            {
+                Priority = "I",
+                Type = "LOD",
+                Message = "Form opened"
+            };
+            SM.SessionLogFacade.Save(log);
         }
 
         private void btnNew_Click(object sender, EventArgs e)

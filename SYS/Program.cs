@@ -17,7 +17,7 @@ namespace kPrasat
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
+            //todo: splash screen
             App.Init();
             //if (new SM.frmLogin().ShowDialog() == DialogResult.OK)
                 Application.Run(new frmMain());
