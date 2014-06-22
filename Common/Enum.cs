@@ -26,4 +26,12 @@ namespace kPrasat
         public static string Warning = "W";
         public static string Error = "E";
     }
+
+    public static class LogType
+    {
+        public static string Insert = "INS";
+        public static string Update = "UPD";
+        public static string Delete = "DEL";
+        public static string Unlock = "UNL";
+    }
 }

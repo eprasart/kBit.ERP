@@ -81,7 +81,7 @@
             // 
             // groupLabel1
             // 
-            this.groupLabel1.Caption = "Inventory Control (IC)";
+            this.groupLabel1.Caption = "IC - Inventory Control";
             this.groupLabel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel1.Location = new System.Drawing.Point(12, 18);
             this.groupLabel1.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
@@ -92,7 +92,7 @@
             // 
             // groupLabel2
             // 
-            this.groupLabel2.Caption = "Security Management (SM)";
+            this.groupLabel2.Caption = "SM - Security Management";
             this.groupLabel2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel2.Location = new System.Drawing.Point(742, 18);
             this.groupLabel2.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
@@ -103,7 +103,7 @@
             // 
             // groupLabel3
             // 
-            this.groupLabel3.Caption = "System";
+            this.groupLabel3.Caption = "SYS - System";
             this.groupLabel3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel3.Location = new System.Drawing.Point(499, 18);
             this.groupLabel3.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
@@ -116,7 +116,6 @@
             // 
             this.btnLocation.BackColor = System.Drawing.Color.White;
             this.btnLocation.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLocation.Enabled = false;
             this.btnLocation.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnLocation.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.btnLocation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -137,7 +136,6 @@
             // 
             this.buttonFlat4.BackColor = System.Drawing.Color.White;
             this.buttonFlat4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonFlat4.Enabled = false;
             this.buttonFlat4.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonFlat4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.buttonFlat4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -194,7 +192,6 @@
             // 
             this.buttonFlat3.BackColor = System.Drawing.Color.White;
             this.buttonFlat3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonFlat3.Enabled = false;
             this.buttonFlat3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonFlat3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.buttonFlat3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -251,7 +248,7 @@
             // 
             // groupLabel4
             // 
-            this.groupLabel4.Caption = "Account Payable (AP)";
+            this.groupLabel4.Caption = "AP - Account Payable";
             this.groupLabel4.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel4.Location = new System.Drawing.Point(255, 120);
             this.groupLabel4.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
@@ -280,7 +277,7 @@
             // 
             // groupLabel5
             // 
-            this.groupLabel5.Caption = "Purchase Order (PO)";
+            this.groupLabel5.Caption = "PO - Purchase Order";
             this.groupLabel5.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel5.Location = new System.Drawing.Point(255, 18);
             this.groupLabel5.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
@@ -293,7 +290,6 @@
             // 
             this.buttonFlat1.BackColor = System.Drawing.Color.White;
             this.buttonFlat1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonFlat1.Enabled = false;
             this.buttonFlat1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonFlat1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.buttonFlat1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -424,7 +420,7 @@
             // 
             // groupLabel6
             // 
-            this.groupLabel6.Caption = "Account Receivable (AR)";
+            this.groupLabel6.Caption = "AR - Account Receivable";
             this.groupLabel6.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel6.Location = new System.Drawing.Point(255, 222);
             this.groupLabel6.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
@@ -491,7 +487,7 @@
             // 
             // groupLabel7
             // 
-            this.groupLabel7.Caption = "General Leader (GL)";
+            this.groupLabel7.Caption = "GL - General Leader";
             this.groupLabel7.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel7.Location = new System.Drawing.Point(499, 120);
             this.groupLabel7.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
@@ -540,7 +536,7 @@
             // 
             // groupLabel8
             // 
-            this.groupLabel8.Caption = "Sale Order (SO)";
+            this.groupLabel8.Caption = "SO - Sale Order";
             this.groupLabel8.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel8.Location = new System.Drawing.Point(499, 222);
             this.groupLabel8.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Data;
 using Npgsql;
 using kPrasat.SYS;
+using kPrasat.SM;
 
 namespace kPrasat.IC
 {
@@ -63,7 +64,8 @@ namespace kPrasat.IC
         public static long Save(Location m)
         {
             DateTime? ts = Database.GetCurrentTimeStamp();
-            long seq = 0;   // New inserted sequence
+            long seq = 0;   // New inserted sequence         
+
             var mSave = new Location
             {
                 Code = m.Code,
@@ -83,11 +85,12 @@ namespace kPrasat.IC
             {
                 mSave.ChangeBy = App.session.Username;
                 mSave.ChangeAt = ts;
-                Database.Connection.UpdateOnly(mSave, p => new { p.Code, p.Desc1, p.Desc2, p.Address, p.Note, ChangeBy = p.ChangeBy, ChangeAt = p.ChangeAt },
+                Database.Connection.UpdateOnly(mSave, p => new { p.Code, p.Desc1, p.Desc2, p.Address, p.Note, p.ChangeBy,p.ChangeAt },
                     p => p.Id == m.Id);
                 // If record is lock then unlock
                 if (IsLocked(m.Id)) ReleaseLock(m.Id);
             }
+           
             return seq;
         }
 

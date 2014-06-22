@@ -77,7 +77,7 @@ namespace kPrasat.SM
         public static long Save(User m)
         {
             DateTime? ts = Database.GetCurrentTimeStamp();
-            long seq = 0;   // New inserted sequence
+            var log = new SessionLog ("UserList");
             if (m.Id == 0)
             {
                 m.Status = StatusType.Active;
@@ -85,7 +85,9 @@ namespace kPrasat.SM
                 m.InsertAt = ts;
                 string sqlPwd = "select crypt('" + m.Pwd + "', gen_salt('bf'))";    // Blowfish algorithm
                 m.Pwd = Database.ExcuteString(sqlPwd);
-                seq = Database.Connection.Insert(m, true);
+                m.Id = Database.Connection.Insert(m, true); // New inserted sequence
+                log.Priority = Priority.Information; 
+                log.Type = LogType.Insert;                
             }
             else
             {
@@ -94,10 +96,14 @@ namespace kPrasat.SM
 
                 Database.Connection.UpdateOnly(m, p => new { p.Username, p.FullName, p.StartOn, p.EndOn, p.Phone, p.Email, p.Note, p.ChangeBy, p.ChangeAt },
                     p => p.Id == m.Id);
-                // If record is lock then unlock
+                // If record is locked then unlock
                 if (IsLocked(m.Id)) ReleaseLock(m.Id);
+                log.Priority = Priority.Caution;
+                log.Type = LogType.Update;
             }
-            return seq;
+            log.Message = "Id=" + m.Id + ", Username=" + m.Username;
+            SessionLogFacade.Save(log);
+            return m.Id;
         }
 
         public static User Select(long Id)

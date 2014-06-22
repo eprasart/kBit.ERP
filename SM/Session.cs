@@ -43,6 +43,14 @@ namespace kPrasat.SM
         [Required]
         public string Message { get; set; }
         public string Status { get; set; }
+
+        public SessionLog() { }
+
+        public SessionLog(string module) 
+        {
+            Module = module;
+        }
+
     }
 
     static class SessionFacade
