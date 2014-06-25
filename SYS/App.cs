@@ -46,7 +46,7 @@ namespace kPrasat.SYS
             //session.Username = Login.Username;
 
             session.MachineName = Environment.MachineName;
-            session.MachinerUserName = Environment.UserName;
+            session.MachineUserName = Environment.UserName;
             session.Version = version;
             session.Id = SessionFacade.Save(session);
         }

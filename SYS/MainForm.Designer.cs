@@ -105,7 +105,7 @@
             // 
             this.groupLabel3.Caption = "SYS - System";
             this.groupLabel3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupLabel3.Location = new System.Drawing.Point(499, 18);
+            this.groupLabel3.Location = new System.Drawing.Point(742, 120);
             this.groupLabel3.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
             this.groupLabel3.Name = "groupLabel3";
             this.groupLabel3.Size = new System.Drawing.Size(230, 16);
@@ -180,7 +180,7 @@
             this.buttonFlat2.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonFlat2.Image = ((System.Drawing.Image)(resources.GetObject("buttonFlat2.Image")));
             this.buttonFlat2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFlat2.Location = new System.Drawing.Point(512, 40);
+            this.buttonFlat2.Location = new System.Drawing.Point(755, 142);
             this.buttonFlat2.Name = "buttonFlat2";
             this.buttonFlat2.Size = new System.Drawing.Size(217, 31);
             this.buttonFlat2.TabIndex = 2;
@@ -439,7 +439,7 @@
             this.buttonFlat14.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonFlat14.Image = ((System.Drawing.Image)(resources.GetObject("buttonFlat14.Image")));
             this.buttonFlat14.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFlat14.Location = new System.Drawing.Point(512, 77);
+            this.buttonFlat14.Location = new System.Drawing.Point(755, 179);
             this.buttonFlat14.Name = "buttonFlat14";
             this.buttonFlat14.Size = new System.Drawing.Size(217, 31);
             this.buttonFlat14.TabIndex = 2;
@@ -457,7 +457,7 @@
             this.buttonFlat15.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonFlat15.Image = ((System.Drawing.Image)(resources.GetObject("buttonFlat15.Image")));
             this.buttonFlat15.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFlat15.Location = new System.Drawing.Point(512, 142);
+            this.buttonFlat15.Location = new System.Drawing.Point(512, 40);
             this.buttonFlat15.Name = "buttonFlat15";
             this.buttonFlat15.Size = new System.Drawing.Size(217, 31);
             this.buttonFlat15.TabIndex = 2;
@@ -476,7 +476,7 @@
             this.buttonFlat17.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonFlat17.Image = ((System.Drawing.Image)(resources.GetObject("buttonFlat17.Image")));
             this.buttonFlat17.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFlat17.Location = new System.Drawing.Point(512, 179);
+            this.buttonFlat17.Location = new System.Drawing.Point(512, 77);
             this.buttonFlat17.Name = "buttonFlat17";
             this.buttonFlat17.Size = new System.Drawing.Size(217, 31);
             this.buttonFlat17.TabIndex = 2;
@@ -489,7 +489,7 @@
             // 
             this.groupLabel7.Caption = "GL - General Leader";
             this.groupLabel7.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupLabel7.Location = new System.Drawing.Point(499, 120);
+            this.groupLabel7.Location = new System.Drawing.Point(499, 18);
             this.groupLabel7.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
             this.groupLabel7.Name = "groupLabel7";
             this.groupLabel7.Size = new System.Drawing.Size(230, 16);
@@ -506,7 +506,7 @@
             this.buttonFlat16.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonFlat16.Image = ((System.Drawing.Image)(resources.GetObject("buttonFlat16.Image")));
             this.buttonFlat16.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFlat16.Location = new System.Drawing.Point(512, 244);
+            this.buttonFlat16.Location = new System.Drawing.Point(512, 142);
             this.buttonFlat16.Name = "buttonFlat16";
             this.buttonFlat16.Size = new System.Drawing.Size(217, 31);
             this.buttonFlat16.TabIndex = 2;
@@ -525,7 +525,7 @@
             this.buttonFlat18.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonFlat18.Image = ((System.Drawing.Image)(resources.GetObject("buttonFlat18.Image")));
             this.buttonFlat18.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFlat18.Location = new System.Drawing.Point(512, 281);
+            this.buttonFlat18.Location = new System.Drawing.Point(512, 179);
             this.buttonFlat18.Name = "buttonFlat18";
             this.buttonFlat18.Size = new System.Drawing.Size(217, 31);
             this.buttonFlat18.TabIndex = 2;
@@ -538,7 +538,7 @@
             // 
             this.groupLabel8.Caption = "SO - Sale Order";
             this.groupLabel8.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupLabel8.Location = new System.Drawing.Point(499, 222);
+            this.groupLabel8.Location = new System.Drawing.Point(499, 120);
             this.groupLabel8.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
             this.groupLabel8.Name = "groupLabel8";
             this.groupLabel8.Size = new System.Drawing.Size(230, 16);
@@ -581,6 +581,8 @@
             this.Controls.Add(this.buttonFlat3);
             this.Controls.Add(this.btnUser);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "kPrasart ERP";

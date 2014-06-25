@@ -148,7 +148,7 @@ namespace kPrasat.SM
             var log = new SM.SessionLog(Name)
             {
                 Priority = "I",
-                Type = "LOD",
+                Type = LogType.Open,
                 Message = "Form opened"
             };
             SM.SessionLogFacade.Save(log);

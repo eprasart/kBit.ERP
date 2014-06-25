@@ -44,6 +44,7 @@ namespace kPrasat.SM
         public DateTime? InsertAt { get; set; }
         public string ChangeBy { get; set; }
         public DateTime? ChangeAt { get; set; }
+        public static string Module = "User List";  // Module name for logging
     }
 
     static class UserFacade
@@ -77,7 +78,7 @@ namespace kPrasat.SM
         public static long Save(User m)
         {
             DateTime? ts = Database.GetCurrentTimeStamp();
-            var log = new SessionLog ("UserList");
+            var log = new SessionLog(User.Module);
             if (m.Id == 0)
             {
                 m.Status = StatusType.Active;
@@ -86,8 +87,8 @@ namespace kPrasat.SM
                 string sqlPwd = "select crypt('" + m.Pwd + "', gen_salt('bf'))";    // Blowfish algorithm
                 m.Pwd = Database.ExcuteString(sqlPwd);
                 m.Id = Database.Connection.Insert(m, true); // New inserted sequence
-                log.Priority = Priority.Information; 
-                log.Type = LogType.Insert;                
+                log.Priority = Priority.Information;
+                log.Type = LogType.Insert;
             }
             else
             {

@@ -18,10 +18,10 @@ namespace kPrasat.SM
         public string Username { get; set; }
         [Default(typeof(DateTime), "now()")]
         public DateTime? LoginAt { get; set; }
-        public DateTime? LougoutAt { get; set; }
+        public DateTime? LogoutAt { get; set; }
         public string Version { get; set; }
         public string MachineName { get; set; }
-        public string MachinerUserName { get; set; }
+        public string MachineUserName { get; set; }
         public String Status { get; set; }
     }
 
@@ -58,7 +58,7 @@ namespace kPrasat.SM
         public static List<Session> Select(string filter = "")
         {
             SqlExpression<Session> e = OrmLiteConfig.DialectProvider.SqlExpression<Session>();
-            e.Where(q => q.Username.Contains(filter) || q.MachineName.Contains(filter) || q.MachinerUserName.Contains(filter))
+            e.Where(q => q.Username.Contains(filter) || q.MachineName.Contains(filter) || q.MachineUserName.Contains(filter))
                 .OrderBy(q => q.Username);
             //System.Windows.Forms.MessageBox.Show(e.SelectExpression + "\n" + e.WhereExpression);           
             return Database.Connection.Select<Session>(e);
@@ -122,10 +122,11 @@ namespace kPrasat.SM
 
         public static DataTable GetDataTable(string where, string filter = "")
         {
-            var sql = "select *\nfrom sm_session s\nleft join sm_session_log l on s.id = l.session_id where 1 = 1";
+            var sql = "select l.id, username, login_at, logout_at, version, machine_name, machine_user_name, log_at, priority, module, type, message\n" +
+                "from sm_session s\nleft join sm_session_log l on s.id = l.session_id where 1 = 1";
             //if (status.Length > 0)
             //    sql += " and status = '" + status + "'";
-            if (filter.Length > 0)
+            if (filter.Length > 0)                
                 sql += " and (message ~* :filter or type ~* :filter or module ~* :filter)";
             sql += "\norder by login_at desc, log_at desc";
             var cmd = new NpgsqlCommand(sql, new NpgsqlConnection(Database.ConnectionString));

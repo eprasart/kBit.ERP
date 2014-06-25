@@ -21,7 +21,7 @@ namespace kPrasat
             Connection.CreateTableIfNotExists(typeof(IC.Location), typeof(SM.User), typeof(SM.Session), typeof(SM.SessionLog));
             //db.CreateTableIfNotExists<Vendor>();
             //db.CreateTableIfNotExists<Location>();
-           
+
         }
 
         public static DateTime GetCurrentTimeStamp()
@@ -32,6 +32,20 @@ namespace kPrasat
         public static string ExcuteString(string sql)
         {
             return Connection.Scalar<string>(sql);
+        }
+    }
+
+    class SQL
+    {
+        public static string BuildWhere(params string[] colNames)
+        {
+            string sWhere = "";
+            //foreach (var col in colNames)
+            //{
+            //    sWhere+=col + " ~* :filter or "
+            //}
+          
+            return sWhere;
         }
     }
 }

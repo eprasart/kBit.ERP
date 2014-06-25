@@ -33,5 +33,6 @@ namespace kPrasat
         public static string Update = "UPD";
         public static string Delete = "DEL";
         public static string Unlock = "UNL";
+        public static string Open = "OPN";
     }
 }
