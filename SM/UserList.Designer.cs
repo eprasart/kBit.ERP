@@ -497,7 +497,7 @@
             // 
             // groupLabel2
             // 
-            this.groupLabel2.Caption = "Security";
+            this.groupLabel2.Text = "Security";
             this.groupLabel2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel2.Location = new System.Drawing.Point(345, 8);
             this.groupLabel2.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
@@ -508,7 +508,7 @@
             // 
             // groupLabel1
             // 
-            this.groupLabel1.Caption = "General";
+            this.groupLabel1.Text = "General";
             this.groupLabel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel1.Location = new System.Drawing.Point(9, 8);
             this.groupLabel1.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
@@ -528,7 +528,7 @@
             // 
             // groupLabel3
             // 
-            this.groupLabel3.Caption = "Note";
+            this.groupLabel3.Text = "Note";
             this.groupLabel3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel3.Location = new System.Drawing.Point(10, 145);
             this.groupLabel3.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
