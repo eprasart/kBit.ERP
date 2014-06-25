@@ -58,7 +58,7 @@
             // dtpTo
             // 
             this.dtpTo.AutoSize = true;
-            this.dtpTo.Location = new System.Drawing.Point(176, 15);
+            this.dtpTo.Location = new System.Drawing.Point(194, 15);
             this.dtpTo.Name = "dtpTo";
             this.dtpTo.Size = new System.Drawing.Size(19, 13);
             this.dtpTo.TabIndex = 5;
@@ -67,7 +67,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(666, 15);
+            this.label3.Location = new System.Drawing.Point(738, 16);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 13);
             this.label3.TabIndex = 0;
@@ -76,7 +76,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(328, 15);
+            this.label4.Location = new System.Drawing.Point(364, 15);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(41, 13);
             this.label4.TabIndex = 7;
@@ -85,7 +85,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(502, 15);
+            this.label5.Location = new System.Drawing.Point(556, 15);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(31, 13);
             this.label5.TabIndex = 9;
@@ -94,7 +94,7 @@
             // btnRefresh
             // 
             this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefresh.Location = new System.Drawing.Point(848, 11);
+            this.btnRefresh.Location = new System.Drawing.Point(926, 10);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(75, 23);
             this.btnRefresh.TabIndex = 2;
@@ -106,9 +106,9 @@
             // 
             this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearch.Location = new System.Drawing.Point(712, 12);
+            this.txtSearch.Location = new System.Drawing.Point(784, 12);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(130, 21);
+            this.txtSearch.Size = new System.Drawing.Size(136, 21);
             this.txtSearch.TabIndex = 1;
             this.txtSearch.TabOnEnter = true;
             // 
@@ -116,9 +116,10 @@
             // 
             this.dateTimePicker2.CustomFormat = "ddd dd-MM-yy";
             this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker2.Location = new System.Drawing.Point(201, 12);
+            this.dateTimePicker2.Location = new System.Drawing.Point(219, 12);
             this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(118, 21);
+            this.dateTimePicker2.ShowCheckBox = true;
+            this.dateTimePicker2.Size = new System.Drawing.Size(136, 21);
             this.dateTimePicker2.TabIndex = 6;
             this.dateTimePicker2.TabOnEnter = true;
             // 
@@ -128,16 +129,17 @@
             this.dtpFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpFrom.Location = new System.Drawing.Point(49, 12);
             this.dtpFrom.Name = "dtpFrom";
-            this.dtpFrom.Size = new System.Drawing.Size(118, 21);
+            this.dtpFrom.ShowCheckBox = true;
+            this.dtpFrom.Size = new System.Drawing.Size(136, 21);
             this.dtpFrom.TabIndex = 4;
             this.dtpFrom.TabOnEnter = true;
             // 
             // cboType
             // 
             this.cboType.FormattingEnabled = true;
-            this.cboType.Location = new System.Drawing.Point(539, 12);
+            this.cboType.Location = new System.Drawing.Point(593, 12);
             this.cboType.Name = "cboType";
-            this.cboType.Size = new System.Drawing.Size(118, 21);
+            this.cboType.Size = new System.Drawing.Size(136, 21);
             this.cboType.TabIndex = 10;
             this.cboType.TabOnEnter = true;
             // 
@@ -151,9 +153,9 @@
             "Caution",
             "Warning",
             "Error"});
-            this.cboPriority.Location = new System.Drawing.Point(375, 12);
+            this.cboPriority.Location = new System.Drawing.Point(411, 12);
             this.cboPriority.Name = "cboPriority";
-            this.cboPriority.Size = new System.Drawing.Size(118, 21);
+            this.cboPriority.Size = new System.Drawing.Size(136, 21);
             this.cboPriority.TabIndex = 8;
             this.cboPriority.TabOnEnter = true;
             // 
@@ -186,7 +188,7 @@
             this.dgvList.ReadOnly = true;
             this.dgvList.RowHeadersVisible = false;
             this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvList.Size = new System.Drawing.Size(911, 386);
+            this.dgvList.Size = new System.Drawing.Size(989, 386);
             this.dgvList.TabIndex = 11;
             // 
             // frmAuditLog
@@ -194,7 +196,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(935, 437);
+            this.ClientSize = new System.Drawing.Size(1013, 437);
             this.Controls.Add(this.dgvList);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.label5);
@@ -208,7 +210,7 @@
             this.Controls.Add(this.cboType);
             this.Controls.Add(this.cboPriority);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MinimumSize = new System.Drawing.Size(951, 476);
+            this.MinimumSize = new System.Drawing.Size(1029, 476);
             this.Name = "frmAuditLog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Audit Log";
