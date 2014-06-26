@@ -36,11 +36,12 @@ namespace kPrasat.SM
             if (!IsValidated()) return;
             var usr = new User()
             {
-                Id=Id,
-                Pwd=txtPwd.Text
+                Id = Id,
+                Pwd = txtPwd.Text
             };
             UserFacade.UpdatePwd(usr);
             DialogResult = System.Windows.Forms.DialogResult.OK;
+            SessionLogFacade.Log(Priority.Caution, Name, LogType.ResetPwd, "Password reset successfully. Username=" + txtUsernane.Text);
         }
     }
 }

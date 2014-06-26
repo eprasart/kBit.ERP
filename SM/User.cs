@@ -78,7 +78,8 @@ namespace kPrasat.SM
         public static long Save(User m)
         {
             DateTime? ts = Database.GetCurrentTimeStamp();
-            var log = new SessionLog(User.Module);
+            var log = new SessionLog { Module = "UserList" };
+
             if (m.Id == 0)
             {
                 m.Status = StatusType.Active;
@@ -103,7 +104,7 @@ namespace kPrasat.SM
                 log.Type = LogType.Update;
             }
             log.Message = "Id=" + m.Id + ", Username=" + m.Username;
-            SessionLogFacade.Save(log);
+            SessionLogFacade.Log(log);
             return m.Id;
         }
 

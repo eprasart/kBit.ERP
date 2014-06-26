@@ -43,14 +43,6 @@ namespace kPrasat.SM
         [Required]
         public string Message { get; set; }
         public string Status { get; set; }
-
-        public SessionLog() { }
-
-        public SessionLog(string module) 
-        {
-            Module = module;
-        }
-
     }
 
     static class SessionFacade
@@ -126,7 +118,7 @@ namespace kPrasat.SM
                 "from sm_session s\nleft join sm_session_log l on s.id = l.session_id where 1 = 1";
             //if (status.Length > 0)
             //    sql += " and status = '" + status + "'";
-            if (filter.Length > 0)                
+            if (filter.Length > 0)
                 sql += " and (message ~* :filter or type ~* :filter or module ~* :filter)";
             sql += "\norder by login_at desc, log_at desc";
             var cmd = new NpgsqlCommand(sql, new NpgsqlConnection(Database.ConnectionString));
@@ -138,21 +130,19 @@ namespace kPrasat.SM
             return dt;
         }
 
-        public static long Save(SessionLog m)
+        private static void Save(SessionLog m)
         {
             DateTime? ts = Database.GetCurrentTimeStamp();
-            long seq = 0;   // New inserted sequence
             if (m.Id == 0)
             {
                 m.SessionId = SYS.App.session.Id;
                 m.LogAt = ts;
-                seq = Database.Connection.Insert(m, true);
+                Database.Connection.Insert(m);
             }
             else
             {
                 //Database.Connection.UpdateOnly(m, p => new { p.Username }, p => p.Id == m.Id);
             }
-            return seq;
         }
 
         public static SessionLog Select(long Id)
@@ -164,6 +154,23 @@ namespace kPrasat.SM
         {
             DateTime? ts = Database.GetCurrentTimeStamp();
             Database.Connection.UpdateOnly(new SessionLog { Status = s }, p => p.Id == Id);
+        }
+
+        public static void Log(string priority, string module, string type, string message)
+        {
+            var log = new SessionLog()
+            {
+                Priority = priority,
+                Module = module,
+                Type = type,
+                Message = message
+            };
+            Log(log);
+        }
+
+        public static void Log(SessionLog log)
+        {
+            Save(log);
         }
     }
 }

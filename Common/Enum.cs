@@ -32,7 +32,15 @@ namespace kPrasat
         public static string Insert = "INS";
         public static string Update = "UPD";
         public static string Delete = "DEL";
-        public static string Unlock = "UNL";
+        public static string New = "NEW";
+        public static string Lock = "LOK"; 
+        public static string Unlock = "UNL";        
         public static string Open = "OPN";
+        public static string Copy = "CPY";
+        public static string Save = "SAV";
+        public static string SaveAndNew = "SNW";
+        public static string Active = "ATV";
+        public static string Inactive = "IAT";
+        public static string ResetPwd = "PWR";
     }
 }

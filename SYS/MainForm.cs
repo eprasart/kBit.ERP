@@ -59,6 +59,7 @@ namespace kPrasat.SYS
             }
             App.fUserList.Focus();
             Cursor = Cursors.Default;
+            SM.SessionLogFacade.Log(Priority.Information, Name, LogType.Open, "User List opened.");
         }
 
         private void btnAuditLog_Click(object sender, EventArgs e)
@@ -71,6 +72,12 @@ namespace kPrasat.SYS
             }
             App.fAuditLog.Focus();
             Cursor = Cursors.Default;
+            SM.SessionLogFacade.Log(Priority.Information, Name, LogType.Open, "Audito Log opened.");
+        }
+
+        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            SYS.App.SaveSettings(); // Save settings to file
         }
     }
 }

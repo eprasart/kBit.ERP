@@ -81,7 +81,6 @@
             // 
             // groupLabel1
             // 
-            this.groupLabel1.Text = "IC - Inventory Control";
             this.groupLabel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel1.Location = new System.Drawing.Point(12, 18);
             this.groupLabel1.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
@@ -92,7 +91,6 @@
             // 
             // groupLabel2
             // 
-            this.groupLabel2.Text = "SM - Security Management";
             this.groupLabel2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel2.Location = new System.Drawing.Point(742, 18);
             this.groupLabel2.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
@@ -103,7 +101,6 @@
             // 
             // groupLabel3
             // 
-            this.groupLabel3.Text = "SYS - System";
             this.groupLabel3.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel3.Location = new System.Drawing.Point(742, 120);
             this.groupLabel3.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
@@ -248,7 +245,6 @@
             // 
             // groupLabel4
             // 
-            this.groupLabel4.Text = "AP - Account Payable";
             this.groupLabel4.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel4.Location = new System.Drawing.Point(255, 120);
             this.groupLabel4.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
@@ -277,7 +273,6 @@
             // 
             // groupLabel5
             // 
-            this.groupLabel5.Text = "PO - Purchase Order";
             this.groupLabel5.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel5.Location = new System.Drawing.Point(255, 18);
             this.groupLabel5.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
@@ -420,7 +415,6 @@
             // 
             // groupLabel6
             // 
-            this.groupLabel6.Text = "AR - Account Receivable";
             this.groupLabel6.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel6.Location = new System.Drawing.Point(255, 222);
             this.groupLabel6.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
@@ -487,7 +481,6 @@
             // 
             // groupLabel7
             // 
-            this.groupLabel7.Text = "GL - General Leader";
             this.groupLabel7.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel7.Location = new System.Drawing.Point(499, 18);
             this.groupLabel7.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
@@ -536,7 +529,6 @@
             // 
             // groupLabel8
             // 
-            this.groupLabel8.Text = "SO - Sale Order";
             this.groupLabel8.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupLabel8.Location = new System.Drawing.Point(499, 120);
             this.groupLabel8.Margin = new System.Windows.Forms.Padding(3, 9, 3, 3);
@@ -586,6 +578,7 @@
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "kPrasart ERP";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.ResumeLayout(false);
 
