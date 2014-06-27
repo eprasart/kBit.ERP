@@ -38,7 +38,7 @@ namespace kPrasat.IC
         public static List<Location> Select(string filter = "")
         {
             SqlExpression<Location> e = OrmLiteConfig.DialectProvider.SqlExpression<Location>();
-            e.Where(q => q.Status == StatusType.Active && (q.Code.Contains(filter) || q.Desc1.Contains(filter) || q.Desc2.Contains(filter)))
+            e.Where(q => q.Status == Type.RecordStatus_Active && (q.Code.Contains(filter) || q.Desc1.Contains(filter) || q.Desc2.Contains(filter)))
                 .OrderBy(q => q.Code);
             //System.Windows.Forms.MessageBox.Show(e.SelectExpression + "\n" + e.WhereExpression);           
             return Database.Connection.Select<Location>(e);
@@ -76,7 +76,7 @@ namespace kPrasat.IC
             };
             if (m.Id == 0)
             {
-                mSave.Status = StatusType.Active;
+                mSave.Status = Type.RecordStatus_Active;
                 mSave.InsertBy = App.session.Username;
                 mSave.InsertAt = ts;
                 seq = Database.Connection.Insert(mSave, true);

@@ -52,7 +52,7 @@ namespace kPrasat.SM
         public static List<User> Select(string filter = "")
         {
             SqlExpression<User> e = OrmLiteConfig.DialectProvider.SqlExpression<User>();
-            e.Where(q => q.Status == StatusType.Active && (q.Username.Contains(filter) || q.FullName.Contains(filter)))
+            e.Where(q => q.Status == Type.RecordStatus_Active && (q.Username.Contains(filter) || q.FullName.Contains(filter)))
                 .OrderBy(q => q.Username);
             //System.Windows.Forms.MessageBox.Show(e.SelectExpression + "\n" + e.WhereExpression);           
             return Database.Connection.Select<User>(e);
@@ -82,14 +82,14 @@ namespace kPrasat.SM
 
             if (m.Id == 0)
             {
-                m.Status = StatusType.Active;
+                m.Status = Type.RecordStatus_Active;
                 m.InsertBy = App.session.Username;
                 m.InsertAt = ts;
                 string sqlPwd = "select crypt('" + m.Pwd + "', gen_salt('bf'))";    // Blowfish algorithm
                 m.Pwd = Database.ExcuteString(sqlPwd);
                 m.Id = Database.Connection.Insert(m, true); // New inserted sequence
-                log.Priority = Priority.Information;
-                log.Type = LogType.Insert;
+                log.Priority = Type.Priority_Information;
+                log.Type = Type.Log_Insert;
             }
             else
             {
@@ -100,8 +100,8 @@ namespace kPrasat.SM
                     p => p.Id == m.Id);
                 // If record is locked then unlock
                 if (IsLocked(m.Id)) ReleaseLock(m.Id);
-                log.Priority = Priority.Caution;
-                log.Type = LogType.Update;
+                log.Priority = Type.Priority_Caution;
+                log.Type = Type.Log_Update;
             }
             log.Message = "Id=" + m.Id + ", Username=" + m.Username;
             SessionLogFacade.Log(log);

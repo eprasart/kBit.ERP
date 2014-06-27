@@ -219,7 +219,7 @@ namespace kPrasat.IC
             msg = "Are you sure you want to delete?";
             if (MessageBox.Show(msg, "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
                 return;
-            LocationFacade.SetStatus(Id, StatusType.Deleted);
+            LocationFacade.SetStatus(Id, Type.RecordStatus_Deleted);
             RefreshGrid();
             if (dgvList.RowCount == 0) btnNew_Click(sender, e);
         }
@@ -275,7 +275,7 @@ namespace kPrasat.IC
                 new frmMsg(msg).ShowDialog();
                 return;
             }
-            LocationFacade.SetStatus(Id, btnActive.Text.StartsWith("I") ? StatusType.InActive : StatusType.Active);
+            LocationFacade.SetStatus(Id, btnActive.Text.StartsWith("I") ? Type.RecordStatus_InActive : Type.RecordStatus_Active);
             RefreshGrid();
         }
 

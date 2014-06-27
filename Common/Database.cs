@@ -10,7 +10,7 @@ namespace kPrasat
 {
     class Database
     {
-        public static string ConnectionString = ""; //Data Source=localhost:1521/xe;User ID=erp;Password=erp;Unicode=True";
+        public static string ConnectionString = "";
         public static OrmLiteConnectionFactory Factory = null;
         public static IDbConnection Connection = null;
 

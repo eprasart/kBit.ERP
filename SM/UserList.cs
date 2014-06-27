@@ -142,7 +142,7 @@ namespace kPrasat.SM
             RefreshGrid();
             Text += " v. " + SYS.App.version;
             LockControls();
-            SessionLogFacade.Log(Priority.Information, Name, LogType.Open, "Form opened");
+            SessionLogFacade.Log(Type.Priority_Information, Name, Type.Log_Open, "Form opened");
         }
 
         private void btnNew_Click(object sender, EventArgs e)
@@ -162,7 +162,7 @@ namespace kPrasat.SM
             txtPwd.Enabled = true;
             txtPwdAgain.Enabled = true;
             if (dgvList.RowCount > 0) rowIndex = dgvList.CurrentRow.Index;
-            SessionLogFacade.Log(Priority.Information, Name, LogType.New, "New user");
+            SessionLogFacade.Log(Type.Priority_Information, Name, Type.Log_New, "New user");
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -184,7 +184,7 @@ namespace kPrasat.SM
             RefreshGrid(m.Id);
             LockControls();
             Cursor = Cursors.Default;
-            SessionLogFacade.Log(Priority.Information, Name, LogType.Save, "Save successfull. Id=" + m.Id + " ,Username=" + txtUsernane.Text);
+            SessionLogFacade.Log(Type.Priority_Information, Name, Type.Log_Save, "Save successfull. Id=" + m.Id + " ,Username=" + txtUsernane.Text);
         }
 
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
@@ -216,7 +216,7 @@ namespace kPrasat.SM
 
         private void btnSaveNew_Click(object sender, EventArgs e)
         {
-            SessionLogFacade.Log(Priority.Information, Name, LogType.SaveAndNew, "Save and new. Id=" + dgvList.Id + ", Username=" + txtUsernane.Text);
+            SessionLogFacade.Log(Type.Priority_Information, Name, Type.Log_SaveAndNew, "Save and new. Id=" + dgvList.Id + ", Username=" + txtUsernane.Text);
             btnSave_Click(sender, e);
             btnNew_Click(sender, e);
         }
@@ -233,19 +233,19 @@ namespace kPrasat.SM
             {
                 msg = "Record cannot be deleted because it is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
                 new frmMsg(msg).ShowDialog();
-                SessionLogFacade.Log(Priority.Caution, Name, LogType.Delete, "Cannot delete while currently locked. Id=" + dgvList.Id + ", Username=" + txtUsernane.Text);
+                SessionLogFacade.Log(Type.Priority_Caution, Name, Type.Log_Delete, "Cannot delete while currently locked. Id=" + dgvList.Id + ", Username=" + txtUsernane.Text);
                 return;
             }
             // Delete
             msg = "Are you sure you want to delete?";
             if (MessageBox.Show(msg, "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
                 return;
-            UserFacade.SetStatus(Id, StatusType.Deleted);
+            UserFacade.SetStatus(Id, Type.RecordStatus_Deleted);
             RefreshGrid();
             if (dgvList.RowCount == 0) btnNew_Click(sender, e);
 
             // log
-            SessionLogFacade.Log(Priority.Warning, Name, LogType.Delete, "User Id " + dgvList.Id + " has been deleted");
+            SessionLogFacade.Log(Type.Priority_Warning, Name, Type.Log_Delete, "User Id " + dgvList.Id + " has been deleted");
         }
 
         private void btnCopy_Click(object sender, EventArgs e)
@@ -253,7 +253,7 @@ namespace kPrasat.SM
             Id = 0;
             txtUsernane.Focus();
             LockControls(false);
-            SessionLogFacade.Log(Priority.Information, Name, LogType.Copy, "Copy from " + txtUsernane.Text);
+            SessionLogFacade.Log(Type.Priority_Information, Name, Type.Log_Copy, "Copy from " + txtUsernane.Text);
         }
 
         private void picExpand_Click(object sender, EventArgs e)
@@ -298,10 +298,10 @@ namespace kPrasat.SM
                 new frmMsg(msg).ShowDialog();
                 return;
             }
-            string status = btnActive.Text.StartsWith("I") ? StatusType.InActive : StatusType.Active;
+            string status = btnActive.Text.StartsWith("I") ? Type.RecordStatus_InActive : Type.RecordStatus_Active;
             UserFacade.SetStatus(Id, status);
             RefreshGrid();
-            SessionLogFacade.Log(Priority.Caution, Name, status == "I" ? LogType.Inactive : LogType.Active, "Id=" + dgvList.Id + ", Username=" + txtUsernane.Text);
+            SessionLogFacade.Log(Type.Priority_Caution, Name, status == "I" ? Type.Log_Inactive : Type.Log_Active, "Id=" + dgvList.Id + ", Username=" + txtUsernane.Text);
         }
 
         private void btnUnlock_Click(object sender, EventArgs e)
@@ -321,7 +321,7 @@ namespace kPrasat.SM
                 UserFacade.ReleaseLock(dgvList.Id);
                 if (dgvList.RowCount > 0 && !dgvList.CurrentRow.Selected)
                     dgvList.CurrentRow.Selected = true;
-                SessionLogFacade.Log(Priority.Information, Name, LogType.Unlock, "Cancel lock, User=" + dgvList.Id);
+                SessionLogFacade.Log(Type.Priority_Information, Name, Type.Log_Unlock, "Cancel lock, User=" + dgvList.Id);
                 return;
             }
             // Unlock
@@ -336,7 +336,7 @@ namespace kPrasat.SM
             }
             LockControls(false);
             UserFacade.Lock(dgvList.Id);
-            SessionLogFacade.Log(Priority.Information, Name, LogType.Lock, "Lock, User=" + dgvList.Id);
+            SessionLogFacade.Log(Type.Priority_Information, Name, Type.Log_Lock, "Lock, User=" + dgvList.Id);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -393,7 +393,7 @@ namespace kPrasat.SM
 
         private void btnPwdReset_Click(object sender, EventArgs e)
         {
-            SessionLogFacade.Log(Priority.Caution, Name, LogType.ResetPwd, "Reset pwd clicked.");
+            SessionLogFacade.Log(Type.Priority_Caution, Name, Type.Log_ResetPwd, "Reset pwd clicked.");
             if (dgvList.Id == 0) return;
             var fPwdReset = new SM.frmPwdReset(txtUsernane.Text, txtFullName.Text);
             fPwdReset.Id = dgvList.Id;
