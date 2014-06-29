@@ -41,7 +41,7 @@ namespace kPrasat.SM
             };
             UserFacade.UpdatePwd(usr);
             DialogResult = System.Windows.Forms.DialogResult.OK;
-            SessionLogFacade.Log(Type.Priority_Caution, Name, Type.Log_ResetPwd, "Password reset successfully. Username=" + txtUsernane.Text);
+            SessionLogFacade.Log(Type.Priority_Caution, "User", Type.Log_ResetPwd, "Password reset successfully. Username=" + txtUsernane.Text);
         }
     }
 }

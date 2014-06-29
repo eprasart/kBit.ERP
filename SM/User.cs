@@ -5,6 +5,7 @@
 */
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using ServiceStack.OrmLite;
 using ServiceStack.DataAnnotations;
 using System.Linq;
@@ -71,15 +72,19 @@ namespace kPrasat.SM
                 cmd.Parameters.AddWithValue(":filter", filter);
             var da = new NpgsqlDataAdapter(cmd);
             var dt = new DataTable();
-            da.Fill(dt);
+            try
+            { da.Fill(dt); }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error while loading data.\n" + ex.Message, "Location", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                SYS.ErrorLogFacade.Log( ex.ToString(), ex.StackTrace);
+            }
             return dt;
         }
 
         public static long Save(User m)
         {
             DateTime? ts = Database.GetCurrentTimeStamp();
-            var log = new SessionLog { Module = "UserList" };
-
             if (m.Id == 0)
             {
                 m.Status = Type.RecordStatus_Active;
@@ -88,8 +93,6 @@ namespace kPrasat.SM
                 string sqlPwd = "select crypt('" + m.Pwd + "', gen_salt('bf'))";    // Blowfish algorithm
                 m.Pwd = Database.ExcuteString(sqlPwd);
                 m.Id = Database.Connection.Insert(m, true); // New inserted sequence
-                log.Priority = Type.Priority_Information;
-                log.Type = Type.Log_Insert;
             }
             else
             {
@@ -100,11 +103,7 @@ namespace kPrasat.SM
                     p => p.Id == m.Id);
                 // If record is locked then unlock
                 if (IsLocked(m.Id)) ReleaseLock(m.Id);
-                log.Priority = Type.Priority_Caution;
-                log.Type = Type.Log_Update;
             }
-            log.Message = "Id=" + m.Id + ", Username=" + m.Username;
-            SessionLogFacade.Log(log);
             return m.Id;
         }
 

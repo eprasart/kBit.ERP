@@ -17,10 +17,15 @@ namespace kPrasat
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //todo: splash screen
-            App.Init();
+
+            if (!App.Init()) return;
+            //App.fSplash.Visible = false;
             //if (new SM.frmLogin().ShowDialog() == DialogResult.OK)
+            //{
+            //    App.fSplash.Visible = true;
+            //    App.fSplash.ShowMsg("Loading Main Form...");
                 Application.Run(new frmMain());
+            //}
             //else
             //    Application.Exit();
         }

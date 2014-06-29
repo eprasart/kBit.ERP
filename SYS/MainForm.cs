@@ -12,6 +12,8 @@ namespace kPrasat.SYS
 {
     public partial class frmMain : Form
     {
+        private string Module = "Main Form";
+
         public frmMain()
         {
             InitializeComponent();
@@ -21,6 +23,9 @@ namespace kPrasat.SYS
         {
             Text += " v " + SYS.App.version;
             Icon = Properties.Resources.Icon;
+
+            App.fSplash.ShowMsg("");
+            App.fSplash.StartTimer();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -59,20 +64,20 @@ namespace kPrasat.SYS
             }
             App.fUserList.Focus();
             Cursor = Cursors.Default;
-            SM.SessionLogFacade.Log(Type.Priority_Information, Name, Type.Log_Open, "User List opened.");
+            SM.SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "User List opened.");
         }
 
         private void btnAuditLog_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            if (App.fAuditLog == null || App.fAuditLog.IsDisposed==true)
+            SM.SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "Audito Log opened.");
+            if (App.fAuditLog == null || App.fAuditLog.IsDisposed == true)
             {
                 App.fAuditLog = new SM.frmAuditLog();
                 App.fAuditLog.Show();
             }
             App.fAuditLog.Focus();
             Cursor = Cursors.Default;
-            SM.SessionLogFacade.Log(Type.Priority_Information, Name, Type.Log_Open, "Audito Log opened.");
         }
 
         private void frmMain_FormClosed(object sender, FormClosedEventArgs e)

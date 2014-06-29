@@ -1,10 +1,7 @@
 ﻿using ServiceStack.OrmLite;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace kPrasat
 {
@@ -17,8 +14,8 @@ namespace kPrasat
         public static void PrepareDatabase()
         {
             //Connection.DropTables(typeof(SM.SessionLog), typeof(SM.Session));
-
-            Connection.CreateTableIfNotExists(typeof(IC.Location), typeof(SM.User), typeof(SM.Session), typeof(SM.SessionLog));
+            //Connection.DropTables(typeof(IC.Location));
+            Connection.CreateTableIfNotExists(typeof(IC.Location), typeof(SM.User), typeof(SM.Session), typeof(SM.SessionLog), typeof(SYS.ErrorLog));
             //db.CreateTableIfNotExists<Vendor>();
             //db.CreateTableIfNotExists<Location>();
 
@@ -44,7 +41,7 @@ namespace kPrasat
             //{
             //    sWhere+=col + " ~* :filter or "
             //}
-          
+
             return sWhere;
         }
     }

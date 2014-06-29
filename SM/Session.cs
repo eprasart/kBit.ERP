@@ -137,7 +137,8 @@ namespace kPrasat.SM
             {
                 m.SessionId = SYS.App.session.Id;
                 m.LogAt = ts;
-                Database.Connection.Insert(m);
+                //todo: if failed > log error > log to file
+                Database.Connection.Insert(m);                
             }
             else
             {

@@ -1,5 +1,9 @@
-﻿using System;
-//using System.Windows.Forms;
+﻿/* TODO
+ * Pwd encrypt
+ * Reset pwd
+ * 
+*/
+using System;
 using System.Collections.Generic;
 using ServiceStack.OrmLite;
 using ServiceStack.DataAnnotations;
@@ -7,7 +11,6 @@ using System.Linq;
 using System.Data;
 using Npgsql;
 using kPrasat.SYS;
-using kPrasat.SM;
 
 namespace kPrasat.IC
 {
@@ -16,12 +19,14 @@ namespace kPrasat.IC
     {
         [AutoIncrement]
         public long Id { get; set; }
-        public int CompanyId { get; set; }
         [Required]
         public string Code { get; set; }
-        public string Desc1 { get; set; }
-        public string Desc2 { get; set; }
+        public string Description { get; set; }
         public string Address { get; set; }
+        public string Name { get; set; }
+        public string Phone { get; set; }
+        public string Fax { get; set; }
+        public string Email { get; set; }
         public string Note { get; set; }
         public String Status { get; set; }
         public string LockBy { get; set; }
@@ -38,19 +43,18 @@ namespace kPrasat.IC
         public static List<Location> Select(string filter = "")
         {
             SqlExpression<Location> e = OrmLiteConfig.DialectProvider.SqlExpression<Location>();
-            e.Where(q => q.Status == Type.RecordStatus_Active && (q.Code.Contains(filter) || q.Desc1.Contains(filter) || q.Desc2.Contains(filter)))
+            e.Where(q => q.Status == Type.RecordStatus_Active && (q.Code.Contains(filter) || q.Description.Contains(filter)))
                 .OrderBy(q => q.Code);
-            //System.Windows.Forms.MessageBox.Show(e.SelectExpression + "\n" + e.WhereExpression);           
             return Database.Connection.Select<Location>(e);
         }
 
         public static DataTable GetDataTable(string filter = "", string status = "")
         {
-            var sql = "select id, code, desc1, desc2, address from ic_location where 1 = 1";
+            var sql = "select id, code, description, name, phone, fax, email, address from ic_location where 1 = 1";
             if (status.Length > 0)
                 sql += " and status = '" + status + "'";
             if (filter.Length > 0)
-                sql += " and (code ~* :filter or desc1 ~* :filter or desc2 ~* :filter or address ~* :filter or note ~* :filter)";
+                sql += " and (code ~* :filter or description ~* :filter or phone ~* :filter or fax ~* :filter or email ~* :filter or address ~* :filter or note ~* :filter)";
             sql += "\norder by code";
             var cmd = new NpgsqlCommand(sql, new NpgsqlConnection(Database.ConnectionString));
             if (filter.Length > 0)
@@ -64,34 +68,23 @@ namespace kPrasat.IC
         public static long Save(Location m)
         {
             DateTime? ts = Database.GetCurrentTimeStamp();
-            long seq = 0;   // New inserted sequence         
-
-            var mSave = new Location
-            {
-                Code = m.Code,
-                Desc1 = m.Desc1,
-                Desc2 = m.Desc2,
-                Address = m.Address,
-                Note = m.Note,
-            };
             if (m.Id == 0)
             {
-                mSave.Status = Type.RecordStatus_Active;
-                mSave.InsertBy = App.session.Username;
-                mSave.InsertAt = ts;
-                seq = Database.Connection.Insert(mSave, true);
+                m.Status = Type.RecordStatus_Active;
+                m.InsertBy = App.session.Username;
+                m.InsertAt = ts;
+                m.Id = Database.Connection.Insert(m, true); // New inserted sequence
             }
             else
             {
-                mSave.ChangeBy = App.session.Username;
-                mSave.ChangeAt = ts;
-                Database.Connection.UpdateOnly(mSave, p => new { p.Code, p.Desc1, p.Desc2, p.Address, p.Note, p.ChangeBy,p.ChangeAt },
+                m.ChangeBy = App.session.Username;
+                m.ChangeAt = ts;
+
+                Database.Connection.UpdateOnly(m, p => new { p.Code, p.Description, p.Address, p.Name, p.Phone, p.Fax, p.Email, p.Note, p.ChangeBy, p.ChangeAt },
                     p => p.Id == m.Id);
-                // If record is lock then unlock
-                if (IsLocked(m.Id)) ReleaseLock(m.Id);
+                if (IsLocked(m.Id)) ReleaseLock(m.Id);  // If record is locked then unlock
             }
-           
-            return seq;
+            return m.Id;
         }
 
         public static Location Select(long Id)

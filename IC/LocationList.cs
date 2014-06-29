@@ -6,6 +6,7 @@
 */
 using System;
 using System.Windows.Forms;
+using kPrasat.SM;
 
 namespace kPrasat.IC
 {
@@ -13,12 +14,14 @@ namespace kPrasat.IC
     {
         private long Id = 0;
         private int rowIndex = 0;
-        private bool isExpand = false;
-        private bool isDirty = false;
+        private bool IsExpand = false;
+        private bool IsDirty = false;
+        private string Module = "Location";   // Log module
 
         public frmLocationList()
         {
             InitializeComponent();
+            //MessageBox.Show(Environment.MachineName + "\n" + Environment.UserDomainName + "\n" + Environment.UserName);
         }
 
         private string GetStatus()
@@ -61,17 +64,17 @@ namespace kPrasat.IC
                     ((TextBox)c).ReadOnly = l;
                 else if (c is ComboBox)
                     ((ComboBox)c).Enabled = !l;
+                else if (c is DateTimePicker)
+                    ((DateTimePicker)c).Enabled = !l;
             }
             btnNew.Enabled = l;
             btnCopy.Enabled = l;
-            //btnUnlock.Enabled = !l;
             btnSave.Enabled = !l;
             btnSaveNew.Enabled = !l;
             btnActive.Enabled = l;
             btnDelete.Enabled = l;
             splitContainer1.Panel1.Enabled = l;
             btnUnlock.Text = l ? "Un&lock" : "Cance&l";
-            btnUnlock.ToolTipText = btnUnlock.Text + " (Ctrl+C)";
         }
 
         private void SetStatus(string stat)
@@ -92,7 +95,7 @@ namespace kPrasat.IC
 
         private bool IsValidated()
         {
-            string Code=txtCode.Text.Trim();
+            string Code = txtCode.Text.Trim();
             if (Code.Length == 0)
             {
                 Common.ShowMsg("Code cannot be empty.", "Save");
@@ -101,12 +104,13 @@ namespace kPrasat.IC
             }
             if (LocationFacade.IsExist(Code, Id))
             {
-                Common.ShowMsg("Code already exists. Code must be unique.", "Save");
+                Common.ShowMsg("Code already exists. It must be unique.", "Save");
                 txtCode.Focus();
                 txtCode.SelectAll();
                 return false;
             }
             //todo: prevent duplicate
+            //todo: pwd matching
             return true;
         }
 
@@ -114,58 +118,89 @@ namespace kPrasat.IC
         {
             var Id = dgvList.Id;
             if (Id == 0) return;
-            var m = LocationFacade.Select(Id);
-            txtCode.Text = m.Code;
-            txtDescEN.Text = m.Desc1;
-            txtDescKH.Text = m.Desc2;
-            txtAddress.Text = m.Address;
-            txtNote.Text = m.Note;
-
-            SetStatus(m.Status);
-
-            LockControls();
+            try
+            {
+                var m = LocationFacade.Select(Id);
+                txtCode.Text = m.Code;
+                txtDesc.Text = m.Description;
+                txtAddress.Text = m.Address;
+                txtName.Text = m.Name;
+                txtPhone.Text = m.Phone;
+                txtFax.Text = m.Fax;
+                txtEmail.Text = m.Email;
+                txtNote.Text = m.Note;
+                SetStatus(m.Status);
+                LockControls();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error while loading data.\n" + ex.Message, "Location", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                SYS.ErrorLogFacade.Log(ex.ToString(), ex.StackTrace);
+            }
         }
 
         private void frmLocationList_Load(object sender, EventArgs e)
         {
+            Icon = Properties.Resources.Icon;
             dgvList.ShowLessColumns(true);
-            RefreshGrid();          
-
+            RefreshGrid();
+            Text += " v. " + SYS.App.version;
             LockControls();
+            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "Form opened");
         }
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-            if (isExpand) picExpand_Click(sender, e);
+            if (IsExpand) picExpand_Click(sender, e);
             txtCode.Text = "";
             txtCode.Focus();
-            txtDescEN.Text = "";
-            txtDescKH.Text = "";            
+            txtDesc.Text = "";
             txtAddress.Text = "";
+            txtName.Text = "";
+            txtPhone.Text = "";
+            txtFax.Text = "";
+            txtEmail.Text = "";
             txtNote.Text = "";
             if (dgvList.RowCount > 0)
                 dgvList.CurrentRow.Selected = false;
             Id = 0;
             LockControls(false);
             if (dgvList.RowCount > 0) rowIndex = dgvList.CurrentRow.Index;
+            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_New, "New clicked");
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (!IsValidated()) return;            
+            if (!IsValidated()) return;
             Cursor = Cursors.WaitCursor;
             var m = new Location();
+            var log = new SessionLog { Module = Module };
             m.Id = Id;
             m.Code = txtCode.Text.Trim();
-            m.Desc1 = txtDescEN.Text;
-            m.Desc2 = txtDescKH.Text;
+            m.Description = txtDesc.Text;
             m.Address = txtAddress.Text;
+            m.Name = txtName.Text;
+            m.Phone = txtPhone.Text;
+            m.Fax = txtFax.Text;
+            m.Email = txtEmail.Text;
             m.Note = txtNote.Text;
-            long seq = LocationFacade.Save(m);
+            if (m.Id == 0)
+            {
+                log.Priority = Type.Priority_Information;
+                log.Type = Type.Log_Insert;
+            }
+            else
+            {
+                log.Priority = Type.Priority_Caution;
+                log.Type = Type.Log_Update;
+            }
+            m.Id = LocationFacade.Save(m);
             if (dgvList.RowCount > 0) rowIndex = dgvList.CurrentRow.Index;
-            RefreshGrid(seq);
+            RefreshGrid(m.Id);
             LockControls();
             Cursor = Cursors.Default;
+            log.Message = "Save successfull. Id=" + m.Id + " , Code=" + txtCode.Text;
+            SessionLogFacade.Log(log);
         }
 
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
@@ -197,6 +232,7 @@ namespace kPrasat.IC
 
         private void btnSaveNew_Click(object sender, EventArgs e)
         {
+            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_SaveAndNew, "Save and new. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
             btnSave_Click(sender, e);
             btnNew_Click(sender, e);
         }
@@ -213,6 +249,7 @@ namespace kPrasat.IC
             {
                 msg = "Record cannot be deleted because it is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
                 new frmMsg(msg).ShowDialog();
+                SessionLogFacade.Log(Type.Priority_Caution, Module, Type.Log_Delete, "Cannot delete while currently locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
                 return;
             }
             // Delete
@@ -222,6 +259,9 @@ namespace kPrasat.IC
             LocationFacade.SetStatus(Id, Type.RecordStatus_Deleted);
             RefreshGrid();
             if (dgvList.RowCount == 0) btnNew_Click(sender, e);
+
+            // log
+            SessionLogFacade.Log(Type.Priority_Warning, Module, Type.Log_Delete, "User Id=" + dgvList.Id + ", Code=" + txtCode.Text + " has been deleted");
         }
 
         private void btnCopy_Click(object sender, EventArgs e)
@@ -229,12 +269,13 @@ namespace kPrasat.IC
             Id = 0;
             txtCode.Focus();
             LockControls(false);
+            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Copy, "Copy from Id=" + dgvList.Id + "Code=" + txtCode.Text);
         }
 
         private void picExpand_Click(object sender, EventArgs e)
         {
-            splitContainer1.IsSplitterFixed = !isExpand;
-            if (!isExpand)
+            splitContainer1.IsSplitterFixed = !IsExpand;
+            if (!IsExpand)
             {
                 splitContainer1.SplitterDistance = splitContainer1.Size.Width;
                 splitContainer1.FixedPanel = FixedPanel.Panel2;
@@ -246,13 +287,13 @@ namespace kPrasat.IC
                 splitContainer1.FixedPanel = FixedPanel.Panel1;
                 imgExpand.Image = Properties.Resources.Next;
             }
-            dgvList.ShowLessColumns(isExpand);
-            isExpand = !isExpand;
+            dgvList.ShowLessColumns(IsExpand);
+            IsExpand = !IsExpand;
         }
 
         private void dgvList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (isExpand) picExpand_Click(sender, e);
+            if (IsExpand) picExpand_Click(sender, e);
             dgvList_SelectionChanged(sender, e);    // reload data since SelectionChanged will not occured on current row
         }
 
@@ -260,7 +301,6 @@ namespace kPrasat.IC
         {
             if (btnUnlock.Text == "Cance&l")
                 btnUnlock_Click(null, null);
-            SYS.App.SaveSettings(); // Move to main form instead
         }
 
         private void btnActive_Click(object sender, EventArgs e)
@@ -270,23 +310,24 @@ namespace kPrasat.IC
             var lInfo = LocationFacade.GetLockInfo(Id);
             if (lInfo.IsLocked)
             {
-                string msg = "Account is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'" +
-                    "\nទិន្នន័យ​នេះ​កំពុង​ប្រើ​ប្រាស់​ដោយ '" + lInfo.LockBy + "' តាំងពី '" + lInfo.LockAt + "'";
+                string msg = "Account is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
                 new frmMsg(msg).ShowDialog();
                 return;
             }
-            LocationFacade.SetStatus(Id, btnActive.Text.StartsWith("I") ? Type.RecordStatus_InActive : Type.RecordStatus_Active);
+            string status = btnActive.Text.StartsWith("I") ? Type.RecordStatus_InActive : Type.RecordStatus_Active;
+            LocationFacade.SetStatus(Id, status);
             RefreshGrid();
+            SessionLogFacade.Log(Type.Priority_Caution, Module, status == "I" ? Type.Log_Inactive : Type.Log_Active, "Id=" + dgvList.Id + ", Code=" + txtCode.Text);
         }
 
         private void btnUnlock_Click(object sender, EventArgs e)
         {
-            if (isExpand) picExpand_Click(sender, e);
+            if (IsExpand) picExpand_Click(sender, e);
             Id = dgvList.Id;
             // Cancel
             if (btnUnlock.Text == "Cance&l")
             {
-                if (isDirty)
+                if (IsDirty)
                 {
                     //todo: reload orginal data (if dirty)
 
@@ -296,9 +337,9 @@ namespace kPrasat.IC
                 LocationFacade.ReleaseLock(dgvList.Id);
                 if (dgvList.RowCount > 0 && !dgvList.CurrentRow.Selected)
                     dgvList.CurrentRow.Selected = true;
+                SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Unlock, "Cancel lock, Location=" + dgvList.Id);
                 return;
             }
-
             // Unlock
             if (Id == 0) return;
             var lInfo = LocationFacade.GetLockInfo(Id);
@@ -311,6 +352,7 @@ namespace kPrasat.IC
             }
             LockControls(false);
             LocationFacade.Lock(dgvList.Id);
+            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Lock, "Lock, User=" + dgvList.Id);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -360,19 +402,9 @@ namespace kPrasat.IC
             RefreshGrid();
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void lblFilter_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             mnuShow.Show(lblFilter, 0, 15);
-        }
-
-        private void mnuShow_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-
-        }
-
-        private void mnuShowA_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
