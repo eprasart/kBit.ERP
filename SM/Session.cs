@@ -32,7 +32,7 @@ namespace kPrasat.SM
         public long Id { get; set; }
         [Default(typeof(DateTime), "now()")]
         public DateTime? LogAt { get; set; }
-        [References(typeof(Session))]
+        //[References(typeof(Session))]
         public long SessionId { get; set; }
         [Required]
         public string Priority { get; set; }
@@ -133,16 +133,22 @@ namespace kPrasat.SM
         private static void Save(SessionLog m)
         {
             DateTime? ts = Database.GetCurrentTimeStamp();
-            if (m.Id == 0)
+            try
             {
-                m.SessionId = SYS.App.session.Id;
-                m.LogAt = ts;
-                //todo: if failed > log error > log to file
-                Database.Connection.Insert(m);                
+                if (m.Id == 0)
+                {
+                    m.SessionId = SYS.App.session.Id;
+                    m.LogAt = ts;
+                    Database.Connection.Insert(m);
+                }
+                else
+                {
+                    //Database.Connection.UpdateOnly(m, p => new { p.Username }, p => p.Id == m.Id);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                //Database.Connection.UpdateOnly(m, p => new { p.Username }, p => p.Id == m.Id);
+                SYS.ErrorLogFacade.LogToFile(ex);
             }
         }
 

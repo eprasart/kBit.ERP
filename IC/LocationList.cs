@@ -1,9 +1,8 @@
 ﻿/*TODO: 
  * msg => English and/or Khmer (use both font in rtf to make it render nice)
  * spliterDistance: save in table by user
- * datagridview sort by column header
- * show/search inactive
 */
+
 using System;
 using System.Windows.Forms;
 using kPrasat.SM;
@@ -13,15 +12,13 @@ namespace kPrasat.IC
     public partial class frmLocationList : Form
     {
         private long Id = 0;
-        private int rowIndex = 0;
-        private bool IsExpand = false;
-        private bool IsDirty = false;
-        private string Module = "Location";   // Log module
+        private int rowIndex = 0;   // Current gird selected row
+        private bool IsExpand = false;        
+        private const string Module = "Location";   // Log module
 
         public frmLocationList()
         {
-            InitializeComponent();
-            //MessageBox.Show(Environment.MachineName + "\n" + Environment.UserDomainName + "\n" + Environment.UserName);
+            InitializeComponent();            
         }
 
         private string GetStatus()
@@ -108,9 +105,7 @@ namespace kPrasat.IC
                 txtCode.Focus();
                 txtCode.SelectAll();
                 return false;
-            }
-            //todo: prevent duplicate
-            //todo: pwd matching
+            }                        
             return true;
         }
 
@@ -135,7 +130,7 @@ namespace kPrasat.IC
             catch (Exception ex)
             {
                 MessageBox.Show("Error while loading data.\n" + ex.Message, "Location", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                SYS.ErrorLogFacade.Log(ex.ToString(), ex.StackTrace);
+                SYS.ErrorLogFacade.Log(ex);
             }
         }
 
@@ -326,14 +321,8 @@ namespace kPrasat.IC
             Id = dgvList.Id;
             // Cancel
             if (btnUnlock.Text == "Cance&l")
-            {
-                if (IsDirty)
-                {
-                    //todo: reload orginal data (if dirty)
-
-                }
-                LockControls(true);
-                //dgvList.CurrentCell = dgvList[1, rowIndex];
+            {                
+                LockControls(true);                
                 LocationFacade.ReleaseLock(dgvList.Id);
                 if (dgvList.RowCount > 0 && !dgvList.CurrentRow.Selected)
                     dgvList.CurrentRow.Selected = true;

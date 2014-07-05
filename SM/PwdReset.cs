@@ -27,7 +27,12 @@ namespace kPrasat.SM
 
         private bool IsValidated()
         {
-            //todo: pwd matching
+            if (txtPwd.Text != txtPwdAgain.Text )
+            {
+                MessageBox.Show("Password does not match.", "Reset Password", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                txtPwd.Focus();
+                txtPwd.SelectAll();
+            }
             return true;
         }
 
