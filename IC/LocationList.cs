@@ -21,7 +21,7 @@ namespace kPrasat.IC
         public frmLocationList()
         {
             InitializeComponent();
-            //MessageBox.Show(Environment.MachineName + "\n" + Environment.UserDomainName + "\n" + Environment.UserName);
+            MessageBox.Show(Environment.MachineName + "\n" + Environment.UserDomainName + "\n" + Environment.UserName);
         }
 
         private string GetStatus()
