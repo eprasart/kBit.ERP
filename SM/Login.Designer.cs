@@ -140,6 +140,7 @@
             this.lblMsg.TabOnEnter = false;
             this.lblMsg.TabStop = false;
             this.lblMsg.Text = "Message";
+            this.lblMsg.Click += new System.EventHandler(this.lblMsg_Click);
             // 
             // frmLogin
             // 

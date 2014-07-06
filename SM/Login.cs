@@ -8,11 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using kPrasat.SYS;
+using kPrasat.SM;
 
 namespace kPrasat.SM
 {
     public partial class frmLogin : Form
     {
+        private string Module = "Login";
+
         public frmLogin()
         {
             InitializeComponent();
@@ -54,14 +57,28 @@ namespace kPrasat.SM
             Icon = Properties.Resources.Icon;
             lblMsg.Text = "";
 
-            txtUsername.Text = App.setting.Get("Username");           
+            txtUsername.Text = App.setting.Get("Username");
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
             if (!IsValidated()) return;
-
-
+            // Check Username
+            var usr = UserFacade.Select(txtUsername.Text.Trim());
+            if (usr == null)  // Username not exist
+            {
+                lblMsg.Text = "Invalid username or password";
+                SessionLogFacade.Log(Type.Priority_Warning, Module, Type.Log_Login, "Username=" + txtUsername.Text.Trim() + " not exist");
+                return;
+            }
+            // Check password
+            if (!UserFacade.IsPwdCorrect(usr.Id, txtPassword.Text))
+            {
+                lblMsg.Text = "Invalid username or password";
+                SessionLogFacade.Log(Type.Priority_Warning, Module, Type.Log_Login, "Password not exist");
+                return;
+            }
+            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Login,  "Username=" + txtUsername.Text.Trim() + " authenticates OK");
             // Save username
             App.setting.Set("Username", txtUsername.Text.Trim());
             App.setting.Save();
@@ -80,6 +97,16 @@ namespace kPrasat.SM
             if (e.KeyCode != Keys.Enter) return;
             e.SuppressKeyPress = true;
             btnLogin_Click(null, null);
+        }
+
+        private void lblMsg_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Clipboard.SetText(lblMsg.Text);
+            }
+            catch { }
+
         }
 
     }

@@ -45,15 +45,6 @@ namespace kPrasat.SM
 
     static class UserFacade
     {
-        public static List<User> Select(string filter = "")
-        {
-            SqlExpression<User> e = OrmLiteConfig.DialectProvider.SqlExpression<User>();
-            e.Where(q => q.Status == Type.RecordStatus_Active && (q.Username.Contains(filter) || q.FullName.Contains(filter)))
-                .OrderBy(q => q.Username);
-            //System.Windows.Forms.MessageBox.Show(e.SelectExpression + "\n" + e.WhereExpression);           
-            return Database.Connection.Select<User>(e);
-        }
-
         public static DataTable GetDataTable(string filter = "", string status = "")
         {
             var sql = "select id, username, full_name, phone, email from sm_user where 1 = 1";
@@ -109,6 +100,11 @@ namespace kPrasat.SM
             return Database.Connection.SingleById<User>(Id);
         }
 
+        public static User Select(string usr)
+        {
+            return Database.Connection.SingleWhere<User>("Username", usr);
+        }
+
         public static void SetStatus(long Id, string s)
         {
             DateTime? ts = Database.GetCurrentTimeStamp();
@@ -153,6 +149,12 @@ namespace kPrasat.SM
             string sqlPwd = "select crypt('" + m.Pwd + "', gen_salt('bf'))";
             m.Pwd = Database.ExcuteString(sqlPwd);
             Database.Connection.UpdateOnly(m, p => new { p.Pwd }, p => p.Id == m.Id);
+        }
+
+        public static bool IsPwdCorrect(long id, string pwd)
+        {
+            string sql = "SELECT (pwd = crypt(@pwd, pwd)) AS pswmatch FROM sm_user where id = @id";
+            return Database.Connection.SqlScalar<bool>(sql, new { pwd = pwd, id = id });
         }
     }
 
@@ -203,7 +205,7 @@ namespace kPrasat.SM
         [Required]
         public long RoleId { get; set; }
         public long FunctionId { get; set; }
-        public string Right { get; set; }        
+        public string Right { get; set; }
         public String Status { get; set; }
         public string LockBy { get; set; }
         public DateTime? LockAt { get; set; }
@@ -221,7 +223,7 @@ namespace kPrasat.SM
         public long Id { get; set; }
         [Required]
         public long UserId { get; set; }
-        public long FunctionId { get; set; }        
+        public long FunctionId { get; set; }
         public String Status { get; set; }
         public string LockBy { get; set; }
         public DateTime? LockAt { get; set; }
@@ -238,7 +240,7 @@ namespace kPrasat.SM
         [AutoIncrement]
         public long Id { get; set; }
         public long UserId { get; set; }
-        public long RoleId { get; set; }        
+        public long RoleId { get; set; }
         public String Status { get; set; }
         public string LockBy { get; set; }
         public DateTime? LockAt { get; set; }
