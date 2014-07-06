@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>kPrasat</RootNamespace>
-    <AssemblyName>kPrasat</AssemblyName>
+    <AssemblyName>kERP</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -101,7 +101,6 @@
     <Compile Include="SM\PwdReset.Designer.cs">
       <DependentUpon>PwdReset.cs</DependentUpon>
     </Compile>
-    <Compile Include="SM\User.cs" />
     <Compile Include="SM\UserList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +108,8 @@
       <DependentUpon>UserList.cs</DependentUpon>
     </Compile>
     <Compile Include="SYS\Error.cs" />
+    <Compile Include="SYS\Config.cs" />
+    <Compile Include="SM\SM.cs" />
     <Compile Include="SYS\Msg.cs">
       <SubType>Form</SubType>
     </Compile>

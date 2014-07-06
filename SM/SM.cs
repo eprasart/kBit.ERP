@@ -1,17 +1,12 @@
-﻿/* TODO
- * Pwd encrypt
- * Reset pwd
- * 
-*/
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using ServiceStack.OrmLite;
 using ServiceStack.DataAnnotations;
 using System.Linq;
 using System.Data;
 using Npgsql;
 using kPrasat.SYS;
+using System.Windows.Forms;
 
 namespace kPrasat.SM
 {
@@ -73,11 +68,13 @@ namespace kPrasat.SM
             var da = new NpgsqlDataAdapter(cmd);
             var dt = new DataTable();
             try
-            { da.Fill(dt); }
+            {
+                da.Fill(dt);
+            }
             catch (Exception ex)
             {
                 MessageBox.Show("Error while loading data.\n" + ex.Message, "Location", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                SYS.ErrorLogFacade.Log( ex.ToString(), ex.StackTrace);
+                SYS.ErrorLogFacade.Log(ex);
             }
             return dt;
         }
@@ -157,5 +154,98 @@ namespace kPrasat.SM
             m.Pwd = Database.ExcuteString(sqlPwd);
             Database.Connection.UpdateOnly(m, p => new { p.Pwd }, p => p.Id == m.Id);
         }
+    }
+
+    [Alias("SmFunction")]
+    class Function
+    {
+        [AutoIncrement]
+        public long Id { get; set; }
+        [Required]
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public string Type { get; set; }
+        public string Right { get; set; }
+        public string Note { get; set; }
+        public String Status { get; set; }
+        public string LockBy { get; set; }
+        public DateTime? LockAt { get; set; }
+        public string InsertBy { get; set; }
+        [Default(typeof(DateTime), "now()")]
+        public DateTime? InsertAt { get; set; }
+        public string ChangeBy { get; set; }
+        public DateTime? ChangeAt { get; set; }
+    }
+
+    [Alias("SmRole")]
+    class Role
+    {
+        [AutoIncrement]
+        public long Id { get; set; }
+        [Required]
+        public string Name { get; set; }
+        public string Note { get; set; }
+        public String Status { get; set; }
+        public string LockBy { get; set; }
+        public DateTime? LockAt { get; set; }
+        public string InsertBy { get; set; }
+        [Default(typeof(DateTime), "now()")]
+        public DateTime? InsertAt { get; set; }
+        public string ChangeBy { get; set; }
+        public DateTime? ChangeAt { get; set; }
+    }
+
+    [Alias("SmRoleFunction")]
+    class RoleFunction
+    {
+        [AutoIncrement]
+        public long Id { get; set; }
+        [Required]
+        public long RoleId { get; set; }
+        public long FunctionId { get; set; }
+        public string Right { get; set; }        
+        public String Status { get; set; }
+        public string LockBy { get; set; }
+        public DateTime? LockAt { get; set; }
+        public string InsertBy { get; set; }
+        [Default(typeof(DateTime), "now()")]
+        public DateTime? InsertAt { get; set; }
+        public string ChangeBy { get; set; }
+        public DateTime? ChangeAt { get; set; }
+    }
+
+    [Alias("SmUserFunction")]
+    class UserFunction
+    {
+        [AutoIncrement]
+        public long Id { get; set; }
+        [Required]
+        public long UserId { get; set; }
+        public long FunctionId { get; set; }        
+        public String Status { get; set; }
+        public string LockBy { get; set; }
+        public DateTime? LockAt { get; set; }
+        public string InsertBy { get; set; }
+        [Default(typeof(DateTime), "now()")]
+        public DateTime? InsertAt { get; set; }
+        public string ChangeBy { get; set; }
+        public DateTime? ChangeAt { get; set; }
+    }
+
+    [Alias("SmUserRole")]
+    class UserRole
+    {
+        [AutoIncrement]
+        public long Id { get; set; }
+        public long UserId { get; set; }
+        public long RoleId { get; set; }        
+        public String Status { get; set; }
+        public string LockBy { get; set; }
+        public DateTime? LockAt { get; set; }
+        public string InsertBy { get; set; }
+        [Default(typeof(DateTime), "now()")]
+        public DateTime? InsertAt { get; set; }
+        public string ChangeBy { get; set; }
+        public DateTime? ChangeAt { get; set; }
     }
 }

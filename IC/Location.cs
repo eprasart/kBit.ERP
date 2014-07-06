@@ -1,9 +1,4 @@
-﻿/* TODO
- * Pwd encrypt
- * Reset pwd
- * 
-*/
-using System;
+﻿using System;
 using System.Collections.Generic;
 using ServiceStack.OrmLite;
 using ServiceStack.DataAnnotations;

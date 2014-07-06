@@ -14,10 +14,9 @@ namespace kPrasat
         public static void PrepareDatabase()
         {
             //Connection.DropTables(typeof(SM.SessionLog), typeof(SM.Session));
-            //Connection.DropTables(typeof(IC.Location));
-            Connection.CreateTableIfNotExists(typeof(IC.Location), typeof(SM.User), typeof(SM.Session), typeof(SM.SessionLog), typeof(SYS.ErrorLog));
-            //db.CreateTableIfNotExists<Vendor>();
-            //db.CreateTableIfNotExists<Location>();
+            Connection.CreateTableIfNotExists(typeof(IC.Location), typeof(SM.Session), typeof(SM.SessionLog), typeof(SYS.ErrorLog));
+            Connection.CreateTableIfNotExists(typeof(SM.User), typeof(SM.Role), typeof(SM.UserRole), typeof(SM.Function), typeof(SM.UserFunction),
+                typeof(SM.RoleFunction));
 
         }
 

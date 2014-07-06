@@ -84,5 +84,10 @@ namespace kPrasat.SYS
         {
             SYS.App.SaveSettings(); // Save settings to file
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

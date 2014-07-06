@@ -1,10 +1,4 @@
-﻿/*TODO: 
- * msg => English and/or Khmer (use both font in rtf to make it render nice)
- * spliterDistance: save in table by user
- * datagridview sort by column header
- * show/search inactive
-*/
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace kPrasat.SM
@@ -14,13 +8,11 @@ namespace kPrasat.SM
         private long Id = 0;
         private int rowIndex = 0;
         private bool IsExpand = false;
-        private bool IsDirty = false;
-        private string Module = "User";   // Log module
+                private string Module = "User";   // Log module
 
         public frmUserList()
         {
-            InitializeComponent();
-            //MessageBox.Show(Environment.MachineName + "\n" + Environment.UserDomainName + "\n" + Environment.UserName);
+            InitializeComponent();            
         }
 
         private string GetStatus()
@@ -111,9 +103,8 @@ namespace kPrasat.SM
                 txtUsernane.Focus();
                 txtUsernane.SelectAll();
                 return false;
-            }
-            //todo: prevent duplicate
-            //todo: pwd matching
+            }            
+            
             return true;
         }
 
@@ -280,7 +271,7 @@ namespace kPrasat.SM
             }
             else
             {
-                splitContainer1.SplitterDistance = 300; // TODO: load from var or db
+                splitContainer1.SplitterDistance = 300;
                 splitContainer1.FixedPanel = FixedPanel.Panel1;
                 imgExpand.Image = Properties.Resources.Next;
             }
@@ -323,12 +314,7 @@ namespace kPrasat.SM
             Id = dgvList.Id;
             // Cancel
             if (btnUnlock.Text == "Cance&l")
-            {
-                if (IsDirty)
-                {
-                    //todo: reload orginal data (if dirty)
-
-                }
+            {                
                 LockControls(true);
                 //dgvList.CurrentCell = dgvList[1, rowIndex];
                 UserFacade.ReleaseLock(dgvList.Id);

@@ -1,7 +1,6 @@
 ﻿/*TODO:
  * Option to auto switch keyboard to KH when in Unicode box
- * Loging in db and file
- */
+*/
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -43,7 +42,7 @@ namespace kPrasat.SYS
             }
             catch (Exception ex)
             {
-                //todo: log to file
+                ErrorLogFacade.LogToFile(ex);
             }
             try
             {
@@ -56,7 +55,7 @@ namespace kPrasat.SYS
                 fSplash.ShowError(ex.Message);
                 fSplash.Visible = false;
                 fSplash.ShowDialog();
-                //todo: log to file
+                ErrorLogFacade.LogToFile(ex);
                 return false;
             }
 
@@ -82,8 +81,7 @@ namespace kPrasat.SYS
         private static void LoadSettings()
         {
             setting.Path = Path.Combine(Application.StartupPath, "setting.ini");
-            Database.ConnectionString = setting.Get("ConnectionString", @"server=localhost;uid=erp;pwd=erp");
-            //todo: test connection
+            Database.ConnectionString = setting.Get("ConnectionString", @"server=localhost;uid=erp;pwd=erp");            
         }
 
         public static void SaveSettings()
