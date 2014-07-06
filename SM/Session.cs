@@ -89,6 +89,13 @@ namespace kPrasat.SM
             return seq;
         }
 
+        public static void UpdateLogout(Session m)
+        {
+            DateTime? ts = Database.GetCurrentTimeStamp();
+            m.LogoutAt = ts;
+            Database.Connection.UpdateOnly(m, p => new { p.LogoutAt }, p => p.Id == m.Id);
+        }
+
         public static Session Select(long Id)
         {
             return Database.Connection.SingleById<Session>(Id);

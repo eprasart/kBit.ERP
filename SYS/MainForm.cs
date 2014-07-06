@@ -81,7 +81,9 @@ namespace kPrasat.SYS
         }
 
         private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
-        {
+        {            
+            SM.SessionFacade.UpdateLogout(App.session);
+            
             SYS.App.SaveSettings(); // Save settings to file
         }
 

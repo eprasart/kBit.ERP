@@ -6,10 +6,11 @@ namespace kPrasat
 {
     public class Setting
     {
-        private  string mPath;
-        private  SortedDictionary<string, string> dictionary = new SortedDictionary<string, string>();
+        private string mPath;
+        private SortedDictionary<string, string> dictionary = new SortedDictionary<string, string>();
+        private bool IsDirty = false;   // Flag to check if no need to save to file is no changes
 
-        public  string Path
+        public string Path
         {
             set
             {
@@ -19,7 +20,7 @@ namespace kPrasat
             get { return mPath; }
         }
 
-        private  void Load()
+        private void Load()
         {
             dictionary.Clear();
             if (!File.Exists(Path)) return;
@@ -35,20 +36,23 @@ namespace kPrasat
                 Add(key, value);
             }
             sr.Close();
+            IsDirty = false;
         }
 
-        public  void Save()
+        public void Save()
         {
+            if (!IsDirty) return;
             StreamWriter sw = new StreamWriter(Path);
-            
+
             foreach (KeyValuePair<string, string> p in dictionary)
             {
                 sw.WriteLine(p.Key + " = " + p.Value);
             }
             sw.Close();
+            IsDirty = false;
         }
 
-        public  string Get(string key, string defaultvalue = "")
+        public string Get(string key, string defaultvalue = "")
         {
             string s;
             if (!dictionary.TryGetValue(key, out s))
@@ -59,20 +63,27 @@ namespace kPrasat
             return s;
         }
 
-        public  void Set(string key, string value)
+        public void Set(string key, string value)
         {
             if (dictionary.ContainsKey(key))
-                dictionary[key] = value;
+            {
+                if (dictionary[key] != value)
+                {
+                    dictionary[key] = value;
+                    IsDirty = true;
+                }
+            }
             else
                 Add(key, value);
         }
 
-        private  void Add(string key, string value)
+        private void Add(string key, string value)
         {
             dictionary.Add(key, value);
+            IsDirty = true;
         }
 
-        public  void Delete(string key)
+        public void Delete(string key)
         {
             if (dictionary.ContainsKey(key))
                 dictionary.Remove(key);

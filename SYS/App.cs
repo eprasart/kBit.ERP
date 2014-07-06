@@ -58,18 +58,15 @@ namespace kPrasat.SYS
                 ErrorLogFacade.LogToFile(ex);
                 return false;
             }
-
+            // Create table if not exist
             Database.PrepareDatabase();
-
-            session.Username = "Visal";
-
-            // Session
-            //session.Username = Login.Username;
-
+            //Session            
+            session.Username = "Visal"; //todo: to be removed
             session.MachineName = Environment.MachineName;
             session.MachineUserName = Environment.UserName;
             session.Version = version;
-            session.Id = SessionFacade.Save(session);           
+            session.Id = SessionFacade.Save(session);
+            SessionLogFacade.Log(Type.Priority_Information, "Application", Type.Log_Launch, "Application started");
             return true;
         }
 
@@ -81,7 +78,7 @@ namespace kPrasat.SYS
         private static void LoadSettings()
         {
             setting.Path = Path.Combine(Application.StartupPath, "setting.ini");
-            Database.ConnectionString = setting.Get("ConnectionString", @"server=localhost;uid=erp;pwd=erp");            
+            Database.ConnectionString = setting.Get("ConnectionString", @"server=localhost;uid=erp;pwd=erp");
         }
 
         public static void SaveSettings()

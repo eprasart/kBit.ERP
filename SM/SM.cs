@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace kPrasat.SM
 {
     [Alias("SmUser")]
-    class User
+    public class User
     {
         [AutoIncrement]
         public long Id { get; set; }
@@ -40,10 +40,9 @@ namespace kPrasat.SM
         public DateTime? InsertAt { get; set; }
         public string ChangeBy { get; set; }
         public DateTime? ChangeAt { get; set; }
-        public static string Module = "User List";  // Module name for logging
     }
 
-    static class UserFacade
+    public static class UserFacade
     {
         public static DataTable GetDataTable(string filter = "", string status = "")
         {
@@ -159,7 +158,7 @@ namespace kPrasat.SM
     }
 
     [Alias("SmFunction")]
-    class Function
+    public class Function
     {
         [AutoIncrement]
         public long Id { get; set; }
@@ -180,7 +179,7 @@ namespace kPrasat.SM
     }
 
     [Alias("SmRole")]
-    class Role
+    public class Role
     {
         [AutoIncrement]
         public long Id { get; set; }
@@ -198,7 +197,7 @@ namespace kPrasat.SM
     }
 
     [Alias("SmRoleFunction")]
-    class RoleFunction
+    public class RoleFunction
     {
         [AutoIncrement]
         public long Id { get; set; }
@@ -235,7 +234,7 @@ namespace kPrasat.SM
     }
 
     [Alias("SmUserRole")]
-    class UserRole
+    public class UserRole
     {
         [AutoIncrement]
         public long Id { get; set; }
@@ -249,5 +248,18 @@ namespace kPrasat.SM
         public DateTime? InsertAt { get; set; }
         public string ChangeBy { get; set; }
         public DateTime? ChangeAt { get; set; }
+    }
+
+    public static class Privilege
+    {
+        public static bool CanAccess(string function, string command)
+        {
+            // Check in role (user_role > role_function)
+
+
+            // Check in user_function
+
+            return false;
+        }
     }
 }
