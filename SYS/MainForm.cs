@@ -12,7 +12,7 @@ namespace kPrasat.SYS
 {
     public partial class frmMain : Form
     {
-        private string Module = "Main Form";
+        private string Module = "Main Form";        
 
         public frmMain()
         {
@@ -44,6 +44,11 @@ namespace kPrasat.SYS
 
         private void btnLocation_Click(object sender, EventArgs e)
         {
+            if (!SM.Privilege.CanAccess("IC_LOC","V"))
+            {
+                MessageBox.Show("You don't have the privilege to access this function.");
+                return;
+            }
             Cursor = Cursors.WaitCursor;
             if (App.fLocationList == null || App.fLocationList.IsDisposed == true)
             {

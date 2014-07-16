@@ -35,5 +35,6 @@ namespace kPrasat
         public static string Log_ResetPwd = "Password Reset";
         public static string Log_Login = "Login";
         public static string Log_Launch = "Launch";
+        public static string Log_NoAccess = "No Access";
     }
 }

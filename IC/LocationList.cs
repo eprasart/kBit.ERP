@@ -13,12 +13,13 @@ namespace kPrasat.IC
     {
         private long Id = 0;
         private int rowIndex = 0;   // Current gird selected row
-        private bool IsExpand = false;        
+        private bool IsExpand = false;
         private const string Module = "Location";   // Log module
+        public static string Function = "IC_LOC";
 
         public frmLocationList()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         private string GetStatus()
@@ -101,11 +102,11 @@ namespace kPrasat.IC
             }
             if (LocationFacade.IsExist(Code, Id))
             {
-                Common.ShowMsg("Code already exists. It must be unique.", "Save");
+                Common.ShowMsg("Code already exists. Enter a unique code.", "Save");
                 txtCode.Focus();
                 txtCode.SelectAll();
                 return false;
-            }                        
+            }
             return true;
         }
 
@@ -129,6 +130,7 @@ namespace kPrasat.IC
             }
             catch (Exception ex)
             {
+                //todo: use own msg box
                 MessageBox.Show("Error while loading data.\n" + ex.Message, "Location", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 SYS.ErrorLogFacade.Log(ex);
             }
@@ -141,11 +143,17 @@ namespace kPrasat.IC
             RefreshGrid();
             Text += " v. " + SYS.App.version;
             LockControls();
-            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "Form opened");
+            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "Opened");
         }
 
         private void btnNew_Click(object sender, EventArgs e)
         {
+            if (!Privilege.CanAccess(Function, "N"))
+            {
+                MessageBox.Show("You don't have the privilege to perform this command.");
+                SessionLogFacade.Log(Type.Priority_Caution, Module, Type.Log_NoAccess, "New: No access");
+                return;
+            }
             if (IsExpand) picExpand_Click(sender, e);
             txtCode.Text = "";
             txtCode.Focus();
@@ -156,11 +164,11 @@ namespace kPrasat.IC
             txtFax.Text = "";
             txtEmail.Text = "";
             txtNote.Text = "";
-            if (dgvList.RowCount > 0)
+            if (dgvList.CurrentRow != null)
                 dgvList.CurrentRow.Selected = false;
             Id = 0;
             LockControls(false);
-            if (dgvList.RowCount > 0) rowIndex = dgvList.CurrentRow.Index;
+            if (dgvList.CurrentRow != null) rowIndex = dgvList.CurrentRow.Index;
             SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_New, "New clicked");
         }
 
@@ -194,7 +202,7 @@ namespace kPrasat.IC
             RefreshGrid(m.Id);
             LockControls();
             Cursor = Cursors.Default;
-            log.Message = "Save successfull. Id=" + m.Id + " , Code=" + txtCode.Text;
+            log.Message = "Saved. Id=" + m.Id + " , Code=" + txtCode.Text;
             SessionLogFacade.Log(log);
         }
 
@@ -227,7 +235,7 @@ namespace kPrasat.IC
 
         private void btnSaveNew_Click(object sender, EventArgs e)
         {
-            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_SaveAndNew, "Save and new. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_SaveAndNew, "Saved and new. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
             btnSave_Click(sender, e);
             btnNew_Click(sender, e);
         }
@@ -256,11 +264,17 @@ namespace kPrasat.IC
             if (dgvList.RowCount == 0) btnNew_Click(sender, e);
 
             // log
-            SessionLogFacade.Log(Type.Priority_Warning, Module, Type.Log_Delete, "User Id=" + dgvList.Id + ", Code=" + txtCode.Text + " has been deleted");
+            SessionLogFacade.Log(Type.Priority_Warning, Module, Type.Log_Delete, "Deleted. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
         }
 
         private void btnCopy_Click(object sender, EventArgs e)
         {
+            if (!Privilege.CanAccess(Function, "N"))
+            {
+                MessageBox.Show("You don't have the privilege for perform this command.");
+                SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_NoAccess, "Copy: No access");
+                return;
+            }
             Id = 0;
             txtCode.Focus();
             LockControls(false);
@@ -321,12 +335,12 @@ namespace kPrasat.IC
             Id = dgvList.Id;
             // Cancel
             if (btnUnlock.Text == "Cance&l")
-            {                
-                LockControls(true);                
+            {
+                LockControls(true);
                 LocationFacade.ReleaseLock(dgvList.Id);
-                if (dgvList.RowCount > 0 && !dgvList.CurrentRow.Selected)
+                if (dgvList.CurrentRow != null && !dgvList.CurrentRow.Selected)
                     dgvList.CurrentRow.Selected = true;
-                SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Unlock, "Cancel lock, Location=" + dgvList.Id);
+                SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Unlock, "Unlock cancel. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
                 return;
             }
             // Unlock
@@ -341,7 +355,7 @@ namespace kPrasat.IC
             }
             LockControls(false);
             LocationFacade.Lock(dgvList.Id);
-            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Lock, "Lock, User=" + dgvList.Id);
+            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Lock, "Locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

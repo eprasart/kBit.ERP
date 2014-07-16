@@ -259,7 +259,7 @@ namespace kPrasat.SM
 
             // Check in user_function
 
-            return false;
+            return true;
         }
     }
 }

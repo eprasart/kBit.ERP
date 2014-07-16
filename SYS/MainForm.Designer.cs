@@ -564,7 +564,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(267, 22);
             this.textBox2.TabIndex = 5;
-            this.textBox2.Text = "King dom of Wonder ព្រះរាជាសង្គ្រាម";
+            this.textBox2.Text = "Kingdom of Wonder ព្រះរាជាសង្គ្រាម";
             this.textBox2.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // textBox3
@@ -574,7 +574,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(267, 32);
             this.textBox3.TabIndex = 5;
-            this.textBox3.Text = "King dom of Wonder ព្រះរាជាសង្គ្រាម";
+            this.textBox3.Text = "Kingdom of Wonder ព្រះរាជាសង្គ្រាម";
             this.textBox3.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // textBox4
@@ -584,7 +584,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(267, 28);
             this.textBox4.TabIndex = 5;
-            this.textBox4.Text = "King dom of Wonder ព្រះរាជាសង្គ្រាម";
+            this.textBox4.Text = "Kingdom of Wonder ព្រះរាជាសង្គ្រាម";
             this.textBox4.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // tableLayoutPanel1
@@ -632,7 +632,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(267, 30);
             this.textBox1.TabIndex = 5;
-            this.textBox1.Text = "King dom of Wonder ព្រះរាជាសង្គ្រាម";
+            this.textBox1.Text = "Kingdom of Wonder ព្រះរាជាសង្គ្រាម";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label2
@@ -689,7 +689,7 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(267, 30);
             this.textBox5.TabIndex = 5;
-            this.textBox5.Text = "King dom of Wonder ព្រះរាជាសង្គ្រាម";
+            this.textBox5.Text = "Kingdom of Wonder ព្រះរាជាសង្គ្រាម";
             this.textBox5.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // frmMain

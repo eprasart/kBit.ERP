@@ -19,15 +19,15 @@ namespace kPrasat
             Application.SetCompatibleTextRenderingDefault(false);
 
             if (!App.Init()) return;
-            App.fSplash.Visible = false;
-            if (new SM.frmLogin().ShowDialog() == DialogResult.OK)
-            {
-                App.fSplash.Visible = true;
+            //App.fSplash.Visible = false;
+            //if (new SM.frmLogin().ShowDialog() == DialogResult.OK)
+            //{
+            //    App.fSplash.Visible = true;
                 App.fSplash.ShowMsg("Loading Main Form...");
                 Application.Run(new frmMain());
-            }
-            else
-                Application.Exit();
+            //}
+            //else
+            //    Application.Exit();
         }
     }
 }

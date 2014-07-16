@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace kPrasat
 {
-    class LockInfo
+    public class LockInfo
     {
         public long Id { get; set; }
         public string LockBy { get; set; }
