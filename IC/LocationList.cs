@@ -141,7 +141,6 @@ namespace kPrasat.IC
             Icon = Properties.Resources.Icon;
             dgvList.ShowLessColumns(true);
             RefreshGrid();
-            Text += " v. " + SYS.App.version;
             LockControls();
             SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "Opened");
         }
@@ -287,14 +286,12 @@ namespace kPrasat.IC
             if (!IsExpand)
             {
                 splitContainer1.SplitterDistance = splitContainer1.Size.Width;
-                splitContainer1.FixedPanel = FixedPanel.Panel2;
-                imgExpand.Image = Properties.Resources.Back;
+                splitContainer1.FixedPanel = FixedPanel.Panel2;                
             }
             else
             {
-                splitContainer1.SplitterDistance = 300; // TODO: load from var or db
-                splitContainer1.FixedPanel = FixedPanel.Panel1;
-                imgExpand.Image = Properties.Resources.Next;
+                splitContainer1.SplitterDistance = 228; // TODO: load from var or db
+                splitContainer1.FixedPanel = FixedPanel.Panel1;                
             }
             dgvList.ShowLessColumns(IsExpand);
             IsExpand = !IsExpand;
@@ -395,7 +392,7 @@ namespace kPrasat.IC
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            lblClear.Enabled = (txtSearch.Text.Length > 0);
+            if (txtSearch.Text.Length == 0) lblRefresh_LinkClicked(null, null);
         }
 
         private void mnuShow_CheckedChanged(object sender, EventArgs e)
@@ -405,9 +402,9 @@ namespace kPrasat.IC
             RefreshGrid();
         }
 
-        private void lblFilter_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void picFitler_Click(object sender, EventArgs e)
         {
-            mnuShow.Show(lblFilter, 0, 15);
+            mnuShow.Show(picFitler, 0, 15);
         }
     }
 }

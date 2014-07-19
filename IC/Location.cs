@@ -46,7 +46,9 @@ namespace kPrasat.IC
         public static DataTable GetDataTable(string filter = "", string status = "")
         {
             var sql = "select id, code, description, name, phone, fax, email, address from ic_location where 1 = 1";
-            if (status.Length > 0)
+            if (status.Length == 0)
+                sql += " and status <> 'X'";
+            else
                 sql += " and status = '" + status + "'";
             if (filter.Length > 0)
                 sql += " and (code ~* :filter or description ~* :filter or phone ~* :filter or fax ~* :filter or email ~* :filter or address ~* :filter or note ~* :filter)";

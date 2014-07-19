@@ -75,7 +75,7 @@ namespace kPrasat.SYS
         private void btnAuditLog_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            SM.SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "Audito Log opened.");
+            SM.SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "Audit Log opened.");
             if (App.fAuditLog == null || App.fAuditLog.IsDisposed == true)
             {
                 App.fAuditLog = new SM.frmAuditLog();
