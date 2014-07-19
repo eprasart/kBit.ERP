@@ -1,4 +1,4 @@
-﻿namespace kPrasat.IC
+﻿namespace kBit.ERP.IC
 {
     partial class frmLocationList
     {
@@ -60,7 +60,7 @@
             this.mnuShowA = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuShowI = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.dgvList = new kPrasat.UI.DataGridView();
+            this.dgvList = new kBit.UI.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDesc1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,16 +69,16 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txtSearch = new kPrasat.UI.TextBoxPlaceHolder();
-            this.groupLabel3 = new kPrasat.UI.GroupLabel();
-            this.groupLabel2 = new kPrasat.UI.GroupLabel();
-            this.groupLabel1 = new kPrasat.UI.GroupLabel();
-            this.txtName = new kPrasat.UI.TextBox(this.components);
-            this.txtEmail = new kPrasat.UI.TextBox(this.components);
-            this.txtFax = new kPrasat.UI.TextBox(this.components);
-            this.txtPhone = new kPrasat.UI.TextBox(this.components);
-            this.txtCode = new kPrasat.UI.TextBox(this.components);
-            this.txtDesc = new kPrasat.UI.TextBox(this.components);
+            this.txtSearch = new kBit.UI.TextBoxPlaceHolder();
+            this.groupLabel3 = new kBit.UI.GroupLabel();
+            this.groupLabel2 = new kBit.UI.GroupLabel();
+            this.groupLabel1 = new kBit.UI.GroupLabel();
+            this.txtName = new kBit.UI.TextBox(this.components);
+            this.txtEmail = new kBit.UI.TextBox(this.components);
+            this.txtFax = new kBit.UI.TextBox(this.components);
+            this.txtPhone = new kBit.UI.TextBox(this.components);
+            this.txtCode = new kBit.UI.TextBox(this.components);
+            this.txtDesc = new kBit.UI.TextBox(this.components);
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -111,7 +111,7 @@
             // 
             // btnNew
             // 
-            this.btnNew.Image = global::kPrasat.Properties.Resources.New;
+            this.btnNew.Image = global::kBit.ERP.Properties.Resources.New;
             this.btnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(51, 22);
@@ -121,7 +121,7 @@
             // 
             // btnCopy
             // 
-            this.btnCopy.Image = global::kPrasat.Properties.Resources.Copy;
+            this.btnCopy.Image = global::kBit.ERP.Properties.Resources.Copy;
             this.btnCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(55, 22);
@@ -131,7 +131,7 @@
             // 
             // btnUnlock
             // 
-            this.btnUnlock.Image = global::kPrasat.Properties.Resources.Unlock;
+            this.btnUnlock.Image = global::kBit.ERP.Properties.Resources.Unlock;
             this.btnUnlock.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnUnlock.Name = "btnUnlock";
             this.btnUnlock.Size = new System.Drawing.Size(64, 22);
@@ -141,7 +141,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Image = global::kPrasat.Properties.Resources.Save;
+            this.btnSave.Image = global::kBit.ERP.Properties.Resources.Save;
             this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(60, 22);
@@ -151,7 +151,7 @@
             // 
             // btnSaveNew
             // 
-            this.btnSaveNew.Image = global::kPrasat.Properties.Resources.SaveNew;
+            this.btnSaveNew.Image = global::kBit.ERP.Properties.Resources.SaveNew;
             this.btnSaveNew.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSaveNew.Name = "btnSaveNew";
             this.btnSaveNew.Size = new System.Drawing.Size(101, 22);
@@ -166,7 +166,7 @@
             // 
             // btnActive
             // 
-            this.btnActive.Image = global::kPrasat.Properties.Resources.Inactive;
+            this.btnActive.Image = global::kBit.ERP.Properties.Resources.Inactive;
             this.btnActive.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnActive.Name = "btnActive";
             this.btnActive.Size = new System.Drawing.Size(68, 22);
@@ -176,7 +176,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Image = global::kPrasat.Properties.Resources.Recyclebin;
+            this.btnDelete.Image = global::kBit.ERP.Properties.Resources.Recyclebin;
             this.btnDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(60, 22);
@@ -244,7 +244,7 @@
             // 
             this.picFitler.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.picFitler.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picFitler.Image = global::kPrasat.Properties.Resources.Filter;
+            this.picFitler.Image = global::kBit.ERP.Properties.Resources.Filter;
             this.picFitler.Location = new System.Drawing.Point(190, 6);
             this.picFitler.Name = "picFitler";
             this.picFitler.Size = new System.Drawing.Size(16, 16);
@@ -258,7 +258,7 @@
             // 
             this.imgExpand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.imgExpand.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.imgExpand.Image = global::kPrasat.Properties.Resources.Expand;
+            this.imgExpand.Image = global::kBit.ERP.Properties.Resources.Expand;
             this.imgExpand.Location = new System.Drawing.Point(208, 6);
             this.imgExpand.Margin = new System.Windows.Forms.Padding(4);
             this.imgExpand.Name = "imgExpand";
@@ -677,16 +677,16 @@
         private System.Windows.Forms.ToolStripButton btnUnlock;
         private System.Windows.Forms.ToolStripMenuItem mnuShowA;
         private System.Windows.Forms.ToolStripMenuItem mnuShowI;
-        private UI.DataGridView dgvList;
+        private kBit.UI.DataGridView dgvList;
         private System.Windows.Forms.Label label4;
-        private UI.GroupLabel groupLabel2;
-        private UI.GroupLabel groupLabel1;
+        private kBit.UI.GroupLabel groupLabel2;
+        private kBit.UI.GroupLabel groupLabel1;
         private System.Windows.Forms.TextBox txtAddress;
-        private UI.TextBox txtCode;
+        private kBit.UI.TextBox txtCode;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label7;
-        private UI.TextBox txtDesc;
+        private kBit.UI.TextBox txtDesc;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
@@ -698,13 +698,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private UI.TextBox txtName;
-        private UI.TextBox txtPhone;
-        private UI.TextBox txtEmail;
-        private UI.TextBox txtFax;
+        private kBit.UI.TextBox txtName;
+        private kBit.UI.TextBox txtPhone;
+        private kBit.UI.TextBox txtEmail;
+        private kBit.UI.TextBox txtFax;
         private System.Windows.Forms.Label label5;
-        private UI.GroupLabel groupLabel3;
-        private UI.TextBoxPlaceHolder txtSearch;
+        private kBit.UI.GroupLabel groupLabel3;
+        private kBit.UI.TextBoxPlaceHolder txtSearch;
         private System.Windows.Forms.PictureBox picFitler;
         private System.Windows.Forms.ToolTip toolTip1;        
     }

@@ -1,4 +1,4 @@
-﻿namespace kPrasat.SM
+﻿namespace kBit.ERP.SM
 {
     partial class frmUserList
     {
@@ -44,14 +44,14 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnPwdReset = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.dgvList = new kPrasat.UI.DataGridView();
+            this.dgvList = new kBit.UI.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colUsername = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFullName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.txtSearch = new kPrasat.UI.TextBox(this.components);
+            this.txtSearch = new kBit.UI.TextBox(this.components);
             this.imgExpand = new System.Windows.Forms.PictureBox();
             this.lblClear = new System.Windows.Forms.LinkLabel();
             this.lblFilter = new System.Windows.Forms.LinkLabel();
@@ -60,25 +60,25 @@
             this.mnuShowA = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuShowI = new System.Windows.Forms.ToolStripMenuItem();
             this.label3 = new System.Windows.Forms.Label();
-            this.dtpEnd = new kPrasat.UI.DateTimePicker(this.components);
-            this.dtpStart = new kPrasat.UI.DateTimePicker(this.components);
+            this.dtpEnd = new kBit.UI.DateTimePicker(this.components);
+            this.dtpStart = new kBit.UI.DateTimePicker(this.components);
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.groupLabel2 = new kPrasat.UI.GroupLabel();
-            this.groupLabel1 = new kPrasat.UI.GroupLabel();
+            this.groupLabel2 = new kBit.UI.GroupLabel();
+            this.groupLabel1 = new kBit.UI.GroupLabel();
             this.txtNote = new System.Windows.Forms.TextBox();
-            this.groupLabel3 = new kPrasat.UI.GroupLabel();
-            this.txtPwdAgain = new kPrasat.UI.TextBox(this.components);
-            this.txtPwd = new kPrasat.UI.TextBox(this.components);
-            this.txtEmail = new kPrasat.UI.TextBox(this.components);
-            this.txtPhone = new kPrasat.UI.TextBox(this.components);
-            this.txtUsernane = new kPrasat.UI.TextBox(this.components);
+            this.groupLabel3 = new kBit.UI.GroupLabel();
+            this.txtPwdAgain = new kBit.UI.TextBox(this.components);
+            this.txtPwd = new kBit.UI.TextBox(this.components);
+            this.txtEmail = new kBit.UI.TextBox(this.components);
+            this.txtPhone = new kBit.UI.TextBox(this.components);
+            this.txtUsernane = new kBit.UI.TextBox(this.components);
             this.label9 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtFullName = new kPrasat.UI.TextBox(this.components);
+            this.txtFullName = new kBit.UI.TextBox(this.components);
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
@@ -113,7 +113,7 @@
             // 
             // btnNew
             // 
-            this.btnNew.Image = global::kPrasat.Properties.Resources.New;
+            this.btnNew.Image = global::kBit.ERP.Properties.Resources.New;
             this.btnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(51, 22);
@@ -123,7 +123,7 @@
             // 
             // btnCopy
             // 
-            this.btnCopy.Image = global::kPrasat.Properties.Resources.Copy;
+            this.btnCopy.Image = global::kBit.ERP.Properties.Resources.Copy;
             this.btnCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(55, 22);
@@ -133,7 +133,7 @@
             // 
             // btnUnlock
             // 
-            this.btnUnlock.Image = global::kPrasat.Properties.Resources.Unlock;
+            this.btnUnlock.Image = global::kBit.ERP.Properties.Resources.Unlock;
             this.btnUnlock.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnUnlock.Name = "btnUnlock";
             this.btnUnlock.Size = new System.Drawing.Size(64, 22);
@@ -143,7 +143,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Image = global::kPrasat.Properties.Resources.Save;
+            this.btnSave.Image = global::kBit.ERP.Properties.Resources.Save;
             this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(51, 22);
@@ -153,7 +153,7 @@
             // 
             // btnSaveNew
             // 
-            this.btnSaveNew.Image = global::kPrasat.Properties.Resources.SaveNew;
+            this.btnSaveNew.Image = global::kBit.ERP.Properties.Resources.SaveNew;
             this.btnSaveNew.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSaveNew.Name = "btnSaveNew";
             this.btnSaveNew.Size = new System.Drawing.Size(101, 22);
@@ -168,7 +168,7 @@
             // 
             // btnActive
             // 
-            this.btnActive.Image = global::kPrasat.Properties.Resources.Inactive;
+            this.btnActive.Image = global::kBit.ERP.Properties.Resources.Inactive;
             this.btnActive.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnActive.Name = "btnActive";
             this.btnActive.Size = new System.Drawing.Size(68, 22);
@@ -178,7 +178,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Image = global::kPrasat.Properties.Resources.Recyclebin;
+            this.btnDelete.Image = global::kBit.ERP.Properties.Resources.Recyclebin;
             this.btnDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(60, 22);
@@ -354,7 +354,7 @@
             // 
             this.imgExpand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.imgExpand.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.imgExpand.Image = global::kPrasat.Properties.Resources.Next;
+            this.imgExpand.Image = global::kBit.ERP.Properties.Resources.Next;
             this.imgExpand.Location = new System.Drawing.Point(282, 4);
             this.imgExpand.Name = "imgExpand";
             this.imgExpand.Size = new System.Drawing.Size(16, 16);
@@ -690,10 +690,10 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
         private System.Windows.Forms.ToolStripButton btnDelete;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private kPrasat.UI.DataGridView dgvList;
+        private kBit.UI.DataGridView dgvList;
         private System.Windows.Forms.Panel panel1;
-        private kPrasat.UI.TextBox txtPwd;
-        private kPrasat.UI.TextBox txtFullName;
+        private kBit.UI.TextBox txtPwd;
+        private kBit.UI.TextBox txtFullName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
@@ -701,26 +701,26 @@
         private System.Windows.Forms.LinkLabel lblClear;
         private System.Windows.Forms.LinkLabel lblRefresh;
         private System.Windows.Forms.PictureBox imgExpand;
-        private kPrasat.UI.TextBox txtUsernane;
+        private kBit.UI.TextBox txtUsernane;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label13;
-        private kPrasat.UI.GroupLabel groupLabel3;
+        private kBit.UI.GroupLabel groupLabel3;
         private System.Windows.Forms.TextBox txtNote;
         private System.Windows.Forms.ContextMenuStrip mnuShow;
         private System.Windows.Forms.ToolStripButton btnActive;
         private System.Windows.Forms.ToolStripButton btnUnlock;
-        private kPrasat.UI.GroupLabel groupLabel2;
-        private kPrasat.UI.GroupLabel groupLabel1;
+        private kBit.UI.GroupLabel groupLabel2;
+        private kBit.UI.GroupLabel groupLabel1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ToolStripMenuItem mnuShowA;
         private System.Windows.Forms.ToolStripMenuItem mnuShowI;
         private System.Windows.Forms.LinkLabel lblFilter;
-        private kPrasat.UI.TextBox txtSearch;
-        private kPrasat.UI.DateTimePicker dtpEnd;
-        private kPrasat.UI.DateTimePicker dtpStart;
-        private kPrasat.UI.TextBox txtPwdAgain;
-        private kPrasat.UI.TextBox txtEmail;
-        private kPrasat.UI.TextBox txtPhone;
+        private kBit.UI.TextBox txtSearch;
+        private kBit.UI.DateTimePicker dtpEnd;
+        private kBit.UI.DateTimePicker dtpStart;
+        private kBit.UI.TextBox txtPwdAgain;
+        private kBit.UI.TextBox txtEmail;
+        private kBit.UI.TextBox txtPhone;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;

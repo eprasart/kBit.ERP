@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace kPrasat
+namespace kBit
 {
     public static class Type
     {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Data;
 using Npgsql;
 
-namespace kPrasat.SM
+namespace kBit.ERP.SM
 {
     [Alias("SmSession")]
     public class Session

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace kPrasat
+namespace kBit
 {
     public partial class frmMsg : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace kPrasat.SM
+﻿namespace kBit.ERP.SM
 {
     partial class frmPwdReset
     {
@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.txtPwdAgain = new kPrasat.UI.TextBox(this.components);
-            this.txtPwd = new kPrasat.UI.TextBox(this.components);
+            this.txtPwdAgain = new kBit.UI.TextBox(this.components);
+            this.txtPwd = new kBit.UI.TextBox(this.components);
             this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtUsernane = new kPrasat.UI.TextBox(this.components);
-            this.txtFullName = new kPrasat.UI.TextBox(this.components);
+            this.txtUsernane = new kBit.UI.TextBox(this.components);
+            this.txtFullName = new kBit.UI.TextBox(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnSave = new System.Windows.Forms.ToolStripButton();
@@ -127,7 +127,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Image = global::kPrasat.Properties.Resources.Save;
+            this.btnSave.Image = global::kBit.ERP.Properties.Resources.Save;
             this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(51, 22);
@@ -165,13 +165,13 @@
 
         #endregion
 
-        private kPrasat.UI.TextBox txtPwdAgain;
-        private kPrasat.UI.TextBox txtPwd;
+        private kBit.UI.TextBox txtPwdAgain;
+        private kBit.UI.TextBox txtPwd;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
-        private kPrasat.UI.TextBox txtUsernane;
-        private kPrasat.UI.TextBox txtFullName;
+        private kBit.UI.TextBox txtUsernane;
+        private kBit.UI.TextBox txtFullName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btnSave;

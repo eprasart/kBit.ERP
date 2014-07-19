@@ -1,4 +1,4 @@
-﻿namespace kPrasat.SM
+﻿namespace kBit.ERP.SM
 {
     partial class frmAuditLog
     {
@@ -40,12 +40,12 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.txtSearch = new kPrasat.UI.TextBox(this.components);
-            this.dateTimePicker2 = new kPrasat.UI.DateTimePicker(this.components);
-            this.dtpFrom = new kPrasat.UI.DateTimePicker(this.components);
-            this.cboType = new kPrasat.UI.ComboBox(this.components);
-            this.cboPriority = new kPrasat.UI.ComboBox(this.components);
-            this.dgvList = new kPrasat.UI.DataGridView();
+            this.txtSearch = new kBit.UI.TextBox(this.components);
+            this.dateTimePicker2 = new kBit.UI.DateTimePicker(this.components);
+            this.dtpFrom = new kBit.UI.DateTimePicker(this.components);
+            this.cboType = new kBit.UI.ComboBox(this.components);
+            this.cboPriority = new kBit.UI.ComboBox(this.components);
+            this.dgvList = new kBit.UI.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -363,18 +363,18 @@
 
         #endregion
 
-        private UI.ComboBox cboPriority;
-        private UI.DateTimePicker dtpFrom;
-        private UI.TextBox txtSearch;
+        private kBit.UI.ComboBox cboPriority;
+        private kBit.UI.DateTimePicker dtpFrom;
+        private kBit.UI.TextBox txtSearch;
         private System.Windows.Forms.Label label1;
-        private UI.DateTimePicker dateTimePicker2;
+        private kBit.UI.DateTimePicker dateTimePicker2;
         private System.Windows.Forms.Label dtpTo;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private UI.ComboBox cboType;
+        private kBit.UI.ComboBox cboType;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnRefresh;
-        private UI.DataGridView dgvList;
+        private kBit.UI.DataGridView dgvList;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;

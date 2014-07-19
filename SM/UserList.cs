@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace kPrasat.SM
+namespace kBit.ERP.SM
 {
     public partial class frmUserList : Form
     {

@@ -5,9 +5,9 @@ using ServiceStack.DataAnnotations;
 using System.Linq;
 using System.Data;
 using Npgsql;
-using kPrasat.SYS;
+using kBit.ERP.SYS;
 
-namespace kPrasat.IC
+namespace kBit.ERP.IC
 {
     [Alias("IcLocation")]
     class Location

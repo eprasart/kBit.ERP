@@ -2,7 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 
-namespace kPrasat
+namespace kBit
 {
     public class Setting
     {

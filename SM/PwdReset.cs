@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace kPrasat.SM
+namespace kBit.ERP.SM
 {
     public partial class frmPwdReset : Form
     {

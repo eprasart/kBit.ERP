@@ -5,10 +5,10 @@ using ServiceStack.DataAnnotations;
 using System.Linq;
 using System.Data;
 using Npgsql;
-using kPrasat.SYS;
+using kBit.ERP.SYS;
 using System.Windows.Forms;
 
-namespace kPrasat.SM
+namespace kBit.ERP.SM
 {
     [Alias("SmUser")]
     public class User

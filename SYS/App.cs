@@ -7,9 +7,9 @@ using System.Windows.Forms;
 using System.Data;
 using ServiceStack.OrmLite;
 using System.Reflection;
-using kPrasat.SM;
+using kBit.ERP.SM;
 
-namespace kPrasat.SYS
+namespace kBit.ERP.SYS
 {
     public static class App
     {

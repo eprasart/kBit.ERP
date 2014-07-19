@@ -6,7 +6,7 @@ using System.Linq;
 using System.Data;
 using Npgsql;
 
-namespace kPrasat.SYS
+namespace kBit.ERP.SYS
 {
     [Alias("SysConfig")]
     class Config

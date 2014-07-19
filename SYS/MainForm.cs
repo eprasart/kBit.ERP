@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace kPrasat.SYS
+namespace kBit.ERP.SYS
 {
     public partial class frmMain : Form
     {

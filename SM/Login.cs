@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using kPrasat.SYS;
-using kPrasat.SM;
+using kBit.ERP.SYS;
+using kBit.ERP.SM;
 
-namespace kPrasat.SM
+namespace kBit.ERP.SM
 {
     public partial class frmLogin : Form
     {

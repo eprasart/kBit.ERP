@@ -2,8 +2,9 @@
 using System;
 using System.Data;
 using System.Windows.Forms;
+using kBit.ERP;
 
-namespace kPrasat
+namespace kBit.ERP
 {
     class Database
     {

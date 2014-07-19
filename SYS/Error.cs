@@ -6,7 +6,7 @@ using ServiceStack.DataAnnotations;
 using Npgsql;
 using System.Windows.Forms;
 
-namespace kPrasat.SYS
+namespace kBit.ERP.SYS
 {
     [Alias("SysErrorLog")]
     class ErrorLog

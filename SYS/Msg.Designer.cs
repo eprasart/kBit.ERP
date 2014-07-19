@@ -1,4 +1,4 @@
-﻿namespace kPrasat
+﻿namespace kBit
 {
     partial class frmMsg
     {

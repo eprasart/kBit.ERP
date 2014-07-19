@@ -1,4 +1,4 @@
-﻿namespace kPrasat.SM
+﻿namespace kBit.ERP.SM
 {
     partial class frmLogin
     {
@@ -30,16 +30,16 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
-            this.txtUsername = new kPrasat.UI.TextBox(this.components);
+            this.txtUsername = new kBit.UI.TextBox(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
-            this.txtPassword = new kPrasat.UI.TextBox(this.components);
+            this.txtPassword = new kBit.UI.TextBox(this.components);
             this.label2 = new System.Windows.Forms.Label();
             this.btnLogin = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.line1 = new kPrasat.UI.Line();
-            this.lblMsg = new kPrasat.UI.TextBox(this.components);
+            this.line1 = new kBit.UI.Line();
+            this.lblMsg = new kBit.UI.TextBox(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -163,7 +163,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "kPrasart ERP - Login";
+            this.Text = "kBit ERP - Login";
             this.Activated += new System.EventHandler(this.frmLogin_Activated);
             this.Load += new System.EventHandler(this.frmLogin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -174,15 +174,15 @@
 
         #endregion
 
-        private UI.TextBox txtUsername;
+        private kBit.UI.TextBox txtUsername;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnExit;
-        private UI.TextBox txtPassword;
+        private kBit.UI.TextBox txtPassword;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label3;
-        private UI.Line line1;
-        private UI.TextBox lblMsg;
+        private kBit.UI.Line line1;
+        private kBit.UI.TextBox lblMsg;
     }
 }

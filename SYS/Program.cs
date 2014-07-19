@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using kPrasat.SYS;
+using kBit.ERP.SYS;
 
-namespace kPrasat
+namespace kBit
 {
     static class Program
     {

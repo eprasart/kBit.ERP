@@ -1,4 +1,4 @@
-﻿namespace kPrasat.SYS
+﻿namespace kBit.ERP.SYS
 {
     partial class frmSplash
     {
@@ -35,10 +35,10 @@
             this.btnQuit = new System.Windows.Forms.Button();
             this.lblMsg = new System.Windows.Forms.Label();
             this.lblError = new System.Windows.Forms.Label();
-            this.line1 = new kPrasat.UI.Line();
-            this.line2 = new kPrasat.UI.Line();
-            this.line3 = new kPrasat.UI.Line();
-            this.line4 = new kPrasat.UI.Line();
+            this.line1 = new kBit.UI.Line();
+            this.line2 = new kBit.UI.Line();
+            this.line3 = new kBit.UI.Line();
+            this.line4 = new kBit.UI.Line();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -184,10 +184,10 @@
         private System.Windows.Forms.Button btnQuit;
         private System.Windows.Forms.Label lblMsg;
         private System.Windows.Forms.Label lblError;
-        private UI.Line line1;
-        private UI.Line line2;
-        private UI.Line line3;
-        private UI.Line line4;
+        private kBit.UI.Line line1;
+        private kBit.UI.Line line2;
+        private kBit.UI.Line line3;
+        private kBit.UI.Line line4;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label1;
     }

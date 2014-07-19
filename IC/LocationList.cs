@@ -5,9 +5,9 @@
 
 using System;
 using System.Windows.Forms;
-using kPrasat.SM;
+using kBit.ERP.SM;
 
-namespace kPrasat.IC
+namespace kBit.ERP.IC
 {
     public partial class frmLocationList : Form
     {
