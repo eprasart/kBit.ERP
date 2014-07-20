@@ -23,6 +23,8 @@ namespace kBit.ERP.SYS
         public static SM.frmUserList fUserList;
         public static SM.frmAuditLog fAuditLog;
 
+        public static FileLog AccessLog = new FileLog();
+
         public static bool Init()
         {
             SetVersion();
@@ -32,9 +34,8 @@ namespace kBit.ERP.SYS
             fSplash.SetAppName(" v " + SYS.App.version);
             fSplash.Show();
             fSplash.ShowMsg("Initializing the application...");
-            Application.DoEvents();
-
             fSplash.TopMost = true;
+            // Database connection string from setting.ini
             try
             {
                 fSplash.ShowMsg("Loading settings...");
@@ -44,6 +45,7 @@ namespace kBit.ERP.SYS
             {
                 ErrorLogFacade.LogToFile(ex);
             }
+            // Database connection: open/test
             try
             {
                 fSplash.ShowMsg("Connecting to the database...");
@@ -58,15 +60,21 @@ namespace kBit.ERP.SYS
                 ErrorLogFacade.LogToFile(ex);
                 return false;
             }
-            // Create table if not exist
+            // Create tables if not exist
             Database.PrepareDatabase();
+
             //Session            
             session.Username = "Visal"; //todo: to be removed
             session.MachineName = Environment.MachineName;
             session.MachineUserName = Environment.UserName;
             session.Version = version;
+            // Log
+            ErrorLogFacade.logFile.FileName = Path.Combine(Application.StartupPath, "Error.log");
+            AccessLog.FileName = Path.Combine(Application.StartupPath, "Access.log");
+            AccessLog.Write(DateTime.Now.ToString("yyy-MM-dd ddd hh:mm:ss tt") + " Application started. Machine: " + session.MachineName + ", machine username: " + session.MachineUserName + ", version: " + session.Version);
             session.Id = SessionFacade.Save(session);
             SessionLogFacade.Log(Type.Priority_Information, "Application", Type.Log_Launch, "Application started");
+
             return true;
         }
 

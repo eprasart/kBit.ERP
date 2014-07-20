@@ -60,9 +60,9 @@
             this.lblAppName.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAppName.Location = new System.Drawing.Point(88, 30);
             this.lblAppName.Name = "lblAppName";
-            this.lblAppName.Size = new System.Drawing.Size(39, 16);
+            this.lblAppName.Size = new System.Drawing.Size(60, 16);
             this.lblAppName.TabIndex = 1;
-            this.lblAppName.Text = "kERP";
+            this.lblAppName.Text = "kBit ERP";
             // 
             // btnQuit
             // 
@@ -144,9 +144,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(88, 55);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(169, 13);
+            this.label1.Size = new System.Drawing.Size(184, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "© 2014 kERP. All rights reserved.";
+            this.label1.Text = "© 2014 kBit ERP. All rights reserved.";
             // 
             // frmSplash
             // 

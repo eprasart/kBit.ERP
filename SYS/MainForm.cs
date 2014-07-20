@@ -12,7 +12,7 @@ namespace kBit.ERP.SYS
 {
     public partial class frmMain : Form
     {
-        private string Module = "Main Form";        
+        private string Module = "Main Form";
 
         public frmMain()
         {
@@ -25,7 +25,7 @@ namespace kBit.ERP.SYS
             Icon = Properties.Resources.Icon;
 
             App.fSplash.ShowMsg("");
-            App.fSplash.StartTimer();
+            App.fSplash.StartTimer();            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -44,7 +44,7 @@ namespace kBit.ERP.SYS
 
         private void btnLocation_Click(object sender, EventArgs e)
         {
-            if (!SM.Privilege.CanAccess("IC_LOC","V"))
+            if (!SM.Privilege.CanAccess("IC_LOC", "V"))
             {
                 MessageBox.Show("You don't have the privilege to access this function.");
                 return;
@@ -86,13 +86,18 @@ namespace kBit.ERP.SYS
         }
 
         private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
-        {            
+        {
             SM.SessionFacade.UpdateLogout(App.session);
-            
             SYS.App.SaveSettings(); // Save settings to file
+            SYS.App.AccessLog.Write(DateTime.Now.ToString("yyy-MM-dd ddd hh:mm:ss tt") + " Application quit. Machine: " + SYS.App.session.MachineName);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
 
         }

@@ -125,7 +125,7 @@ namespace kBit.ERP.IC
 
         public static bool IsExist(string Code, long Id = 0)
         {
-            return Database.Connection.Exists<Location>("Id <> @Id and Code = @Code", new { Id = Id, Code = Code });
+            return Database.Connection.Exists<Location>("Id <> @Id and Status <> 'X' and Code = @Code", new { Id = Id, Code = Code });  // Also check in 'Inactive', except 'X' (Deleted)
         }
     }
 }

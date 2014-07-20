@@ -12,8 +12,9 @@ namespace kBit.ERP.IC
     public partial class frmLocationList : Form
     {
         private long Id = 0;
-        private int rowIndex = 0;   // Current gird selected row
+        private int RowIndex = 0;   // Current gird selected row
         private bool IsExpand = false;
+        private bool IsDirty = false;
         private const string Module = "Location";   // Log module
         public static string Function = "IC_LOC";
 
@@ -34,14 +35,14 @@ namespace kBit.ERP.IC
 
         private void RefreshGrid(long seq = 0)
         {
-            if (dgvList.RowCount > 0) rowIndex = dgvList.CurrentRow.Index;
+            if (dgvList.RowCount > 0) RowIndex = dgvList.CurrentRow.Index;
 
             dgvList.DataSource = LocationFacade.GetDataTable(txtSearch.Text, GetStatus());
             if (dgvList.RowCount > 0)
                 if (seq == 0)
                 {
-                    if (rowIndex >= dgvList.RowCount) rowIndex = dgvList.RowCount - 1;
-                    dgvList.CurrentCell = dgvList[1, rowIndex];
+                    if (RowIndex >= dgvList.RowCount) RowIndex = dgvList.RowCount - 1;
+                    dgvList.CurrentCell = dgvList[1, RowIndex];
                 }
                 else
                     foreach (DataGridViewRow row in dgvList.Rows)
@@ -59,7 +60,13 @@ namespace kBit.ERP.IC
             foreach (Control c in splitContainer1.Panel2.Controls)
             {
                 if (c is TextBox)
-                    ((TextBox)c).ReadOnly = l;
+                {
+                    var txt = (TextBox)c;
+                    if (Id != 0 && l == false && txt.Name.Equals("txtCode"))
+                        txt.ReadOnly = true;
+                    else
+                        txt.ReadOnly = l;
+                }
                 else if (c is ComboBox)
                     ((ComboBox)c).Enabled = !l;
                 else if (c is DateTimePicker)
@@ -96,13 +103,13 @@ namespace kBit.ERP.IC
             string Code = txtCode.Text.Trim();
             if (Code.Length == 0)
             {
-                Common.ShowMsg("Code cannot be empty.", "Save");
+                MessageBox.Show("Code cannot be empty.", "Save", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtCode.Focus();
                 return false;
             }
             if (LocationFacade.IsExist(Code, Id))
             {
-                Common.ShowMsg("Code already exists. Enter a unique code.", "Save");
+                MessageBox.Show("Code already exists. Enter a unique code.", "Save", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtCode.Focus();
                 txtCode.SelectAll();
                 return false;
@@ -134,6 +141,7 @@ namespace kBit.ERP.IC
                 MessageBox.Show("Error while loading data.\n" + ex.Message, "Location", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 SYS.ErrorLogFacade.Log(ex);
             }
+            IsDirty = false;
         }
 
         private void frmLocationList_Load(object sender, EventArgs e)
@@ -149,7 +157,7 @@ namespace kBit.ERP.IC
         {
             if (!Privilege.CanAccess(Function, "N"))
             {
-                MessageBox.Show("You don't have the privilege to perform this command.");
+                MessageBox.Show("You don't have the privilege to perform this command.", "New", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 SessionLogFacade.Log(Type.Priority_Caution, Module, Type.Log_NoAccess, "New: No access");
                 return;
             }
@@ -167,8 +175,9 @@ namespace kBit.ERP.IC
                 dgvList.CurrentRow.Selected = false;
             Id = 0;
             LockControls(false);
-            if (dgvList.CurrentRow != null) rowIndex = dgvList.CurrentRow.Index;
+            if (dgvList.CurrentRow != null) RowIndex = dgvList.CurrentRow.Index;
             SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_New, "New clicked");
+            IsDirty = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -197,12 +206,13 @@ namespace kBit.ERP.IC
                 log.Type = Type.Log_Update;
             }
             m.Id = LocationFacade.Save(m);
-            if (dgvList.RowCount > 0) rowIndex = dgvList.CurrentRow.Index;
+            if (dgvList.RowCount > 0) RowIndex = dgvList.CurrentRow.Index;
             RefreshGrid(m.Id);
             LockControls();
             Cursor = Cursors.Default;
             log.Message = "Saved. Id=" + m.Id + " , Code=" + txtCode.Text;
             SessionLogFacade.Log(log);
+            IsDirty = false;
         }
 
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
@@ -236,6 +246,7 @@ namespace kBit.ERP.IC
         {
             SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_SaveAndNew, "Saved and new. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
             btnSave_Click(sender, e);
+            if (btnSaveNew.Enabled) return;
             btnNew_Click(sender, e);
         }
 
@@ -243,15 +254,16 @@ namespace kBit.ERP.IC
         {
             var Id = dgvList.Id;
             if (Id == 0) return;
-
+            // If referenced
+            //todo: check if exist in ic_item
             // If locked
             var lInfo = LocationFacade.GetLockInfo(Id);
             string msg = "";
             if (lInfo.IsLocked)
             {
                 msg = "Record cannot be deleted because it is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
-                new frmMsg(msg).ShowDialog();
-                SessionLogFacade.Log(Type.Priority_Caution, Module, Type.Log_Delete, "Cannot delete while currently locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+                MessageBox.Show(msg, "Delete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                SessionLogFacade.Log(Type.Priority_Caution, Module, Type.Log_Delete, "Cannot delete. Currently locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
                 return;
             }
             // Delete
@@ -270,7 +282,7 @@ namespace kBit.ERP.IC
         {
             if (!Privilege.CanAccess(Function, "N"))
             {
-                MessageBox.Show("You don't have the privilege for perform this command.");
+                MessageBox.Show("You don't have the privilege for perform this command.", "Copy", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_NoAccess, "Copy: No access");
                 return;
             }
@@ -278,6 +290,7 @@ namespace kBit.ERP.IC
             txtCode.Focus();
             LockControls(false);
             SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Copy, "Copy from Id=" + dgvList.Id + "Code=" + txtCode.Text);
+            IsDirty = false;
         }
 
         private void picExpand_Click(object sender, EventArgs e)
@@ -286,12 +299,12 @@ namespace kBit.ERP.IC
             if (!IsExpand)
             {
                 splitContainer1.SplitterDistance = splitContainer1.Size.Width;
-                splitContainer1.FixedPanel = FixedPanel.Panel2;                
+                splitContainer1.FixedPanel = FixedPanel.Panel2;
             }
             else
             {
                 splitContainer1.SplitterDistance = 228; // TODO: load from var or db
-                splitContainer1.FixedPanel = FixedPanel.Panel1;                
+                splitContainer1.FixedPanel = FixedPanel.Panel1;
             }
             dgvList.ShowLessColumns(IsExpand);
             IsExpand = !IsExpand;
@@ -303,24 +316,24 @@ namespace kBit.ERP.IC
             dgvList_SelectionChanged(sender, e);    // reload data since SelectionChanged will not occured on current row
         }
 
-        private void frmLocationList_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (btnUnlock.Text == "Cance&l")
-                btnUnlock_Click(null, null);
-        }
-
         private void btnActive_Click(object sender, EventArgs e)
         {
             var Id = dgvList.Id;
             if (Id == 0) return;
+
+            string status = btnActive.Text.StartsWith("I") ? Type.RecordStatus_InActive : Type.RecordStatus_Active;
+            // If referenced
+            //todo: check if already used in ic_item
+
+            // If locked
             var lInfo = LocationFacade.GetLockInfo(Id);
             if (lInfo.IsLocked)
             {
                 string msg = "Account is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
-                new frmMsg(msg).ShowDialog();
+                MessageBox.Show(msg, "Active/Inactive", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            string status = btnActive.Text.StartsWith("I") ? Type.RecordStatus_InActive : Type.RecordStatus_Active;
+
             LocationFacade.SetStatus(Id, status);
             RefreshGrid();
             SessionLogFacade.Log(Type.Priority_Caution, Module, status == "I" ? Type.Log_Inactive : Type.Log_Active, "Id=" + dgvList.Id + ", Code=" + txtCode.Text);
@@ -338,6 +351,7 @@ namespace kBit.ERP.IC
                 if (dgvList.CurrentRow != null && !dgvList.CurrentRow.Selected)
                     dgvList.CurrentRow.Selected = true;
                 SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Unlock, "Unlock cancel. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+                IsDirty = false;
                 return;
             }
             // Unlock
@@ -347,10 +361,11 @@ namespace kBit.ERP.IC
             if (lInfo.IsLocked) // Check if record is locked
             {
                 string msg = "Account is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
-                new frmMsg(msg).ShowDialog();
+                MessageBox.Show(msg, "Unlock", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             LockControls(false);
+            txtDesc.Focus();
             LocationFacade.Lock(dgvList.Id);
             SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Lock, "Locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
         }
@@ -377,17 +392,11 @@ namespace kBit.ERP.IC
                 case Keys.Control | Keys.E:
                     if (btnActive.Enabled) btnActive_Click(null, null);
                     break;
+                case Keys.Delete:
+                    if (btnDelete.Enabled) btnDelete_Click(null, null);
+                    break;
             }
             return base.ProcessCmdKey(ref msg, keyData);
-        }
-
-        private void dgvList_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete)
-            {
-                e.SuppressKeyPress = true;
-                if (btnDelete.Enabled) btnDelete_Click(null, null);
-            }
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
@@ -405,6 +414,30 @@ namespace kBit.ERP.IC
         private void picFitler_Click(object sender, EventArgs e)
         {
             mnuShow.Show(picFitler, 0, 15);
+        }
+
+        private void Dirty_TextChanged(object sender, EventArgs e)
+        {
+            IsDirty = true;
+        }
+
+        private void frmLocationList_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (IsDirty)
+            {
+                switch (MessageBox.Show("Do you want to save changes?", "Close", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+                {
+                    case System.Windows.Forms.DialogResult.Yes: // Save then close
+                        btnSave_Click(null, null);
+                        break;
+                    case System.Windows.Forms.DialogResult.Cancel:
+                        e.Cancel = true;
+                        break;
+                }
+            }
+            if (e.Cancel) return;
+            if (btnUnlock.Text == "Cance&l")
+                btnUnlock_Click(null, null);
         }
     }
 }

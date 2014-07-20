@@ -25,8 +25,13 @@ namespace kBit.ERP.SYS
 
     class ErrorLogFacade
     {
-        private static string LogFileName = Path.Combine(Application.StartupPath, "Error.log");
+        public static FileLog logFile = new FileLog();
 
+        public string FileLogPath
+        {
+            get { return logFile.FileName; }
+            set { logFile.FileName = value; }
+        }
         public static DataTable GetDataTable(string where, string filter = "")
         {
             var sql = "select l.id, username, login_at, logout_at, version, machine_name, machine_user_name, log_at, priority, module, type, message\n" +
@@ -104,11 +109,28 @@ namespace kBit.ERP.SYS
             string log = DateTime.Now.ToString("yyy-MM-dd ddd hh:mm:ss tt");
             log += "\n" + ex.ToString() + "\n" + ex.StackTrace;
             if (info.Length > 0) log += "\n" + info;
+            logFile.Write(log);
+        }
+    }
+
+    public class FileLog
+    {
+        private string mPath = "";
+
+        public string FileName
+        {
+            get { return mPath; }
+            set { mPath = value; Maintain(); }
+        }
+
+        public void Write(string content)
+        {
+            if (mPath.Length == 0) return;
             try
             {
-                using (StreamWriter sr = new StreamWriter(LogFileName, true))
+                using (StreamWriter sr = new StreamWriter(mPath, true))
                 {
-                    sr.WriteLine(log);
+                    sr.WriteLine(content);
                 }
             }
             catch { }
@@ -117,13 +139,14 @@ namespace kBit.ERP.SYS
         /// <summary>
         /// Maintain log file. If file size > 3M then rename it. 
         /// </summary>
-        public static void MaintainLogFile()
+        private void Maintain(long size = 3)
         {
-            double fSize = (new FileInfo(LogFileName).Length / 1024f) / 1024f;
+            if (!File.Exists(mPath)) return;
+            double fSize = (new FileInfo(mPath).Length / 1024f) / 1024f;
             if (fSize > 3)
             {
-                string sFile = Path.Combine(Application.StartupPath, "Error" + DateTime.Today.ToString("_yyMMdd") + ".log");
-                File.Move(LogFileName, sFile);
+                string sFile = Path.Combine(Path.GetDirectoryName(mPath), Path.GetFileNameWithoutExtension(mPath) + DateTime.Today.ToString("_yyMMdd") + Path.GetExtension(mPath));
+                File.Move(mPath, sFile);
             }
         }
     }
