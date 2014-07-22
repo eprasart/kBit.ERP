@@ -136,8 +136,7 @@ namespace kBit.ERP.IC
                 LockControls();
             }
             catch (Exception ex)
-            {
-                //todo: use own msg box
+            {                
                 MessageBox.Show("Error while loading data.\n" + ex.Message, "Location", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 SYS.ErrorLogFacade.Log(ex);
             }

@@ -88,18 +88,8 @@ namespace kBit.ERP.SYS
         private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             SM.SessionFacade.UpdateLogout(App.session);
-            SYS.App.SaveSettings(); // Save settings to file
-            SYS.App.AccessLog.Write(DateTime.Now.ToString("yyy-MM-dd ddd hh:mm:ss tt") + " Application quit. Machine: " + SYS.App.session.MachineName);
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-
+            App.SaveSettings(); // Save settings to file
+            App.AccessLog.Write(DateTime.Now.ToString("yyy-MM-dd ddd hh:mm:ss tt") + " Application quit. Process Id: " + App.ProcessID);
         }
     }
 }

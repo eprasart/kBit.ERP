@@ -25,6 +25,8 @@ namespace kBit.ERP.SYS
 
         public static FileLog AccessLog = new FileLog();
 
+        public static string ProcessID = System.Diagnostics.Process.GetCurrentProcess().Id.ToString();
+
         public static bool Init()
         {
             SetVersion();
@@ -70,8 +72,8 @@ namespace kBit.ERP.SYS
             session.Version = version;
             // Log
             ErrorLogFacade.logFile.FileName = Path.Combine(Application.StartupPath, "Error.log");
-            AccessLog.FileName = Path.Combine(Application.StartupPath, "Access.log");
-            AccessLog.Write(DateTime.Now.ToString("yyy-MM-dd ddd hh:mm:ss tt") + " Application started. Machine: " + session.MachineName + ", machine username: " + session.MachineUserName + ", version: " + session.Version);
+            AccessLog.FileName = Path.Combine(Application.StartupPath, "Access.log");            
+            AccessLog.Write(DateTime.Now.ToString("yyy-MM-dd ddd hh:mm:ss tt")  + " Application started. Process Id: " + ProcessID + ", Machine: " + session.MachineName + ", machine's username: " + session.MachineUserName + ", version: " + session.Version);
             session.Id = SessionFacade.Save(session);
             SessionLogFacade.Log(Type.Priority_Information, "Application", Type.Log_Launch, "Application started");
 
