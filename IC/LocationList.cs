@@ -73,12 +73,13 @@ namespace kBit.ERP.IC
                     ((DateTimePicker)c).Enabled = !l;
             }
             btnNew.Enabled = l;
-            btnCopy.Enabled = l;
+            btnCopy.Enabled = dgvList.Id != 0 && l;
             btnSave.Enabled = !l;
             btnSaveNew.Enabled = !l;
-            btnActive.Enabled = l;
-            btnDelete.Enabled = l;
+            btnActive.Enabled = dgvList.Id != 0 && l;
+            btnDelete.Enabled = dgvList.Id != 0 && l;
             splitContainer1.Panel1.Enabled = l;
+            btnUnlock.Enabled = !l || dgvList.RowCount > 0;
             btnUnlock.Text = l ? "Un&lock" : "Cance&l";
         }
 
@@ -120,26 +121,38 @@ namespace kBit.ERP.IC
         private void LoadData()
         {
             var Id = dgvList.Id;
-            if (Id == 0) return;
-            try
+            if (Id != 0)
+                try
+                {
+                    var m = LocationFacade.Select(Id);
+                    txtCode.Text = m.Code;
+                    txtDesc.Text = m.Description;
+                    txtAddress.Text = m.Address;
+                    txtName.Text = m.Name;
+                    txtPhone.Text = m.Phone;
+                    txtFax.Text = m.Fax;
+                    txtEmail.Text = m.Email;
+                    txtNote.Text = m.Note;
+                    SetStatus(m.Status);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error while loading data.\n" + ex.Message, "Location", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    SYS.ErrorLogFacade.Log(ex);
+                }
+            else    // when delete all => disable buttons and clear all controls
             {
-                var m = LocationFacade.Select(Id);
-                txtCode.Text = m.Code;
-                txtDesc.Text = m.Description;
-                txtAddress.Text = m.Address;
-                txtName.Text = m.Name;
-                txtPhone.Text = m.Phone;
-                txtFax.Text = m.Fax;
-                txtEmail.Text = m.Email;
-                txtNote.Text = m.Note;
-                SetStatus(m.Status);
-                LockControls();
+                btnUnlock.Enabled = false;
+                txtCode.Text = "";
+                txtDesc.Text = "";
+                txtAddress.Text = "";
+                txtName.Text = "";
+                txtPhone.Text = "";
+                txtFax.Text = "";
+                txtEmail.Text = "";
+                txtNote.Text = "";
             }
-            catch (Exception ex)
-            {                
-                MessageBox.Show("Error while loading data.\n" + ex.Message, "Location", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                SYS.ErrorLogFacade.Log(ex);
-            }
+            LockControls();
             IsDirty = false;
         }
 
@@ -148,7 +161,7 @@ namespace kBit.ERP.IC
             Icon = Properties.Resources.Icon;
             dgvList.ShowLessColumns(true);
             RefreshGrid();
-            LockControls();
+            //LockControls();
             SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "Opened");
         }
 
@@ -174,6 +187,7 @@ namespace kBit.ERP.IC
                 dgvList.CurrentRow.Selected = false;
             Id = 0;
             LockControls(false);
+
             if (dgvList.CurrentRow != null) RowIndex = dgvList.CurrentRow.Index;
             SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_New, "New clicked");
             IsDirty = false;
@@ -271,7 +285,7 @@ namespace kBit.ERP.IC
                 return;
             LocationFacade.SetStatus(Id, Type.RecordStatus_Deleted);
             RefreshGrid();
-            if (dgvList.RowCount == 0) btnNew_Click(sender, e);
+            //if (dgvList.RowCount == 0) btnNew_Click(sender, e);
 
             // log
             SessionLogFacade.Log(Type.Priority_Warning, Module, Type.Log_Delete, "Deleted. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
@@ -286,6 +300,7 @@ namespace kBit.ERP.IC
                 return;
             }
             Id = 0;
+            if (IsExpand) picExpand_Click(sender, e);
             txtCode.Focus();
             LockControls(false);
             SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Copy, "Copy from Id=" + dgvList.Id + "Code=" + txtCode.Text);
@@ -340,16 +355,27 @@ namespace kBit.ERP.IC
 
         private void btnUnlock_Click(object sender, EventArgs e)
         {
+            //todo: previlege
             if (IsExpand) picExpand_Click(sender, e);
             Id = dgvList.Id;
             // Cancel
             if (btnUnlock.Text == "Cance&l")
             {
+                if (IsDirty)
+                {
+                    var result = MessageBox.Show("Do you want to save changes?", "Cancel", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                    if (result == System.Windows.Forms.DialogResult.Yes) // Save then close
+                        btnSave_Click(null, null);
+                    else if (result == System.Windows.Forms.DialogResult.Cancel)
+                        return;
+                }
                 LockControls(true);
+                dgvList.Focus();
                 LocationFacade.ReleaseLock(dgvList.Id);
                 if (dgvList.CurrentRow != null && !dgvList.CurrentRow.Selected)
                     dgvList.CurrentRow.Selected = true;
                 SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Unlock, "Unlock cancel. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+                btnUnlock.ToolTipText = "Unlock (Ctrl+L)";
                 IsDirty = false;
                 return;
             }
@@ -364,9 +390,11 @@ namespace kBit.ERP.IC
                 return;
             }
             LockControls(false);
+            txtDesc.SelectionStart = txtDesc.Text.Length;
             txtDesc.Focus();
             LocationFacade.Lock(dgvList.Id);
             SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Lock, "Locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+            btnUnlock.ToolTipText = "Cancel (Esc or Ctrl+L)";
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -381,6 +409,9 @@ namespace kBit.ERP.IC
                     break;
                 case Keys.Control | Keys.L:
                     if (btnUnlock.Enabled) btnUnlock_Click(null, null);
+                    break;
+                case Keys.Escape:
+                    if (btnUnlock.Text.StartsWith("C")) btnUnlock_Click(null, null);    // Cancel
                     break;
                 case Keys.Control | Keys.S:
                     if (btnSave.Enabled) btnSave_Click(null, null);
@@ -435,6 +466,7 @@ namespace kBit.ERP.IC
                 }
             }
             if (e.Cancel) return;
+            IsDirty = false;
             if (btnUnlock.Text == "Cance&l")
                 btnUnlock_Click(null, null);
         }
