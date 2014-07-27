@@ -21,7 +21,7 @@ namespace kBit.ERP.SYS
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            Text += " v " + SYS.App.version;
+            lblVersion.Text = " v " + SYS.App.version;
             Icon = Properties.Resources.Icon;
 
             App.fSplash.ShowMsg("");

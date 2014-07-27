@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("kERP")]
-[assembly: AssemblyDescription("kPrasat ERP")]
+[assembly: AssemblyDescription("kBit ERP")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("kPrasat")]
-[assembly: AssemblyProduct("kPrasat ERP")]
+[assembly: AssemblyCompany("kBit")]
+[assembly: AssemblyProduct("kBitERP")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
-[assembly: AssemblyTrademark("kPrasat")]
+[assembly: AssemblyTrademark("kBit")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.1.2.0")]
+[assembly: AssemblyVersion("0.1.3.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

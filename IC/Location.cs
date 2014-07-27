@@ -51,15 +51,14 @@ namespace kBit.ERP.IC
             else
                 sql += " and status = '" + status + "'";
             if (filter.Length > 0)
-                sql += " and (code ~* :filter or description ~* :filter or phone ~* :filter or fax ~* :filter or email ~* :filter or address ~* :filter or note ~* :filter)";
-            sql += "\norder by code";
-            var cmd = new NpgsqlCommand(sql, new NpgsqlConnection(Database.ConnectionString));
+                sql += " and (code ilike :filter or description ilike :filter or phone ilike :filter or fax ilike :filter or email ilike :filter or address ilike :filter or note ilike :filter)";
+            sql += "\norder by code\nlimit 200";
+
+            var cmd = new NpgsqlCommand(sql);
             if (filter.Length > 0)
-                cmd.Parameters.AddWithValue(":filter", filter);
-            var da = new NpgsqlDataAdapter(cmd);
-            var dt = new DataTable();
-            da.Fill(dt);
-            return dt;
+                cmd.Parameters.AddWithValue(":filter", "%" + filter + "%");
+
+            return Database.GetDataTable(cmd);
         }
 
         public static long Save(Location m)
@@ -126,6 +125,14 @@ namespace kBit.ERP.IC
         public static bool IsExist(string Code, long Id = 0)
         {
             return Database.Connection.Exists<Location>("Id <> @Id and Status <> 'X' and Code = @Code", new { Id = Id, Code = Code });  // Also check in 'Inactive', except 'X' (Deleted)
+        }
+
+        public static void Export()
+        {
+            string sql = "select id \"Id\", code \"Code\", description \"Description\", address \"Address\", name \"Contact Name\", phone \"Phone\", fax \"Fax\"," +
+                "email \"Email\", note \"Note\", status \"Status\", insert_by \"Inserted By\", insert_at \"Inserted At\", change_by \"Changed By\", change_at \"Changed At\"\n" +
+                "from ic_location\nwhere status <> 'X'\norder by code";
+            Database.ExportToCSV(sql);
         }
     }
 }

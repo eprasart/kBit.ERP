@@ -29,10 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnNew = new System.Windows.Forms.ToolStripButton();
             this.btnCopy = new System.Windows.Forms.ToolStripButton();
@@ -42,6 +40,12 @@
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.btnActive = new System.Windows.Forms.ToolStripButton();
             this.btnDelete = new System.Windows.Forms.ToolStripButton();
+            this.txtFind = new System.Windows.Forms.ToolStripTextBox();
+            this.btnFind = new System.Windows.Forms.ToolStripButton();
+            this.btnClear = new System.Windows.Forms.ToolStripButton();
+            this.btnFilter = new System.Windows.Forms.ToolStripButton();
+            this.btnMode = new System.Windows.Forms.ToolStripButton();
+            this.btnExport = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dgvList = new kBit.UI.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,10 +56,6 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.picFitler = new System.Windows.Forms.PictureBox();
-            this.imgExpand = new System.Windows.Forms.PictureBox();
-            this.txtSearch = new kBit.UI.TextBoxPlaceHolder();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupLabel3 = new kBit.UI.GroupLabel();
@@ -85,9 +85,6 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvList)).BeginInit();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picFitler)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imgExpand)).BeginInit();
             this.mnuShow.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -102,10 +99,16 @@
             this.btnSaveNew,
             this.toolStripSeparator,
             this.btnActive,
-            this.btnDelete});
+            this.btnDelete,
+            this.txtFind,
+            this.btnFind,
+            this.btnClear,
+            this.btnFilter,
+            this.btnMode,
+            this.btnExport});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1008, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1008, 27);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -114,7 +117,7 @@
             this.btnNew.Image = global::kBit.ERP.Properties.Resources.New;
             this.btnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnNew.Name = "btnNew";
-            this.btnNew.Size = new System.Drawing.Size(55, 22);
+            this.btnNew.Size = new System.Drawing.Size(55, 24);
             this.btnNew.Text = "&New";
             this.btnNew.ToolTipText = "New (Ctrl+N)";
             this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
@@ -125,7 +128,7 @@
             this.btnCopy.Image = global::kBit.ERP.Properties.Resources.Copy;
             this.btnCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(60, 22);
+            this.btnCopy.Size = new System.Drawing.Size(60, 24);
             this.btnCopy.Text = "Cop&y";
             this.btnCopy.ToolTipText = "Copy (Ctrl+Y)";
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
@@ -136,7 +139,7 @@
             this.btnUnlock.Image = global::kBit.ERP.Properties.Resources.Unlock;
             this.btnUnlock.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnUnlock.Name = "btnUnlock";
-            this.btnUnlock.Size = new System.Drawing.Size(70, 22);
+            this.btnUnlock.Size = new System.Drawing.Size(70, 24);
             this.btnUnlock.Text = "Unl&ock";
             this.btnUnlock.ToolTipText = "Unlock (Ctrl+L)";
             this.btnUnlock.Click += new System.EventHandler(this.btnUnlock_Click);
@@ -146,7 +149,7 @@
             this.btnSave.Image = global::kBit.ERP.Properties.Resources.Save;
             this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(60, 22);
+            this.btnSave.Size = new System.Drawing.Size(60, 24);
             this.btnSave.Text = "&Save";
             this.btnSave.ToolTipText = "Save (Ctrl+S)";
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -156,7 +159,7 @@
             this.btnSaveNew.Image = global::kBit.ERP.Properties.Resources.SaveNew;
             this.btnSaveNew.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSaveNew.Name = "btnSaveNew";
-            this.btnSaveNew.Size = new System.Drawing.Size(116, 22);
+            this.btnSaveNew.Size = new System.Drawing.Size(116, 24);
             this.btnSaveNew.Text = "Save and Ne&w";
             this.btnSaveNew.ToolTipText = "Save and New (Ctrl+W)";
             this.btnSaveNew.Click += new System.EventHandler(this.btnSaveNew_Click);
@@ -164,7 +167,7 @@
             // toolStripSeparator
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator.Size = new System.Drawing.Size(6, 27);
             // 
             // btnActive
             // 
@@ -172,9 +175,9 @@
             this.btnActive.Image = global::kBit.ERP.Properties.Resources.Inactive;
             this.btnActive.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnActive.Name = "btnActive";
-            this.btnActive.Size = new System.Drawing.Size(74, 22);
+            this.btnActive.Size = new System.Drawing.Size(74, 24);
             this.btnActive.Text = "Inactiv&e";
-            this.btnActive.ToolTipText = "Inactive (Ctrl+E)";
+            this.btnActive.ToolTipText = "Active/Inactive (Ctrl+E)";
             this.btnActive.Click += new System.EventHandler(this.btnActive_Click);
             // 
             // btnDelete
@@ -183,24 +186,83 @@
             this.btnDelete.Image = global::kBit.ERP.Properties.Resources.Recyclebin;
             this.btnDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(68, 22);
+            this.btnDelete.Size = new System.Drawing.Size(68, 24);
             this.btnDelete.Text = "Delete";
             this.btnDelete.ToolTipText = "Delete (Del)";
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // txtFind
+            // 
+            this.txtFind.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtFind.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F);
+            this.txtFind.Margin = new System.Windows.Forms.Padding(1);
+            this.txtFind.Name = "txtFind";
+            this.txtFind.Size = new System.Drawing.Size(150, 25);
+            this.txtFind.ToolTipText = "Enter text to find (Ctrl+F)";
+            this.txtFind.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
+            this.txtFind.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
+            // 
+            // btnFind
+            // 
+            this.btnFind.Image = global::kBit.ERP.Properties.Resources.Search;
+            this.btnFind.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnFind.Name = "btnFind";
+            this.btnFind.Size = new System.Drawing.Size(54, 24);
+            this.btnFind.Text = "Find";
+            this.btnFind.ToolTipText = "Find/Refresh (F3)";
+            this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Image = global::kBit.ERP.Properties.Resources.Brush;
+            this.btnClear.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(60, 24);
+            this.btnClear.Text = "Clear";
+            this.btnClear.ToolTipText = "Clear search";
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // btnFilter
+            // 
+            this.btnFilter.Image = global::kBit.ERP.Properties.Resources.Filter;
+            this.btnFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnFilter.Name = "btnFilter";
+            this.btnFilter.Size = new System.Drawing.Size(57, 24);
+            this.btnFilter.Text = "Filter";
+            this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
+            // 
+            // btnMode
+            // 
+            this.btnMode.Image = global::kBit.ERP.Properties.Resources.Expand;
+            this.btnMode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMode.Name = "btnMode";
+            this.btnMode.Size = new System.Drawing.Size(88, 24);
+            this.btnMode.Text = "List/Detail";
+            this.btnMode.ToolTipText = "Toggle between list and detail mode";
+            this.btnMode.Click += new System.EventHandler(this.btnMode_Click);
+            // 
+            // btnExport
+            // 
+            this.btnExport.Image = global::kBit.ERP.Properties.Resources.Export;
+            this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(66, 21);
+            this.btnExport.Text = "Export";
+            this.btnExport.ToolTipText = "Export all data to CSV file";
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // splitContainer1
             // 
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 25);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 27);
             this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.dgvList);
-            this.splitContainer1.Panel1.Controls.Add(this.panel1);
             // 
             // splitContainer1.Panel2
             // 
@@ -226,7 +288,7 @@
             this.splitContainer1.Panel2.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(8, 4, 8, 8);
             this.splitContainer1.Panel2MinSize = 0;
-            this.splitContainer1.Size = new System.Drawing.Size(1008, 549);
+            this.splitContainer1.Size = new System.Drawing.Size(1008, 535);
             this.splitContainer1.SplitterDistance = 228;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 1;
@@ -236,8 +298,8 @@
             this.dgvList.AllowUserToAddRows = false;
             this.dgvList.AllowUserToDeleteRows = false;
             this.dgvList.AllowUserToResizeRows = false;
-            dataGridViewCellStyle13.BackColor = System.Drawing.Color.Honeydew;
-            this.dgvList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Honeydew;
+            this.dgvList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -253,25 +315,27 @@
             this.Column2,
             this.Column3,
             this.Column5});
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvList.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvList.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgvList.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dgvList.Location = new System.Drawing.Point(1, 27);
+            this.dgvList.Location = new System.Drawing.Point(1, -1);
             this.dgvList.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvList.MultiSelect = false;
             this.dgvList.Name = "dgvList";
             this.dgvList.ReadOnly = true;
             this.dgvList.RowHeadersVisible = false;
             this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvList.Size = new System.Drawing.Size(223, 516);
+            this.dgvList.Size = new System.Drawing.Size(223, 530);
             this.dgvList.TabIndex = 1;
             this.dgvList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellDoubleClick);
             this.dgvList.SelectionChanged += new System.EventHandler(this.dgvList_SelectionChanged);
+            this.dgvList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvList_KeyDown);
             // 
             // Column1
             // 
@@ -294,8 +358,6 @@
             // 
             this.colDesc1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colDesc1.DataPropertyName = "description";
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Khmer OS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.colDesc1.DefaultCellStyle = dataGridViewCellStyle14;
             this.colDesc1.HeaderText = "Description";
             this.colDesc1.Name = "colDesc1";
             this.colDesc1.ReadOnly = true;
@@ -305,8 +367,6 @@
             // 
             this.Column4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.Column4.DataPropertyName = "Desc2";
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Khmer OS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column4.DefaultCellStyle = dataGridViewCellStyle15;
             this.Column4.HeaderText = "Contact Name";
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
@@ -346,61 +406,6 @@
             this.Column5.HeaderText = "Address";
             this.Column5.Name = "Column5";
             this.Column5.ReadOnly = true;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.picFitler);
-            this.panel1.Controls.Add(this.imgExpand);
-            this.panel1.Controls.Add(this.txtSearch);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(0, 0, 4, 4);
-            this.panel1.Size = new System.Drawing.Size(226, 28);
-            this.panel1.TabIndex = 0;
-            // 
-            // picFitler
-            // 
-            this.picFitler.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.picFitler.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picFitler.Image = global::kBit.ERP.Properties.Resources.Filter;
-            this.picFitler.Location = new System.Drawing.Point(190, 6);
-            this.picFitler.Name = "picFitler";
-            this.picFitler.Size = new System.Drawing.Size(16, 16);
-            this.picFitler.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.picFitler.TabIndex = 56;
-            this.picFitler.TabStop = false;
-            this.toolTip1.SetToolTip(this.picFitler, "Filter");
-            this.picFitler.Click += new System.EventHandler(this.picFitler_Click);
-            // 
-            // imgExpand
-            // 
-            this.imgExpand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.imgExpand.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.imgExpand.Image = global::kBit.ERP.Properties.Resources.Expand;
-            this.imgExpand.Location = new System.Drawing.Point(208, 6);
-            this.imgExpand.Margin = new System.Windows.Forms.Padding(4);
-            this.imgExpand.Name = "imgExpand";
-            this.imgExpand.Size = new System.Drawing.Size(16, 16);
-            this.imgExpand.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.imgExpand.TabIndex = 5;
-            this.imgExpand.TabStop = false;
-            this.toolTip1.SetToolTip(this.imgExpand, "List/detail mode");
-            this.imgExpand.Click += new System.EventHandler(this.picExpand_Click);
-            // 
-            // txtSearch
-            // 
-            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearch.Location = new System.Drawing.Point(1, 1);
-            this.txtSearch.Margin = new System.Windows.Forms.Padding(4);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.PlaceHolder = "Search";
-            this.txtSearch.Size = new System.Drawing.Size(186, 25);
-            this.txtSearch.TabIndex = 0;
-            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
-            this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             // 
             // label4
             // 
@@ -515,6 +520,7 @@
             // 
             // txtCode
             // 
+            this.txtCode.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCode.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCode.Location = new System.Drawing.Point(108, 40);
             this.txtCode.Margin = new System.Windows.Forms.Padding(4);
@@ -523,6 +529,7 @@
             this.txtCode.TabIndex = 2;
             this.txtCode.TabOnEnter = true;
             this.txtCode.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
+            this.txtCode.Leave += new System.EventHandler(this.txtCode_Leave);
             // 
             // label8
             // 
@@ -603,14 +610,13 @@
             // 
             // txtNote
             // 
-            this.txtNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtNote.Location = new System.Drawing.Point(15, 209);
+            this.txtNote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtNote.Location = new System.Drawing.Point(12, 209);
             this.txtNote.Margin = new System.Windows.Forms.Padding(4);
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
-            this.txtNote.Size = new System.Drawing.Size(747, 326);
+            this.txtNote.Size = new System.Drawing.Size(749, 312);
             this.txtNote.TabIndex = 17;
             this.txtNote.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
             // 
@@ -645,7 +651,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1008, 574);
+            this.ClientSize = new System.Drawing.Size(1008, 562);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -663,10 +669,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvList)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picFitler)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imgExpand)).EndInit();
             this.mnuShow.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -682,9 +684,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
         private System.Windows.Forms.ToolStripButton btnDelete;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripButton btnSaveNew;
-        private System.Windows.Forms.PictureBox imgExpand;
         private System.Windows.Forms.TextBox txtNote;
         private System.Windows.Forms.ContextMenuStrip mnuShow;
         private System.Windows.Forms.ToolStripButton btnActive;
@@ -704,6 +704,19 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private kBit.UI.TextBox txtName;
+        private kBit.UI.TextBox txtPhone;
+        private kBit.UI.TextBox txtEmail;
+        private kBit.UI.TextBox txtFax;
+        private System.Windows.Forms.Label label5;
+        private kBit.UI.GroupLabel groupLabel3;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolStripButton btnFind;
+        private System.Windows.Forms.ToolStripButton btnClear;
+        private System.Windows.Forms.ToolStripButton btnMode;
+        private System.Windows.Forms.ToolStripTextBox txtFind;
+        private System.Windows.Forms.ToolStripButton btnFilter;
+        private System.Windows.Forms.ToolStripButton btnExport;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDesc1;
@@ -711,16 +724,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private kBit.UI.TextBox txtName;
-        private kBit.UI.TextBox txtPhone;
-        private kBit.UI.TextBox txtEmail;
-        private kBit.UI.TextBox txtFax;
-        private System.Windows.Forms.Label label5;
-        private kBit.UI.GroupLabel groupLabel3;
-        private kBit.UI.TextBoxPlaceHolder txtSearch;
-        private System.Windows.Forms.PictureBox picFitler;
-        private System.Windows.Forms.ToolTip toolTip1;        
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;        
     }
 }
 

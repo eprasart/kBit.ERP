@@ -58,6 +58,7 @@
             this.btnUser = new kBit.UI.ButtonFlat();
             this.groupLabel9 = new kBit.UI.GroupLabel();
             this.buttonFlat20 = new kBit.UI.ButtonFlat();
+            this.lblVersion = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // groupLabel5
@@ -545,12 +546,23 @@
             this.buttonFlat20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonFlat20.UseVisualStyleBackColor = false;
             // 
+            // lblVersion
+            // 
+            this.lblVersion.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVersion.Location = new System.Drawing.Point(781, 315);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(191, 17);
+            this.lblVersion.TabIndex = 5;
+            this.lblVersion.Text = "v 0.1.2";
+            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(984, 407);
+            this.ClientSize = new System.Drawing.Size(984, 341);
+            this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.groupLabel9);
             this.Controls.Add(this.groupLabel5);
             this.Controls.Add(this.groupLabel3);
@@ -585,7 +597,7 @@
             this.MaximizeBox = false;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "kERP";
+            this.Text = "kBit ERP";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.ResumeLayout(false);
@@ -623,5 +635,6 @@
         private kBit.UI.GroupLabel groupLabel8;
         private UI.GroupLabel groupLabel9;
         private UI.ButtonFlat buttonFlat20;
+        private System.Windows.Forms.Label lblVersion;
     }
 }
