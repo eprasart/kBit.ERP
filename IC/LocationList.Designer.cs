@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnNew = new System.Windows.Forms.ToolStripButton();
             this.btnCopy = new System.Windows.Forms.ToolStripButton();
@@ -146,6 +146,7 @@
             // 
             // btnSave
             // 
+            this.btnSave.Enabled = false;
             this.btnSave.Image = global::kBit.ERP.Properties.Resources.Save;
             this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSave.Name = "btnSave";
@@ -156,6 +157,7 @@
             // 
             // btnSaveNew
             // 
+            this.btnSaveNew.Enabled = false;
             this.btnSaveNew.Image = global::kBit.ERP.Properties.Resources.SaveNew;
             this.btnSaveNew.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSaveNew.Name = "btnSaveNew";
@@ -219,7 +221,7 @@
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(60, 24);
             this.btnClear.Text = "Clear";
-            this.btnClear.ToolTipText = "Clear search";
+            this.btnClear.ToolTipText = "Clear search (F4)";
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnFilter
@@ -238,7 +240,7 @@
             this.btnMode.Name = "btnMode";
             this.btnMode.Size = new System.Drawing.Size(88, 24);
             this.btnMode.Text = "List/Detail";
-            this.btnMode.ToolTipText = "Toggle between list and detail mode";
+            this.btnMode.ToolTipText = "Toggle between list and detail mode (F4)";
             this.btnMode.Click += new System.EventHandler(this.btnMode_Click);
             // 
             // btnExport
@@ -246,7 +248,7 @@
             this.btnExport.Image = global::kBit.ERP.Properties.Resources.Export;
             this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(66, 21);
+            this.btnExport.Size = new System.Drawing.Size(66, 24);
             this.btnExport.Text = "Export";
             this.btnExport.ToolTipText = "Export all data to CSV file";
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
@@ -298,8 +300,8 @@
             this.dgvList.AllowUserToAddRows = false;
             this.dgvList.AllowUserToDeleteRows = false;
             this.dgvList.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Honeydew;
-            this.dgvList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Honeydew;
+            this.dgvList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -315,14 +317,14 @@
             this.Column2,
             this.Column3,
             this.Column5});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvList.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvList.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvList.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.dgvList.Location = new System.Drawing.Point(1, -1);
             this.dgvList.Margin = new System.Windows.Forms.Padding(4);
@@ -470,6 +472,7 @@
             this.txtAddress.Margin = new System.Windows.Forms.Padding(4);
             this.txtAddress.Multiline = true;
             this.txtAddress.Name = "txtAddress";
+            this.txtAddress.ReadOnly = true;
             this.txtAddress.Size = new System.Drawing.Size(260, 58);
             this.txtAddress.TabIndex = 6;
             this.txtAddress.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
@@ -480,6 +483,7 @@
             this.txtName.Location = new System.Drawing.Point(501, 40);
             this.txtName.Margin = new System.Windows.Forms.Padding(4);
             this.txtName.Name = "txtName";
+            this.txtName.ReadOnly = true;
             this.txtName.Size = new System.Drawing.Size(260, 25);
             this.txtName.TabIndex = 9;
             this.txtName.TabOnEnter = true;
@@ -491,6 +495,7 @@
             this.txtEmail.Location = new System.Drawing.Point(501, 139);
             this.txtEmail.Margin = new System.Windows.Forms.Padding(4);
             this.txtEmail.Name = "txtEmail";
+            this.txtEmail.ReadOnly = true;
             this.txtEmail.Size = new System.Drawing.Size(260, 25);
             this.txtEmail.TabIndex = 15;
             this.txtEmail.TabOnEnter = true;
@@ -502,6 +507,7 @@
             this.txtFax.Location = new System.Drawing.Point(501, 106);
             this.txtFax.Margin = new System.Windows.Forms.Padding(4);
             this.txtFax.Name = "txtFax";
+            this.txtFax.ReadOnly = true;
             this.txtFax.Size = new System.Drawing.Size(260, 25);
             this.txtFax.TabIndex = 13;
             this.txtFax.TabOnEnter = true;
@@ -513,6 +519,7 @@
             this.txtPhone.Location = new System.Drawing.Point(501, 73);
             this.txtPhone.Margin = new System.Windows.Forms.Padding(4);
             this.txtPhone.Name = "txtPhone";
+            this.txtPhone.ReadOnly = true;
             this.txtPhone.Size = new System.Drawing.Size(260, 25);
             this.txtPhone.TabIndex = 11;
             this.txtPhone.TabOnEnter = true;
@@ -525,6 +532,7 @@
             this.txtCode.Location = new System.Drawing.Point(108, 40);
             this.txtCode.Margin = new System.Windows.Forms.Padding(4);
             this.txtCode.Name = "txtCode";
+            this.txtCode.ReadOnly = true;
             this.txtCode.Size = new System.Drawing.Size(260, 25);
             this.txtCode.TabIndex = 2;
             this.txtCode.TabOnEnter = true;
@@ -570,6 +578,7 @@
             this.txtDesc.Location = new System.Drawing.Point(108, 73);
             this.txtDesc.Margin = new System.Windows.Forms.Padding(4);
             this.txtDesc.Name = "txtDesc";
+            this.txtDesc.ReadOnly = true;
             this.txtDesc.Size = new System.Drawing.Size(260, 25);
             this.txtDesc.TabIndex = 4;
             this.txtDesc.TabOnEnter = true;
@@ -616,6 +625,7 @@
             this.txtNote.Margin = new System.Windows.Forms.Padding(4);
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
+            this.txtNote.ReadOnly = true;
             this.txtNote.Size = new System.Drawing.Size(749, 312);
             this.txtNote.TabIndex = 17;
             this.txtNote.TextChanged += new System.EventHandler(this.Dirty_TextChanged);

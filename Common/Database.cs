@@ -19,8 +19,7 @@ namespace kBit.ERP
         {
             //Connection.DropTables(typeof(SM.SessionLog), typeof(SM.Session));
             Connection.CreateTableIfNotExists(typeof(IC.Location), typeof(SM.Session), typeof(SM.SessionLog), typeof(SYS.ErrorLog));
-            Connection.CreateTableIfNotExists(typeof(SM.User), typeof(SM.Role), typeof(SM.UserRole), typeof(SM.Function), typeof(SM.UserFunction),
-                typeof(SM.RoleFunction));
+            Connection.CreateTableIfNotExists(typeof(SM.User), typeof(SM.Role), typeof(SM.UserRole), typeof(SM.Function), typeof(SM.UserFunction), typeof(SM.RoleFunction));
         }
 
         public static DateTime GetCurrentTimeStamp()
@@ -49,7 +48,6 @@ namespace kBit.ERP
 
         public static NpgsqlDataReader GetDataReader(string sql)
         {
-
             return GetDataReader(new NpgsqlCommand(sql));
         }
 
@@ -95,13 +93,13 @@ namespace kBit.ERP
                 sLine = "";
                 for (int i = 0; i < dr.FieldCount; i++)
                 {
-                    sLine += dr[i].ToString();
+                    sLine += "\"" + dr[i].ToString() + "\"";
                     if (i < dr.FieldCount - 1) sLine += delimiter;
                 }
                 sb.AppendLine(sLine);
             }
             dr.Close();
-                       
+
             while (Common.IsFileLocked(path))   // Check if file is being used
             {
                 if (MessageBox.Show("'" + Path.GetFileName(path) + "' is being used by another process.\nPlease close it and try again.", "Export", MessageBoxButtons.RetryCancel, MessageBoxIcon.Question) == DialogResult.Cancel) return 0;

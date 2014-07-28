@@ -38,9 +38,10 @@ namespace kBit.ERP.IC
         {
             Cursor = Cursors.WaitCursor;
             //IsIgnore = true;
-            if (dgvList.SelectedRows.Count >0) RowIndex = dgvList.SelectedRows[0].Index;
+            if (dgvList.SelectedRows.Count > 0) RowIndex = dgvList.SelectedRows[0].Index;
             dgvList.DataSource = LocationFacade.GetDataTable(txtFind.Text, GetStatus());
             if (dgvList.RowCount > 0)
+            {
                 if (seq == 0)
                 {
                     if (RowIndex >= dgvList.RowCount) RowIndex = dgvList.RowCount - 1;
@@ -54,6 +55,15 @@ namespace kBit.ERP.IC
                             dgvList.CurrentCell = dgvList[1, row.Index];
                             break;
                         }
+            }
+            else
+            {
+                btnCopy.Enabled = false;
+                btnUnlock.Enabled = false;
+                btnActive.Enabled = false;
+                btnDelete.Enabled = false;
+                ClearAllBoxes();                
+            }
             IsIgnore = false;
             //LoadData();
             Cursor = Cursors.Default;
@@ -125,6 +135,20 @@ namespace kBit.ERP.IC
             return true;
         }
 
+        private void ClearAllBoxes()
+        {
+            txtCode.Text = "";
+            txtCode.Focus();
+            txtDesc.Text = "";
+            txtAddress.Text = "";
+            txtName.Text = "";
+            txtPhone.Text = "";
+            txtFax.Text = "";
+            txtEmail.Text = "";
+            txtNote.Text = "";
+            IsDirty = false;
+        }
+
         private void LoadData()
         {
             var Id = dgvList.Id;
@@ -142,6 +166,7 @@ namespace kBit.ERP.IC
                     txtNote.Text = m.Note;
                     SetStatus(m.Status);
                     LockControls();
+                    IsDirty = false;
                 }
                 catch (Exception ex)
                 {
@@ -153,17 +178,9 @@ namespace kBit.ERP.IC
                 if (dgvList.RowCount == 0)
                 {
                     btnUnlock.Enabled = false;
-                    txtCode.Text = "";
-                    txtDesc.Text = "";
-                    txtAddress.Text = "";
-                    txtName.Text = "";
-                    txtPhone.Text = "";
-                    txtFax.Text = "";
-                    txtEmail.Text = "";
-                    txtNote.Text = "";
+                    ClearAllBoxes();
                 }
-            }
-            IsDirty = false;
+            }            
         }
 
         private void frmLocationList_Load(object sender, EventArgs e)
@@ -185,23 +202,14 @@ namespace kBit.ERP.IC
                 return;
             }
             if (IsExpand) picExpand_Click(sender, e);
-            txtCode.Text = "";
-            txtCode.Focus();
-            txtDesc.Text = "";
-            txtAddress.Text = "";
-            txtName.Text = "";
-            txtPhone.Text = "";
-            txtFax.Text = "";
-            txtEmail.Text = "";
-            txtNote.Text = "";
+            ClearAllBoxes();
             if (dgvList.CurrentRow != null)
                 dgvList.CurrentRow.Selected = false;
             Id = 0;
             LockControls(false);
 
             if (dgvList.CurrentRow != null) RowIndex = dgvList.CurrentRow.Index;
-            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_New, "New clicked");
-            IsDirty = false;
+            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_New, "New clicked");            
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -437,7 +445,7 @@ namespace kBit.ERP.IC
                     if (btnActive.Enabled) btnActive_Click(null, null);
                     break;
                 case Keys.Control | Keys.F:
-                    txtFind.Focus();
+                    if (!txtFind.ReadOnly) txtFind.Focus();
                     break;
                 case Keys.F3:
                 case Keys.F5:
@@ -489,7 +497,7 @@ namespace kBit.ERP.IC
         private void txtCode_Leave(object sender, EventArgs e)
         {
             // Check if entered code already exists
-            if (!btnSave.Enabled) return;
+            if (txtCode.ReadOnly) return;
             if (LocationFacade.IsExist(txtCode.Text.Trim()))
             {
                 MessageBox.Show("'" + txtCode.Text.Trim() + "' already exists. Enter a unique code.", "Location", MessageBoxButtons.OK, MessageBoxIcon.Information);
