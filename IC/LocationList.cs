@@ -62,7 +62,7 @@ namespace kBit.ERP.IC
                 btnUnlock.Enabled = false;
                 btnActive.Enabled = false;
                 btnDelete.Enabled = false;
-                ClearAllBoxes();                
+                ClearAllBoxes();
             }
             IsIgnore = false;
             //LoadData();
@@ -180,7 +180,7 @@ namespace kBit.ERP.IC
                     btnUnlock.Enabled = false;
                     ClearAllBoxes();
                 }
-            }            
+            }
         }
 
         private void frmLocationList_Load(object sender, EventArgs e)
@@ -209,7 +209,7 @@ namespace kBit.ERP.IC
             LockControls(false);
 
             if (dgvList.CurrentRow != null) RowIndex = dgvList.CurrentRow.Index;
-            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_New, "New clicked");            
+            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_New, "New clicked");
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -252,7 +252,7 @@ namespace kBit.ERP.IC
             if (e.KeyCode == Keys.Enter)
             {
                 e.SuppressKeyPress = true;
-                RefreshGrid();
+                btnFind_Click(null, null);
             }
         }
 
@@ -353,7 +353,7 @@ namespace kBit.ERP.IC
             var lInfo = LocationFacade.GetLockInfo(Id);
             if (lInfo.IsLocked)
             {
-                string msg = "Account is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
+                string msg = "Record is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
                 if (!Privilege.CanAccess(Function, "O"))
                 {
                     MessageBox.Show(msg, "Active/Inactive", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -401,7 +401,7 @@ namespace kBit.ERP.IC
 
             if (lInfo.IsLocked) // Check if record is locked
             {
-                string msg = "Account is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
+                string msg = "Record is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
                 if (!Privilege.CanAccess(Function, "O"))
                 {
                     MessageBox.Show(msg, "Unlock", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -450,6 +450,18 @@ namespace kBit.ERP.IC
                 case Keys.F3:
                 case Keys.F5:
                     if (btnFind.Enabled) btnFind_Click(null, null);
+                    break;
+                case Keys.F4:
+                    if (btnClear.Enabled) btnClear_Click(null, null);
+                    break;
+                case Keys.F8:
+                    if (btnFilter.Enabled) btnFilter_Click(null, null);
+                    break;
+                case Keys.F9:
+                    if (btnMode.Enabled) btnMode_Click(null, null);
+                    break;
+                case Keys.F12:
+                    if (btnExport.Enabled) btnExport_Click(null, null);
                     break;
             }
             return base.ProcessCmdKey(ref msg, keyData);
@@ -530,12 +542,14 @@ namespace kBit.ERP.IC
         {
             Cursor = Cursors.WaitCursor;
             RefreshGrid();
+            txtFind.Focus();
             Cursor = Cursors.Default;
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
             txtFind.Clear();
+            txtFind.Focus();
         }
 
         private void dgvList_KeyDown(object sender, KeyEventArgs e)

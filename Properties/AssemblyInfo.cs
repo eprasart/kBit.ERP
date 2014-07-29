@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("kBit")]
 [assembly: AssemblyProduct("kBitERP")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCopyright("Copyright ©")]
 [assembly: AssemblyTrademark("kBit")]
 [assembly: AssemblyCulture("")]
 
