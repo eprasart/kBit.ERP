@@ -52,7 +52,7 @@ namespace kBit.ERP.IC
                 sql += " and status = '" + status + "'";
             if (filter.Length > 0)
                 sql += " and (code ilike :filter or description ilike :filter or phone ilike :filter or fax ilike :filter or email ilike :filter or address ilike :filter or note ilike :filter)";
-            sql += "\norder by code\nlimit 200";
+            sql += "\norder by code\nlimit 1000";   // todo: in db
 
             var cmd = new NpgsqlCommand(sql);
             if (filter.Length > 0)

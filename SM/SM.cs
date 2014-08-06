@@ -33,6 +33,7 @@ namespace kBit.ERP.SM
         public string Email { get; set; }
         public string Note { get; set; }
         public String Status { get; set; }
+        public long SessionId { get; set; }
         public string LockBy { get; set; }
         public DateTime? LockAt { get; set; }
         public string InsertBy { get; set; }

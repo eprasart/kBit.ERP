@@ -382,6 +382,8 @@ namespace kBit.ERP.IC
                     var result = MessageBox.Show("Do you want to save changes?", "Cancel", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                     if (result == System.Windows.Forms.DialogResult.Yes) // Save then close
                         btnSave_Click(null, null);
+                    else if (result == System.Windows.Forms.DialogResult.No)
+                        LoadData(); // Load original back if changes (dirty)
                     else if (result == System.Windows.Forms.DialogResult.Cancel)
                         return;
                 }
