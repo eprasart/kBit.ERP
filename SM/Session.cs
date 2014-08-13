@@ -34,13 +34,13 @@ namespace kBit.ERP.SM
         public DateTime? LogAt { get; set; }
         //[References(typeof(Session))]
         public long SessionId { get; set; }
-        [Required]
+        
         public string Priority { get; set; }
-        [Required]
+        
         public string Module { get; set; }
-        [Required]
+        
         public string Type { get; set; }
-        [Required]
+        
         public string Message { get; set; }
         public string Status { get; set; }
     }
@@ -80,7 +80,7 @@ namespace kBit.ERP.SM
             if (m.Id == 0)
             {
                 m.LoginAt = ts;
-                seq = Database.Connection.Insert(m, true);
+                seq = Database.Connection.Insert( m,  true);
             }
             else
             {
@@ -186,5 +186,17 @@ namespace kBit.ERP.SM
         {
             Save(log);
         }
+    }
+
+    [Alias("SmLock")]
+    public class Lock
+    {
+        [AutoIncrement]
+        public long Id { get; set; }
+        public string TableName { get; set; }
+        public string Username { get; set; }
+        public long LockId { get; set; }
+        [Default(typeof(DateTime), "now()")]
+        public DateTime? LockAt { get; set; }
     }
 }

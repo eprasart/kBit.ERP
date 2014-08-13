@@ -14,7 +14,7 @@ namespace kBit.ERP.IC
     {
         [AutoIncrement]
         public long Id { get; set; }
-        [Required]
+        
         public string Code { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }
@@ -35,13 +35,13 @@ namespace kBit.ERP.IC
 
     static class LocationFacade
     {
-        public static List<Location> Select(string filter = "")
-        {
-            SqlExpression<Location> e = OrmLiteConfig.DialectProvider.SqlExpression<Location>();
-            e.Where(q => q.Status == Type.RecordStatus_Active && (q.Code.Contains(filter) || q.Description.Contains(filter)))
-                .OrderBy(q => q.Code);
-            return Database.Connection.Select<Location>(e);
-        }
+        //public static List<Location> Select(string filter = "")
+        //{
+        //    SqlExpression<Location> e = OrmLiteConfig.DialectProvider.SqlExpression<Location>();
+        //    e.Where(q => q.Status == Type.RecordStatus_Active && (q.Code.Contains(filter) || q.Description.Contains(filter)))
+        //        .OrderBy(q => q.Code);
+        //    return Database.Connection.Select<Location>(e);
+        //}
 
         public static DataTable GetDataTable(string filter = "", string status = "")
         {

@@ -13,7 +13,6 @@ namespace kBit.ERP.SYS
     {
         [AutoIncrement]
         public long Id { get; set; }
-        [Required]
         public string Name { get; set; }
         public string Value { get; set; }
         public string Note { get; set; }
@@ -29,14 +28,6 @@ namespace kBit.ERP.SYS
 
     static class ConfigFacade
     {
-        public static List<Config> Select(string filter = "")
-        {
-            SqlExpression<Config> e = OrmLiteConfig.DialectProvider.SqlExpression<Config>();
-            e.Where(q => q.Status == Type.RecordStatus_Active && (q.Name.Contains(filter) || q.Value.Contains(filter)))
-                .OrderBy(q => q.Name);
-            return Database.Connection.Select<Config>(e);
-        }
-
         public static DataTable GetDataTable(string filter = "", string status = "")
         {
             var sql = "select id, name, value, note from sys_config where 1 = 1";
@@ -81,7 +72,7 @@ namespace kBit.ERP.SYS
 
         public static string Select(string name, string defaultValue = "")
         {
-            return Database.Connection.Scalar<Config, string>(q => q.Name );
+            return Database.Connection.Scalar<Config, string>(q => q.Name);
         }
 
         public static void SetStatus(long Id, string s)

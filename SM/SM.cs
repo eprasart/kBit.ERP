@@ -14,8 +14,7 @@ namespace kBit.ERP.SM
     public class User
     {
         [AutoIncrement]
-        public long Id { get; set; }
-        [Required]
+        public long Id { get; set; }        
         public string Username { get; set; }
         public string FullName { get; set; }
         public string Pwd { get; set; }
@@ -163,7 +162,7 @@ namespace kBit.ERP.SM
     {
         [AutoIncrement]
         public long Id { get; set; }
-        [Required]
+        
         public string Name { get; set; }
         public string Code { get; set; }
         public string Type { get; set; }
@@ -184,7 +183,7 @@ namespace kBit.ERP.SM
     {
         [AutoIncrement]
         public long Id { get; set; }
-        [Required]
+        
         public string Name { get; set; }
         public string Note { get; set; }
         public String Status { get; set; }
@@ -202,7 +201,7 @@ namespace kBit.ERP.SM
     {
         [AutoIncrement]
         public long Id { get; set; }
-        [Required]
+        
         public long RoleId { get; set; }
         public long FunctionId { get; set; }
         public string Right { get; set; }
@@ -221,7 +220,7 @@ namespace kBit.ERP.SM
     {
         [AutoIncrement]
         public long Id { get; set; }
-        [Required]
+        
         public long UserId { get; set; }
         public long FunctionId { get; set; }
         public String Status { get; set; }
