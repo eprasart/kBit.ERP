@@ -25,7 +25,7 @@ namespace kBit.ERP.SYS
             Icon = Properties.Resources.Icon;
 
             App.fSplash.ShowMsg("");
-            App.fSplash.StartTimer();            
+            App.fSplash.StartTimer();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -38,17 +38,17 @@ namespace kBit.ERP.SYS
         private void button2_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            new SM.frmUserList().Show();
+            ////new SM.frmUserList().Show();
             Cursor = Cursors.Default;
         }
 
         private void btnLocation_Click(object sender, EventArgs e)
         {
-            if (!SM.Privilege.CanAccess("IC_LOC", "V"))
-            {
-                MessageBox.Show("You don't have the privilege to access this function.");
-                return;
-            }
+            ////if (!SM.Privilege.CanAccess("IC_LOC", "V"))
+            ////{
+            ////    MessageBox.Show("You don't have the privilege to access this function.");
+            ////    return;
+            ////}
             Cursor = Cursors.WaitCursor;
             if (App.fLocationList == null || App.fLocationList.IsDisposed == true)
             {
@@ -61,35 +61,35 @@ namespace kBit.ERP.SYS
 
         private void btnUser_Click(object sender, EventArgs e)
         {
-            Cursor = Cursors.WaitCursor;
-            if (App.fUserList == null || App.fUserList.IsDisposed == true)
-            {
-                App.fUserList = new SM.frmUserList();
-                App.fUserList.Show();
-            }
-            App.fUserList.Focus();
-            Cursor = Cursors.Default;
-            SM.SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "User List opened.");
+            //    Cursor = Cursors.WaitCursor;
+            //    if (App.fUserList == null || App.fUserList.IsDisposed == true)
+            //    {
+            //        App.fUserList = new SM.frmUserList();
+            //        App.fUserList.Show();
+            //    }
+            //    App.fUserList.Focus();
+            //    Cursor = Cursors.Default;
+            //    SM.SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "User List opened.");
         }
 
         private void btnAuditLog_Click(object sender, EventArgs e)
         {
-            Cursor = Cursors.WaitCursor;
-            SM.SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "Audit Log opened.");
-            if (App.fAuditLog == null || App.fAuditLog.IsDisposed == true)
-            {
-                App.fAuditLog = new SM.frmAuditLog();
-                App.fAuditLog.Show();
-            }
-            App.fAuditLog.Focus();
-            Cursor = Cursors.Default;
+            //    Cursor = Cursors.WaitCursor;
+            //    SM.SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "Audit Log opened.");
+            //    if (App.fAuditLog == null || App.fAuditLog.IsDisposed == true)
+            //    {
+            //        App.fAuditLog = new SM.frmAuditLog();
+            //        App.fAuditLog.Show();
+            //    }
+            //    App.fAuditLog.Focus();
+            //    Cursor = Cursors.Default;
         }
 
         private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
         {
-            SM.SessionFacade.UpdateLogout(App.session);
-            App.SaveSettings(); // Save settings to file
-            App.AccessLog.Write(DateTime.Now.ToString("yyy-MM-dd ddd hh:mm:ss tt") + " Application quit. Process Id: " + App.ProcessID);
+            //    SM.SessionFacade.UpdateLogout(App.session);
+            //    App.SaveSettings(); // Save settings to file
+            //    App.AccessLog.Write(DateTime.Now.ToString("yyy-MM-dd ddd hh:mm:ss tt") + " Application quit. Process Id: " + App.ProcessID);
         }
     }
 }

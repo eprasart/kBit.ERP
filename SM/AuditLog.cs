@@ -19,7 +19,7 @@ namespace kBit.ERP.SM
 
         private void RefreshGrid()
         {
-            dgvList.DataSource = SessionLogFacade.GetDataTable(txtSearch.Text);
+            ////dgvList.DataSource = SessionLogFacade.GetDataTable(txtSearch.Text);
         }
 
         private void frmAuditLog_Load(object sender, EventArgs e)

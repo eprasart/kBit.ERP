@@ -1,21 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Data;
-using System.IO;
-using ServiceStack.OrmLite;
-using ServiceStack.DataAnnotations;
 using Npgsql;
-using System.Windows.Forms;
+using Dapper;
+using kBit.ERP.SYS;
+using System.IO;
 
 namespace kBit.ERP.SYS
 {
-    [Alias("SysErrorLog")]
     class ErrorLog
     {
-        [AutoIncrement]
-        public long Id { get; set; }
-        //[References(typeof(Session))]
+        public long Id { get; set; }        
         public long SessionId { get; set; }
-        [Default(typeof(DateTime), "now()")]
         public DateTime? At { get; set; }
         public string Message { get; set; }
         public string Trace { get; set; }
@@ -41,7 +38,7 @@ namespace kBit.ERP.SYS
             if (filter.Length > 0)
                 sql += " and (message ~* :filter or type ~* :filter or module ~* :filter)";
             sql += "\norder by login_at desc, log_at desc";
-            var cmd = new NpgsqlCommand(sql, new NpgsqlConnection(Database.ConnectionString));
+            var cmd = new NpgsqlCommand(sql, SqlFacade.Connection);
             if (filter.Length > 0)
                 cmd.Parameters.AddWithValue(":filter", filter);
             var da = new NpgsqlDataAdapter(cmd);
@@ -52,18 +49,18 @@ namespace kBit.ERP.SYS
 
         private static void Save(ErrorLog m)
         {
-            DateTime? ts = Database.GetCurrentTimeStamp();
+
             try
             {
                 if (m.Id == 0)
                 {
                     m.SessionId = App.session.Id;
-                    m.At = ts;
-                    Database.Connection.Insert(m);
+                    var sql = "insert into sys_error_log (session_id, at, message, trace, info) values (@session_id, @at, @message, @trace, @info)";
+                    SqlFacade.Connection.Execute(sql, m);
                 }
                 else
                 {
-                    //Database.Connection.UpdateOnly(m, p => new { p.Username }, p => p.Id == m.Id);
+                    //SqlFacade.Connection.UpdateOnly(m, p => new { p.Username }, p => p.Id == m.Id);
                 }
             }
             catch (Exception ex)
@@ -74,13 +71,14 @@ namespace kBit.ERP.SYS
 
         public static ErrorLog Select(long Id)
         {
-            return Database.Connection.SingleById<ErrorLog>(Id);
+            var sql = "select * from sys_error_log where id=@id";
+            return SqlFacade.Connection.Query<ErrorLog>(sql, new { id = Id }).Single();
         }
 
         public static void SetStatus(long Id, string s)
         {
-            DateTime? ts = Database.GetCurrentTimeStamp();
-            Database.Connection.UpdateOnly(new ErrorLog { Status = s }, p => p.Id == Id);
+            var sql = "update sys_error_log set status=@Status where id=@Id";
+            SqlFacade.Connection.Execute(sql, new { Status = s, Id = Id });
         }
 
         /// <summary>

@@ -1,35 +1,55 @@
-﻿using ServiceStack.OrmLite;
-using System;
+﻿using System;
 using System.Data;
 using System.Windows.Forms;
 using kBit.ERP;
 using Npgsql;
+using Dapper;
 using System.Text;
 using System.IO;
 
 namespace kBit.ERP
 {
-    class Database
+    class SqlFacade
     {
         public static string ConnectionString = "";
-        public static OrmLiteConnectionFactory Factory = null;
-        public static IDbConnection Connection = null;
+        public static NpgsqlConnection Connection = null;
 
-        public static void PrepareDatabase()
+        public static void EnsureDBSetup()
         {
-            //Connection.DropTables(typeof(SM.SessionLog), typeof(SM.Session));
-            Connection.CreateTableIfNotExists(typeof(IC.Location), typeof(SM.Session), typeof(SM.SessionLog), typeof(SYS.ErrorLog));
-            Connection.CreateTableIfNotExists(typeof(SM.User), typeof(SM.Role), typeof(SM.UserRole), typeof(SM.Function), typeof(SM.UserFunction), typeof(SM.RoleFunction));
+            ////using (var cnn = GetOpenConnection())
+            ////{
+            ////    var cmd = cnn.CreateCommand();
+            ////    cmd.CommandText = Properties.Resources.Script;
+            ////    cmd.Connection = cnn;
+            ////    cmd.ExecuteNonQuery();
+            ////}
         }
 
-        public static DateTime GetCurrentTimeStamp()
+        public static void OpenConnection()
         {
-            return Connection.Scalar<DateTime>("select now()");
+            //var connection = new NpgsqlConnection(ConnectionString);
+            //connection.Open();
+            //return connection;            
+            Connection = new NpgsqlConnection(ConnectionString);            
+            Connection.Open();
         }
+
+
+
+        //public static DateTime GetCurrentTimeStamp()
+        //{
+        //    DateTime? ts=null;
+        //    using(var cnn = GetOpenConnection())
+        //    {
+        //       ts = cnn.Query<DateTime>("select now()");
+        //        cnn.Close();
+        //    }
+        //    return ts; // Connection.Scalar<DateTime>("select now()");
+        //}
 
         public static string ExcuteString(string sql)
         {
-            return Connection.Scalar<string>(sql);
+            return "";  //todo: Connection.Scalar<string>(sql);
         }
 
         public static DataTable GetDataTable(string sql)
@@ -39,7 +59,7 @@ namespace kBit.ERP
 
         public static DataTable GetDataTable(NpgsqlCommand cmd)
         {
-            cmd.Connection = new NpgsqlConnection(Database.ConnectionString);
+            cmd.Connection = new NpgsqlConnection(SqlFacade.ConnectionString);
             var da = new NpgsqlDataAdapter(cmd);
             var dt = new DataTable();
             da.Fill(dt);
@@ -53,7 +73,7 @@ namespace kBit.ERP
 
         public static NpgsqlDataReader GetDataReader(NpgsqlCommand cmd)
         {
-            cmd.Connection = new NpgsqlConnection(Database.ConnectionString);
+            cmd.Connection = new NpgsqlConnection(SqlFacade.ConnectionString);
             cmd.Connection.Open();
             return cmd.ExecuteReader(CommandBehavior.CloseConnection);
         }
@@ -111,20 +131,6 @@ namespace kBit.ERP
             }
             if (open) System.Diagnostics.Process.Start(path);   // Open file
             return result;
-        }
-    }
-
-    class SQL
-    {
-        public static string BuildWhere(params string[] colNames)
-        {
-            string sWhere = "";
-            //foreach (var col in colNames)
-            //{
-            //    sWhere+=col + " ~* :filter or "
-            //}
-
-            return sWhere;
         }
     }
 }
