@@ -278,7 +278,7 @@ namespace kBit.ERP.IC
             // If referenced
             //todo: check if exist in ic_item
             // If locked
-            var lInfo = LocationFacade.GetLockInfo(Id);
+            ////var lInfo = LocationFacade.GetLockInfo(Id);
             string msg = "";
             ////if (lInfo.IsLocked)
             ////{
@@ -304,18 +304,18 @@ namespace kBit.ERP.IC
 
         private void btnCopy_Click(object sender, EventArgs e)
         {
-        ////    if (!Privilege.CanAccess(Function, "N"))
-        ////    {
-        ////        MessageBox.Show("You don't have the privilege for perform this command.", "Copy", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        ////        SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_NoAccess, "Copy: No access");
-        ////        return;
-        ////    }
-        ////    Id = 0;
-        ////    if (IsExpand) picExpand_Click(sender, e);
-        ////    txtCode.Focus();
-        ////    LockControls(false);
-        ////    SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Copy, "Copy from Id=" + dgvList.Id + "Code=" + txtCode.Text);
-        ////    IsDirty = false;
+            if (!Privilege.CanAccess(Function, "N"))
+            {
+                MessageBox.Show("You don't have the privilege for perform this command.", "Copy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_NoAccess, "Copy: No access");
+                return;
+            }
+            Id = 0;
+            if (IsExpand) picExpand_Click(sender, e);
+            txtCode.Focus();
+            LockControls(false);
+            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Copy, "Copy from Id=" + dgvList.Id + "Code=" + txtCode.Text);
+            IsDirty = false;
         }
 
         private void picExpand_Click(object sender, EventArgs e)
@@ -343,83 +343,83 @@ namespace kBit.ERP.IC
 
         private void btnActive_Click(object sender, EventArgs e)
         {
-        ////    var Id = dgvList.Id;
-        ////    if (Id == 0) return;
+            var Id = dgvList.Id;
+            if (Id == 0) return;
 
-        ////    string status = btnActive.Text.StartsWith("I") ? Type.RecordStatus_InActive : Type.RecordStatus_Active;
-        ////    // If referenced
-        ////    //todo: check if already used in ic_item
+            string status = btnActive.Text.StartsWith("I") ? Type.RecordStatus_InActive : Type.RecordStatus_Active;
+            // If referenced
+            //todo: check if already used in ic_item
 
-        ////    // If locked
-        ////    var lInfo = LocationFacade.GetLockInfo(Id);
-        ////    if (lInfo.IsLocked)
-        ////    {
-        ////        string msg = "Record is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
-        ////        if (!Privilege.CanAccess(Function, "O"))
-        ////        {
-        ////            MessageBox.Show(msg, "Active/Inactive", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        ////            return;
-        ////        }
-        ////        else
-        ////            if (MessageBox.Show(msg + "\nAre you sure you want to proceed?", "Active/Inactive", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
-        ////                return;
-        ////    }
+            // If locked
+            ////var lInfo = LocationFacade.GetLockInfo(Id);
+            ////if (lInfo.IsLocked)
+            ////{
+            ////    string msg = "Record is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
+            ////    if (!Privilege.CanAccess(Function, "O"))
+            ////    {
+            ////        MessageBox.Show(msg, "Active/Inactive", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            ////        return;
+            ////    }
+            ////    else
+            ////        if (MessageBox.Show(msg + "\nAre you sure you want to proceed?", "Active/Inactive", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+            ////            return;
+            ////}
 
-        ////    LocationFacade.SetStatus(Id, status);
-        ////    RefreshGrid();
-        ////    SessionLogFacade.Log(Type.Priority_Caution, Module, status == "I" ? Type.Log_Inactive : Type.Log_Active, "Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+            LocationFacade.SetStatus(Id, status);
+            RefreshGrid();
+            SessionLogFacade.Log(Type.Priority_Caution, Module, status == "I" ? Type.Log_Inactive : Type.Log_Active, "Id=" + dgvList.Id + ", Code=" + txtCode.Text);
         }
 
         private void btnUnlock_Click(object sender, EventArgs e)
         {
-        ////    //todo: previlege
-        ////    if (IsExpand) picExpand_Click(sender, e);
-        ////    Id = dgvList.Id;
-        ////    // Cancel
-        ////    if (btnUnlock.Text == "Cance&l")
-        ////    {
-        ////        if (IsDirty)
-        ////        {
-        ////            var result = MessageBox.Show("Do you want to save changes?", "Cancel", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-        ////            if (result == System.Windows.Forms.DialogResult.Yes) // Save then close
-        ////                btnSave_Click(null, null);
-        ////            else if (result == System.Windows.Forms.DialogResult.No)
-        ////                LoadData(); // Load original back if changes (dirty)
-        ////            else if (result == System.Windows.Forms.DialogResult.Cancel)
-        ////                return;
-        ////        }
-        ////        LockControls(true);
-        ////        dgvList.Focus();
-        ////        LocationFacade.ReleaseLock(dgvList.Id);
-        ////        if (dgvList.CurrentRow != null && !dgvList.CurrentRow.Selected)
-        ////            dgvList.CurrentRow.Selected = true;
-        ////        SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Unlock, "Unlock cancel. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
-        ////        btnUnlock.ToolTipText = "Unlock (Ctrl+L)";
-        ////        IsDirty = false;
-        ////        return;
-        ////    }
-        ////    // Unlock
-        ////    if (Id == 0) return;
-        ////    var lInfo = LocationFacade.GetLockInfo(Id);
+            //todo: previlege
+            if (IsExpand) picExpand_Click(sender, e);
+            Id = dgvList.Id;
+            // Cancel
+            if (btnUnlock.Text == "Cance&l")
+            {
+                if (IsDirty)
+                {
+                    var result = MessageBox.Show("Do you want to save changes?", "Cancel", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                    if (result == System.Windows.Forms.DialogResult.Yes) // Save then close
+                        btnSave_Click(null, null);
+                    else if (result == System.Windows.Forms.DialogResult.No)
+                        LoadData(); // Load original back if changes (dirty)
+                    else if (result == System.Windows.Forms.DialogResult.Cancel)
+                        return;
+                }
+                LockControls(true);
+                dgvList.Focus();
+                ////LocationFacade.ReleaseLock(dgvList.Id);
+                if (dgvList.CurrentRow != null && !dgvList.CurrentRow.Selected)
+                    dgvList.CurrentRow.Selected = true;
+                SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Unlock, "Unlock cancel. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+                btnUnlock.ToolTipText = "Unlock (Ctrl+L)";
+                IsDirty = false;
+                return;
+            }
+            // Unlock
+            if (Id == 0) return;
+            ////var lInfo = LocationFacade.GetLockInfo(Id);
 
-        ////    if (lInfo.IsLocked) // Check if record is locked
-        ////    {
-        ////        string msg = "Record is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
-        ////        if (!Privilege.CanAccess(Function, "O"))
-        ////        {
-        ////            MessageBox.Show(msg, "Unlock", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        ////            return;
-        ////        }
-        ////        else
-        ////            if (MessageBox.Show(msg + "\nDo you want to override?", "Unlock", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
-        ////                return;
-        ////    }
-        ////    txtDesc.SelectionStart = txtDesc.Text.Length;
-        ////    txtDesc.Focus();
+            ////if (lInfo.IsLocked) // Check if record is locked
+            ////{
+            ////    string msg = "Record is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
+            ////    if (!Privilege.CanAccess(Function, "O"))
+            ////    {
+            ////        MessageBox.Show(msg, "Unlock", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            ////        return;
+            ////    }
+            ////    else
+            ////        if (MessageBox.Show(msg + "\nDo you want to override?", "Unlock", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+            ////            return;
+            ////}
+            txtDesc.SelectionStart = txtDesc.Text.Length;
+            txtDesc.Focus();
             LockControls(false);
-        ////    LocationFacade.Lock(dgvList.Id);
-        ////    SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Lock, "Locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
-        ////    btnUnlock.ToolTipText = "Cancel (Esc or Ctrl+L)";
+            ////LocationFacade.Lock(dgvList.Id);
+            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Lock, "Locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+            btnUnlock.ToolTipText = "Cancel (Esc or Ctrl+L)";
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

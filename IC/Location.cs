@@ -30,9 +30,11 @@ namespace kBit.ERP.IC
 
     static class LocationFacade
     {
+        const string TableName = "ic_location";
+
         public static DataTable GetDataTable(string filter = "", string status = "")
         {
-            var sql = "select id, code, description, name, phone, fax, email, address from ic_location where 1 = 1";
+            var sql = "select id, code, description, name, phone, fax, email, address from " + TableName + " ic_location where 1 = 1";
             if (status.Length == 0)
                 sql += " and status <> 'X'";
             else
@@ -53,18 +55,16 @@ namespace kBit.ERP.IC
             string sql = "";
             if (m.Id == 0)
             {
-                m.Status = Type.RecordStatus_Active;
-                ////m.insert_by = App.session.Username;
-                sql = "insert into ic_location (code, description, address, name, phone, fax, email, note, insert_by)\n" +
-                    "values (@code, @description, @address, @name, @phone, @fax, @email, @note, @insertby) returning id";
-                m.Id = SqlFacade.Connection.Query<long>(sql, m).Single(); // New inserted sequence                    
+                m.InsertBy = App.session.Username;
+                sql = "insert into " + TableName + " (code, description, address, name, phone, fax, email, note, insert_by)\n" +
+                    "values (:Code, :Description, :Address, :Name, :Phone, :Fax, :Email, :Note, :InsertBy) returning id";
+                m.Id = SqlFacade.Connection.Query<long>(sql, m).Single();
             }
             else
             {
-                ////m.change_by = App.session.Username;
-                ////m.change_at = ts;
-                sql = "update ic_location set code=@code, description=@description, address=@address, name=@name, phone=@phone, fax=@fax, email=@email, " +
-                    "note=@note, change_by=@changeby, change_at=now() where id=@id";
+                m.ChangeBy = App.session.Username;
+                sql = "update ic_location set code=:Code, description=:Description, address=:Address, name=:Name, phone=:Phone, fax=:Fax, email=:Email, " +
+                    "note=:Note, change_by=:ChangeBy, change_at=now() where id=:Id";
                 SqlFacade.Connection.Execute(sql, m);
                 ////if (IsLocked(m.id)) ReleaseLock(m.id);  // If record is locked then unlock
             }
@@ -73,42 +73,42 @@ namespace kBit.ERP.IC
 
         public static Location Select(long Id)
         {
-            return SqlFacade.Connection.Query<Location>("select * from ic_location where id=@id", new { id = Id }).Single();
+            return SqlFacade.Connection.Query<Location>("select * from " + TableName + " where id=@Id", new { Id = Id }).Single();
         }
 
         public static void SetStatus(long Id, string s)
         {
-            var sql = "update ic_location set status=@status, change_by=@changeby, change_at=now() where id=@id";
-            SqlFacade.Connection.Execute(sql, new { Status = s, ChangeBy = App.session.Username, id = Id });
+            var sql = "update " + TableName + " set status=:Status, change_by=:ChangeBy, change_at=now() where id=:Id";
+            SqlFacade.Connection.Execute(sql, new { Status = s, ChangeBy = App.session.Username, Id = Id });
         }
 
-        public static bool IsLocked(long Id)
-        {
-            return SqlFacade.Connection.Exists<Location>("Id = @Id and Lock_By = @LockBy", new { Id = Id, LockBy = App.session.Username });
-        }
+        ////public static bool IsLocked(long Id)
+        ////{
+        ////    return SqlFacade.Connection.Exists<Location>("Id = @Id and Lock_By = @LockBy", new { Id = Id, LockBy = App.session.Username });
+        ////}
 
-        public static LockInfo GetLockInfo(long Id)
-        {
-            var m = Select(Id);
-            var l = new LockInfo();
-            l.Id = Id;
-            l.LockBy = m.lock_by;
-            l.LockAt = m.lock_at;
-            return l;
-        }
+        ////public static LockInfo GetLockInfo(long Id)
+        ////{
+        ////    var m = Select(Id);
+        ////    var l = new LockInfo();
+        ////    l.Id = Id;
+        ////    l.LockBy = m.lock_by;
+        ////    l.LockAt = m.lock_at;
+        ////    return l;
+        ////}
 
-        public static void Lock(long Id)
-        {
-            DateTime ts = SqlFacade.GetCurrentTimeStamp();
-            SqlFacade.Connection.UpdateOnly(new Location { lock_by = App.session.Username, lock_at = ts }, p => new { p.LockBy, p.LockAt }, p => p.Id == Id);
-        }
+        ////public static void Lock(long Id)
+        ////{
+        ////    DateTime ts = SqlFacade.GetCurrentTimeStamp();
+        ////    SqlFacade.Connection.UpdateOnly(new Location { lock_by = App.session.Username, lock_at = ts }, p => new { p.LockBy, p.LockAt }, p => p.Id == Id);
+        ////}
 
-        public static void ReleaseLock(long Id)
-        {
-            if (Id == 0) return;
-            DateTime ts = SqlFacade.GetCurrentTimeStamp();
-            SqlFacade.Connection.UpdateOnly(new Location { lock_by = null }, p => p.LockBy, p => p.Id == Id);
-        }
+        ////public static void ReleaseLock(long Id)
+        ////{
+        ////    if (Id == 0) return;
+        ////    DateTime ts = SqlFacade.GetCurrentTimeStamp();
+        ////    SqlFacade.Connection.UpdateOnly(new Location { lock_by = null }, p => p.LockBy, p => p.Id == Id);
+        ////}
 
         public static bool IsExist(string Code, long Id = 0)
         {
