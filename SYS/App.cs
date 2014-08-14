@@ -83,7 +83,7 @@ namespace kBit.ERP.SYS
 
         private static void SetVersion()
         {
-            version = Common.RemoveLastDotZero(Assembly.GetEntryAssembly().GetName().Version.ToString());
+            version = Util.RemoveLastDotZero(Assembly.GetEntryAssembly().GetName().Version.ToString());
         }
 
         private static void LoadSettings()

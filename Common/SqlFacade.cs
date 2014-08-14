@@ -16,8 +16,10 @@ namespace kBit.ERP
 
         public static void EnsureDBSetup()
         {
-
-
+            var ScriptPath = Path.Combine(Application.StartupPath, "script_init.sql");
+            var sql = Util.ReadTextFile(ScriptPath);
+            if (sql.Length == 0) return;
+            SqlFacade.Connection.Execute(sql);
         }
 
         public static void OpenConnection()
@@ -115,7 +117,7 @@ namespace kBit.ERP
             }
             dr.Close();
 
-            while (Common.IsFileLocked(path))   // Check if file is being used
+            while (Util.IsFileLocked(path))   // Check if file is being used
             {
                 if (MessageBox.Show("'" + Path.GetFileName(path) + "' is being used by another process.\nPlease close it and try again.", "Export", MessageBoxButtons.RetryCancel, MessageBoxIcon.Question) == DialogResult.Cancel) return 0;
                 continue;

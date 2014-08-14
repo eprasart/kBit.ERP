@@ -8,11 +8,11 @@ using kBit.ERP.SYS;
 using System.Windows.Forms;
 
 namespace kBit.ERP.SM
-{    
+{
     public class User
     {
-         public long Id { get; set; }
-         public string Username { get; set; }
+        public long Id { get; set; }
+        public string Username { get; set; }
         public string FullName { get; set; }
         public string Pwd { get; set; }
         public DateTime? PwdChangeOn { get; set; }
@@ -32,7 +32,7 @@ namespace kBit.ERP.SM
         public long SessionId { get; set; }
         public string LockBy { get; set; }
         public DateTime? LockAt { get; set; }
-        public string InsertBy { get; set; }        
+        public string InsertBy { get; set; }
         public DateTime? InsertAt { get; set; }
         public string ChangeBy { get; set; }
         public DateTime? ChangeAt { get; set; }
@@ -40,6 +40,8 @@ namespace kBit.ERP.SM
 
     public static class UserFacade
     {
+        const string TableName = "sm_user";
+
         //public static DataTable GetDataTable(string filter = "", string status = "")
         //{
         //    var sql = "select id, username, full_name, phone, email from sm_user where 1 = 1";
@@ -90,15 +92,15 @@ namespace kBit.ERP.SM
         //    return m.Id;
         //}
 
-        //public static User Select(long Id)
-        //{
-        //    return SqlFacade.Connection.SingleById<User>(Id);
-        //}
+        public static User Select(long Id)
+        {
+            return SqlFacade.Connection.Query<User>("select * from " + TableName + " where id=@Id", new { Id = Id }).Single();
+        }
 
-        //public static User Select(string usr)
-        //{
-        //    return SqlFacade.Connection.SingleWhere<User>("Username", usr);
-        //}
+        public static User Select(string usr)
+        {
+            return SqlFacade.Connection.Query<User>("select * from " + TableName + " where username=@usr", new { usr = usr }).Single();
+        }
 
         //public static void SetStatus(long Id, string s)
         //{
@@ -146,13 +148,13 @@ namespace kBit.ERP.SM
         //    SqlFacade.Connection.UpdateOnly(m, p => new { p.Pwd }, p => p.Id == m.Id);
         //}
 
-        //public static bool IsPwdCorrect(long id, string pwd)
-        //{
-        //    string sql = "SELECT (pwd = crypt(@pwd, pwd)) AS pswmatch FROM sm_user where id = @id";
-        //    return SqlFacade.Connection.SqlScalar<bool>(sql, new { pwd = pwd, id = id });
-        //}
+        public static bool IsPwdCorrect(long id, string pwd)
+        {
+            string sql = "SELECT (pwd = crypt(@pwd, pwd)) AS pswmatch FROM sm_user where id = @id";
+            return SqlFacade.Connection.ExecuteScalar<bool>(sql, new { pwd = pwd, id = id });
+        }
     }
-   
+
     //public class Function
     //{
     //    public long Id { get; set; }
@@ -169,7 +171,7 @@ namespace kBit.ERP.SM
     //    public string ChangeBy { get; set; }
     //    public DateTime? ChangeAt { get; set; }
     //}
-    
+
     //public class Role
     //{
     //    [AutoIncrement]

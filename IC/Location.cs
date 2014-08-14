@@ -112,7 +112,8 @@ namespace kBit.ERP.IC
 
         public static bool IsExist(string Code, long Id = 0)
         {
-            return false; ////return SqlFacade.Connection.Exists<Location>("Id <> @Id and Status <> 'X' and Code = @Code", new { Id = Id, Code = Code });  // Also check in 'Inactive', except 'X' (Deleted)
+            //return false; ////return SqlFacade.Connection.Exists<Location>("Id <> @Id and Status <> 'X' and Code = @Code", new { Id = Id, Code = Code });  // Also check in 'Inactive', except 'X' (Deleted)
+            return SqlFacade.Connection.ExecuteScalar<bool>("select exists(select 1 from ic_location where id<>@Id and status <> 'X' and code = @Code)", new { Id = Id, Code = Code });
         }
 
         public static void Export()

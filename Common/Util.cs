@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace kBit
 {
-    class Common
+    class Util
     {
         public static string RemoveLastDotZero(string v)
         {
@@ -49,6 +49,18 @@ namespace kBit
             }
             //file is not locked
             return false;
+        }
+
+        public static string ReadTextFile(string path)
+        {
+            if (!File.Exists(path)) return "";
+            var content = "";
+            using (var sr = new StreamReader(path))
+            {
+                content = sr.ReadToEnd();
+                sr.Close();
+            }
+            return content;
         }
     }
 

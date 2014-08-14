@@ -73,7 +73,7 @@ namespace kBit.ERP.SM
 
         private bool IsValidated()
         {
-           
+            return true;    //// todo: 
         }
 
         private void LoadData()
@@ -150,7 +150,7 @@ namespace kBit.ERP.SM
                 log.Priority = Type.Priority_Caution;
                 log.Type = Type.Log_Update;
             }
-            m.Id = UserFacade.Save(m);
+            ////m.Id = UserFacade.Save(m);
             if (dgvList.RowCount > 0) rowIndex = dgvList.CurrentRow.Index;
             RefreshGrid(m.Id);
             LockControls();
