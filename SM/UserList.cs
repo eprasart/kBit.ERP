@@ -27,24 +27,7 @@ namespace kBit.ERP.SM
 
         private void RefreshGrid(long seq = 0)
         {
-            if (dgvList.RowCount > 0) rowIndex = dgvList.CurrentRow.Index;
-
-            dgvList.DataSource = UserFacade.GetDataTable(txtSearch.Text, GetStatus());
-            if (dgvList.RowCount > 0)
-                if (seq == 0)
-                {
-                    if (rowIndex >= dgvList.RowCount) rowIndex = dgvList.RowCount - 1;
-                    dgvList.CurrentCell = dgvList[1, rowIndex];
-                }
-                else
-                    foreach (DataGridViewRow row in dgvList.Rows)
-                        if ((long)row.Cells[0].Value == seq)
-                        {
-                            Id = (int)seq;
-                            dgvList.CurrentCell = dgvList[1, row.Index];
-                            break;
-                        }
-            LoadData();
+           
         }
 
         private void LockControls(bool l = true)
@@ -90,22 +73,7 @@ namespace kBit.ERP.SM
 
         private bool IsValidated()
         {
-            string Code = txtUsernane.Text.Trim();
-            if (Code.Length == 0)
-            {
-                Common.ShowMsg("Username cannot be empty.", "Save");
-                txtUsernane.Focus();
-                return false;
-            }
-            if (UserFacade.IsExist(Code, Id))
-            {
-                Common.ShowMsg("Username already exists. It must be unique.", "Save");
-                txtUsernane.Focus();
-                txtUsernane.SelectAll();
-                return false;
-            }            
-            
-            return true;
+           
         }
 
         private void LoadData()
@@ -227,37 +195,12 @@ namespace kBit.ERP.SM
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            var Id = dgvList.Id;
-            if (Id == 0) return;
-
-            // If locked
-            var lInfo = UserFacade.GetLockInfo(Id);
-            string msg = "";
-            if (lInfo.IsLocked)
-            {
-                msg = "Record cannot be deleted because it is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
-                new frmMsg(msg).ShowDialog();
-                SessionLogFacade.Log(Type.Priority_Caution, Module, Type.Log_Delete, "Cannot delete while currently locked. Id=" + dgvList.Id + ", Username=" + txtUsernane.Text);
-                return;
-            }
-            // Delete
-            msg = "Are you sure you want to delete?";
-            if (MessageBox.Show(msg, "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
-                return;
-            UserFacade.SetStatus(Id, Type.RecordStatus_Deleted);
-            RefreshGrid();
-            if (dgvList.RowCount == 0) btnNew_Click(sender, e);
-
-            // log
-            SessionLogFacade.Log(Type.Priority_Warning, Module, Type.Log_Delete, "User Id=" + dgvList.Id + ", Username=" + txtUsernane.Text + " has been deleted");
+           
         }
 
         private void btnCopy_Click(object sender, EventArgs e)
         {
-            Id = 0;
-            txtUsernane.Focus();
-            LockControls(false);
-            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Copy, "Copy from Id=" + dgvList.Id + "Username=" + txtUsernane.Text);
+          
         }
 
         private void picExpand_Click(object sender, EventArgs e)
@@ -293,49 +236,12 @@ namespace kBit.ERP.SM
 
         private void btnActive_Click(object sender, EventArgs e)
         {
-            var Id = dgvList.Id;
-            if (Id == 0) return;
-            var lInfo = UserFacade.GetLockInfo(Id);
-            if (lInfo.IsLocked)
-            {
-                string msg = "Account is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
-                new frmMsg(msg).ShowDialog();
-                return;
-            }
-            string status = btnActive.Text.StartsWith("I") ? Type.RecordStatus_InActive : Type.RecordStatus_Active;
-            UserFacade.SetStatus(Id, status);
-            RefreshGrid();
-            SessionLogFacade.Log(Type.Priority_Caution, Module, status == "I" ? Type.Log_Inactive : Type.Log_Active, "Id=" + dgvList.Id + ", Username=" + txtUsernane.Text);
+            
         }
 
         private void btnUnlock_Click(object sender, EventArgs e)
         {
-            if (IsExpand) picExpand_Click(sender, e);
-            Id = dgvList.Id;
-            // Cancel
-            if (btnUnlock.Text == "Cance&l")
-            {                
-                LockControls(true);
-                //dgvList.CurrentCell = dgvList[1, rowIndex];
-                UserFacade.ReleaseLock(dgvList.Id);
-                if (dgvList.RowCount > 0 && !dgvList.CurrentRow.Selected)
-                    dgvList.CurrentRow.Selected = true;
-                SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Unlock, "Cancel lock, User=" + dgvList.Id);
-                return;
-            }
-            // Unlock
-            if (Id == 0) return;
-            var lInfo = UserFacade.GetLockInfo(Id);
 
-            if (lInfo.IsLocked) // Check if record is locked
-            {
-                string msg = "Account is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
-                new frmMsg(msg).ShowDialog();
-                return;
-            }
-            LockControls(false);
-            UserFacade.Lock(dgvList.Id);
-            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Lock, "Lock, User=" + dgvList.Id);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

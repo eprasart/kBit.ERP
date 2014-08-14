@@ -1,1 +1,0 @@
-﻿update ic_location set lock_by = null where lock_by is not null

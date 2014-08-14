@@ -16,13 +16,8 @@ namespace kBit.ERP
 
         public static void EnsureDBSetup()
         {
-            ////using (var cnn = GetOpenConnection())
-            ////{
-            ////    var cmd = cnn.CreateCommand();
-            ////    cmd.CommandText = Properties.Resources.Script;
-            ////    cmd.Connection = cnn;
-            ////    cmd.ExecuteNonQuery();
-            ////}
+
+
         }
 
         public static void OpenConnection()
@@ -30,7 +25,7 @@ namespace kBit.ERP
             //var connection = new NpgsqlConnection(ConnectionString);
             //connection.Open();
             //return connection;            
-            Connection = new NpgsqlConnection(ConnectionString);            
+            Connection = new NpgsqlConnection(ConnectionString);
             Connection.Open();
         }
 

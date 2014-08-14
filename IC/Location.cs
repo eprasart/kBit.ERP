@@ -36,7 +36,7 @@ namespace kBit.ERP.IC
         {
             var sql = "select id, code, description, name, phone, fax, email, address from " + TableName + " ic_location where 1 = 1";
             if (status.Length == 0)
-                sql += " and status <> 'X'";
+                sql += " and status <> '" + Type.RecordStatus_Deleted + "'";
             else
                 sql += " and status = '" + status + "'";
             if (filter.Length > 0)

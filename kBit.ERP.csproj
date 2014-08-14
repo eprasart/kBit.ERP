@@ -97,6 +97,12 @@
       <DependentUpon>AuditLog.cs</DependentUpon>
     </Compile>
     <Compile Include="SM\Branch.cs" />
+    <Compile Include="SM\Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SM\Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
     <Compile Include="SM\PwdReset.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,6 +111,13 @@
     </Compile>
     <Compile Include="SM\Session.cs" />
     <Compile Include="SM\SM.cs" />
+    <Compile Include="SM\UserList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SM\UserList.Designer.cs">
+      <DependentUpon>UserList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SYS\Config.cs" />
     <Compile Include="SYS\Log.cs" />
     <Compile Include="SYS\Msg.cs">
       <SubType>Form</SubType>
@@ -138,8 +151,14 @@
     <EmbeddedResource Include="SM\AuditLog.resx">
       <DependentUpon>AuditLog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SM\Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SM\PwdReset.resx">
       <DependentUpon>PwdReset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SM\UserList.resx">
+      <DependentUpon>UserList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SYS\Msg.resx">
       <DependentUpon>Msg.cs</DependentUpon>
@@ -155,6 +174,7 @@
     <EmbeddedResource Include="SYS\Splash.resx">
       <DependentUpon>Splash.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -229,9 +249,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Export.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\script.sql" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

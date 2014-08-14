@@ -12,13 +12,11 @@ namespace kBit.ERP.IC
 {
     public partial class frmLocationList : Form
     {
-        private long Id = 0;
-        private int RowIndex = 0;   // Current gird selected row
-        private bool IsExpand = false;
-        private bool IsDirty = false;
-        private bool IsIgnore = true;
-        private const string Module = "Location";   // Log module
-        public static string Function = "IC_LOC";
+        long Id = 0;
+        int RowIndex = 0;   // Current gird selected row
+        bool IsExpand = false;
+        bool IsDirty = false;
+        bool IsIgnore = true;
 
         public frmLocationList()
         {
@@ -29,9 +27,9 @@ namespace kBit.ERP.IC
         {
             var status = "";
             if (mnuShowA.Checked && !mnuShowI.Checked)
-                status = "A";
+                status = Type.RecordStatus_Active;
             else if (mnuShowI.Checked && !mnuShowA.Checked)
-                status = "I";
+                status = Type.RecordStatus_InActive;
             return status;
         }
 
@@ -101,16 +99,16 @@ namespace kBit.ERP.IC
 
         private void SetStatus(string stat)
         {
-            if (stat == "A")
+            if (stat == Type.RecordStatus_Active)
             {
-                if (btnActive.Text.StartsWith("I")) return;
+                if (btnActive.Text.StartsWith(Type.RecordStatus_InActive)) return;
                 btnActive.Text = "Inactiv&e";
                 if (btnActive.Image != Properties.Resources.Inactive)
                     btnActive.Image = Properties.Resources.Inactive;
             }
             else
             {
-                if (btnActive.Text.StartsWith("A")) return;
+                if (btnActive.Text.StartsWith(Type.RecordStatus_Active)) return;
                 btnActive.Text = "Activ&e";
                 if (btnActive.Image != Properties.Resources.Active)
                     btnActive.Image = Properties.Resources.Active;
@@ -119,6 +117,7 @@ namespace kBit.ERP.IC
 
         private bool IsValidated()
         {
+            //todo: show all error in just a message box with scroll down
             string Code = txtCode.Text.Trim();
             if (Code.Length == 0)
             {
@@ -172,7 +171,7 @@ namespace kBit.ERP.IC
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error while loading data.\n" + ex.Message, "Location", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    ////SYS.ErrorLogFacade.Log(ex);
+                    SYS.ErrorLogFacade.Log(ex);
                 }
             else    // when delete all => disable buttons and clear all controls
             {
@@ -191,17 +190,17 @@ namespace kBit.ERP.IC
             RefreshGrid();
             LoadData();
             //LockControls();
-            ////SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "Opened");
+            SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_Open, "Opened");
         }
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-            ////if (!Privilege.CanAccess(Function, "N"))
-            ////{
-            ////    MessageBox.Show("You don't have the privilege to perform this command.", "New", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            ////    SessionLogFacade.Log(Type.Priority_Caution, Module, Type.Log_NoAccess, "New: No access");
-            ////    return;
-            ////}
+            if (!Privilege.CanAccess(Type.Function_IC_Location, Type.Privilege_New))
+            {
+                MessageBox.Show("You don't have the privilege to perform this command.", "New", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Location, Type.Log_NoAccess, "New: No access");
+                return;
+            }
             if (IsExpand) picExpand_Click(sender, e);
             ClearAllBoxes();
             if (dgvList.CurrentRow != null)
@@ -210,7 +209,7 @@ namespace kBit.ERP.IC
             LockControls(false);
 
             if (dgvList.CurrentRow != null) RowIndex = dgvList.CurrentRow.Index;
-            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_New, "New clicked");
+            SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_New, "New clicked");
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -218,7 +217,7 @@ namespace kBit.ERP.IC
             if (!IsValidated()) return;
             Cursor = Cursors.WaitCursor;
             var m = new Location();
-            var log = new SessionLog { Module = Module };
+            var log = new SessionLog { Module = Type.Module_IC_Location };
             m.Id = Id;
             m.Code = txtCode.Text.Trim();
             m.Description = txtDesc.Text;
@@ -243,8 +242,8 @@ namespace kBit.ERP.IC
             RefreshGrid(m.Id);
             LockControls();
             Cursor = Cursors.Default;
-            ////log.Message = "Saved. Id=" + m.id + " , Code=" + txtCode.Text;
-            ////SessionLogFacade.Log(log);
+            log.Message = "Saved. Id=" + m.Id + " , Code=" + txtCode.Text;
+            SessionLogFacade.Log(log);
             IsDirty = false;
         }
 
@@ -265,7 +264,7 @@ namespace kBit.ERP.IC
 
         private void btnSaveNew_Click(object sender, EventArgs e)
         {
-            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_SaveAndNew, "Saved and new. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+            SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_SaveAndNew, "Saved and new. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
             btnSave_Click(sender, e);
             if (btnSaveNew.Enabled) return;
             btnNew_Click(sender, e);
@@ -299,22 +298,22 @@ namespace kBit.ERP.IC
             RefreshGrid();
 
             // log
-            ////SessionLogFacade.Log(Type.Priority_Warning, Module, Type.Log_Delete, "Deleted. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+            SessionLogFacade.Log(Type.Priority_Warning, Type.Module_IC_Location, Type.Log_Delete, "Deleted. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
         }
 
         private void btnCopy_Click(object sender, EventArgs e)
         {
-            if (!Privilege.CanAccess(Function, "N"))
+            if (!Privilege.CanAccess(Type.Function_IC_Location,Type.Privilege_New))
             {
                 MessageBox.Show("You don't have the privilege for perform this command.", "Copy", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_NoAccess, "Copy: No access");
+                SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_NoAccess, "Copy: No access");
                 return;
             }
             Id = 0;
             if (IsExpand) picExpand_Click(sender, e);
             txtCode.Focus();
             LockControls(false);
-            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Copy, "Copy from Id=" + dgvList.Id + "Code=" + txtCode.Text);
+            SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_Copy, "Copy from Id=" + dgvList.Id + "Code=" + txtCode.Text);
             IsDirty = false;
         }
 
@@ -367,12 +366,17 @@ namespace kBit.ERP.IC
 
             LocationFacade.SetStatus(Id, status);
             RefreshGrid();
-            SessionLogFacade.Log(Type.Priority_Caution, Module, status == "I" ? Type.Log_Inactive : Type.Log_Active, "Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+            SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Location, status == "I" ? Type.Log_Inactive : Type.Log_Active, "Id=" + dgvList.Id + ", Code=" + txtCode.Text);
         }
 
         private void btnUnlock_Click(object sender, EventArgs e)
         {
-            //todo: previlege
+            if (!Privilege.CanAccess(Type.Function_IC_Location, Type.Privilege_Update))
+            {
+                MessageBox.Show("You don't have the privilege for perform this command.", "Copy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_NoAccess, "Copy: No access");
+                return;
+            }
             if (IsExpand) picExpand_Click(sender, e);
             Id = dgvList.Id;
             // Cancel
@@ -393,7 +397,7 @@ namespace kBit.ERP.IC
                 ////LocationFacade.ReleaseLock(dgvList.Id);
                 if (dgvList.CurrentRow != null && !dgvList.CurrentRow.Selected)
                     dgvList.CurrentRow.Selected = true;
-                SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Unlock, "Unlock cancel. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+                SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_Unlock, "Unlock cancel. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
                 btnUnlock.ToolTipText = "Unlock (Ctrl+L)";
                 IsDirty = false;
                 return;
@@ -418,7 +422,7 @@ namespace kBit.ERP.IC
             txtDesc.Focus();
             LockControls(false);
             ////LocationFacade.Lock(dgvList.Id);
-            SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Lock, "Locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+            SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_Lock, "Locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
             btnUnlock.ToolTipText = "Cancel (Esc or Ctrl+L)";
         }
 
@@ -429,24 +433,24 @@ namespace kBit.ERP.IC
                 case Keys.Control | Keys.N:
                     if (btnNew.Enabled) btnNew_Click(null, null);
                     break;
-                ////case Keys.Control | Keys.Y:
-                ////    if (btnCopy.Enabled) btnCopy_Click(null, null);
-                ////    break;
-                ////case Keys.Control | Keys.L:
-                ////    if (btnUnlock.Enabled) btnUnlock_Click(null, null);
-                ////    break;
-                ////case Keys.Escape:
-                ////    if (btnUnlock.Text.StartsWith("C")) btnUnlock_Click(null, null);    // Cancel
-                ////    break;
-                ////case Keys.Control | Keys.S:
-                ////    if (btnSave.Enabled) btnSave_Click(null, null);
-                ////    break;
-                ////case Keys.Control | Keys.W:
-                ////    if (btnSaveNew.Enabled) btnSaveNew_Click(null, null);
-                ////    break;
-                ////case Keys.Control | Keys.E:
-                ////    if (btnActive.Enabled) btnActive_Click(null, null);
-                ////    break;
+                case Keys.Control | Keys.Y:
+                    if (btnCopy.Enabled) btnCopy_Click(null, null);
+                    break;
+                case Keys.Control | Keys.L:
+                    if (btnUnlock.Enabled) btnUnlock_Click(null, null);
+                    break;
+                case Keys.Escape:
+                    if (btnUnlock.Text.StartsWith("C")) btnUnlock_Click(null, null);    // Cancel
+                    break;
+                case Keys.Control | Keys.S:
+                    if (btnSave.Enabled) btnSave_Click(null, null);
+                    break;
+                case Keys.Control | Keys.W:
+                    if (btnSaveNew.Enabled) btnSaveNew_Click(null, null);
+                    break;
+                case Keys.Control | Keys.E:
+                    if (btnActive.Enabled) btnActive_Click(null, null);
+                    break;
                 case Keys.Control | Keys.F:
                     if (!txtFind.ReadOnly) txtFind.Focus();
                     break;
@@ -505,8 +509,8 @@ namespace kBit.ERP.IC
             }
             if (e.Cancel) return;
             IsDirty = false;
-            ////if (btnUnlock.Text == "Cance&l")
-            ////    btnUnlock_Click(null, null);
+            if (btnUnlock.Text == "Cance&l")
+                btnUnlock_Click(null, null);
         }
 
         private void txtCode_Leave(object sender, EventArgs e)
@@ -558,7 +562,7 @@ namespace kBit.ERP.IC
         private void dgvList_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode != Keys.Delete) return;
-            ////if (btnDelete.Enabled) btnDelete_Click(null, null);
+            if (btnDelete.Enabled) btnDelete_Click(null, null);
         }
 
         private void btnExport_Click(object sender, EventArgs e)

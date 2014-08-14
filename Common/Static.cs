@@ -5,36 +5,60 @@ namespace kBit
     public static class Type
     {
         // Record status type
-        public static string RecordStatus_Active = "A";
-        public static string RecordStatus_InActive = "I";
-        public static string RecordStatus_Deleted = "X";
+        public static readonly string RecordStatus_Active = "A";
+        public static readonly string RecordStatus_InActive = "I";
+        public static readonly string RecordStatus_Deleted = "X";
 
         // Record lock type
         public static string Lock_Locked = "L";
         public static string Lock_Unlock = "";
 
         // Session log priority
-        public static string Priority_Information = "I";
-        public static string Priority_Caution = "C";
-        public static string Priority_Warning = "W";
-        public static string Priority_Error = "E";
+        public static readonly string Priority_Information = "I";
+        public static readonly string Priority_Caution = "C";
+        public static readonly string Priority_Warning = "W";
+        public static readonly string Priority_Error = "E";
 
         // Session log type
-        public static string Log_Insert = "Insert";
-        public static string Log_Update = "Update";
-        public static string Log_Delete = "Delete";
-        public static string Log_New = "New";
-        public static string Log_Lock = "Lock";
-        public static string Log_Unlock = "Unlock";
-        public static string Log_Open = "Open";
-        public static string Log_Copy = "Copy";
-        public static string Log_Save = "Save";
-        public static string Log_SaveAndNew = "Save and New";
-        public static string Log_Active = "Active";
-        public static string Log_Inactive = "Inactive";
-        public static string Log_ResetPwd = "Password Reset";
-        public static string Log_Login = "Login";
-        public static string Log_Launch = "Launch";
-        public static string Log_NoAccess = "No Access";
+        public static readonly string Log_Insert = "Insert";
+        public static readonly string Log_Update = "Update";
+        public static readonly string Log_Delete = "Delete";
+        public static readonly string Log_New = "New";
+        public static readonly string Log_Lock = "Lock";
+        public static readonly string Log_Unlock = "Unlock";
+        public static readonly string Log_Open = "Open";
+        public static readonly string Log_Copy = "Copy";
+        public static readonly string Log_Save = "Save";
+        public static readonly string Log_SaveAndNew = "Save and New";
+        public static readonly string Log_Active = "Active";
+        public static readonly string Log_Inactive = "Inactive";
+        public static readonly string Log_ResetPwd = "Password Reset";
+        public static readonly string Log_Login = "Login";
+        public static readonly string Log_Launch = "Launch";
+        public static readonly string Log_NoAccess = "No Access";
+
+        // Module
+        public static readonly string Module_IC_Location = "IC Location";
+        public static readonly string Module_IC_Item = "IC Item";
+
+        // Function name
+        public static readonly string Function_IC_Location = "ICLOC";
+        public static readonly string Function_IC_Item = "ICITM";
+
+        // Privilege    //todo: privilege codes
+        public static readonly string Privilege_New = "N";  // New, Copy, Save
+        public static readonly string Privilege_Update = "U";   // Save (update), Unlock
+        public static readonly string Privilege_Delete = "D";
+        public static readonly string Privilege_ActiveInactive = "A";
+        public static readonly string Privilege_EditCode = "C";
+
+        public static readonly string Privilege_UpdatePrice = "P";
+        public static readonly string Privilege_Discount = "";
+        public static readonly string Privilege_ViewCost = "";
+
+        public static readonly string Privilege_Reverse = "R";
+        public static readonly string Privilege_Print = "";
+        public static readonly string Privilege_Generate = "";
+
     }
 }
