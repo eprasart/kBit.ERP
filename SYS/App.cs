@@ -9,6 +9,7 @@ using Npgsql;
 using Dapper;
 using System.Reflection;
 using kBit.ERP.SM;
+using System.Diagnostics;
 
 namespace kBit.ERP.SYS
 {
@@ -83,7 +84,8 @@ namespace kBit.ERP.SYS
 
         private static void SetVersion()
         {
-            version = Util.RemoveLastDotZero(Assembly.GetEntryAssembly().GetName().Version.ToString());
+            //version = Util.RemoveLastDotZero(Assembly.GetEntryAssembly().GetName().Version.ToString());
+            version = Util.RemoveLastDotZero(Application.ProductVersion);
         }
 
         private static void LoadSettings()

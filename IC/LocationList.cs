@@ -125,7 +125,7 @@ namespace kBit.ERP.IC
                 txtCode.Focus();
                 return false;
             }
-            if (LocationFacade.IsExist(Code, Id))
+            if (LocationFacade.Exists(Code, Id))
             {
                 MessageBox.Show("Code already exists. Enter a unique code.", "Save", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtCode.Focus();
@@ -366,7 +366,7 @@ namespace kBit.ERP.IC
 
             LocationFacade.SetStatus(Id, status);
             RefreshGrid();
-            SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Location, status == "I" ? Type.Log_Inactive : Type.Log_Active, "Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+            SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Location, status == Type.RecordStatus_InActive ? Type.Log_Inactive : Type.Log_Active, "Id=" + dgvList.Id + ", Code=" + txtCode.Text);
         }
 
         private void btnUnlock_Click(object sender, EventArgs e)
@@ -517,7 +517,7 @@ namespace kBit.ERP.IC
         {
             // Check if entered code already exists
             if (txtCode.ReadOnly) return;
-            if (LocationFacade.IsExist(txtCode.Text.Trim()))
+            if (LocationFacade.Exists(txtCode.Text.Trim()))
             {
                 MessageBox.Show("'" + txtCode.Text.Trim() + "' already exists. Enter a unique code.", "Location", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

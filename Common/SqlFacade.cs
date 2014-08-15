@@ -129,5 +129,34 @@ namespace kBit.ERP
             if (open) System.Diagnostics.Process.Start(path);   // Open file
             return result;
         }
+
+        public static string SqlSelect(string table, string columns, string where = "", string orderby = "")
+        {
+            var sql = "select " + columns + " from " + table;
+            if (where.Length > 0) sql += "\nwhere " + where;
+            if (orderby.Length > 0) sql += "\norder by " + orderby;
+            return sql;
+        }
+
+        public static string SqlExists(string table, string where)
+        {
+            var sql = SqlSelect(table, "1", where);
+            sql = "select exists(" + sql + ")";
+            return sql;
+        }
+
+        public static string SqlInsert(string table, string columns, string values, bool returnSeq = false)
+        {
+            var sql = string.Format("insert into {0} ({1})\nvalues ({2})", table, columns, values);
+            if (returnSeq) sql += "\nreturning id";
+            return sql;
+        }
+
+        public static string SqlUpdate(string table, string sets, string where = "")
+        {
+            var sql = "update " + table + " set " + sets;
+            if (where.Length > 0) sql += "\nwhere " + where;
+            return sql;
+        }
     }
 }

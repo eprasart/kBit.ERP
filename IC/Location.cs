@@ -34,7 +34,7 @@ namespace kBit.ERP.IC
 
         public static DataTable GetDataTable(string filter = "", string status = "")
         {
-            var sql = "select id, code, description, name, phone, fax, email, address from " + TableName + " ic_location where 1 = 1";
+            var sql = "select id, code, description, name, phone, fax, email, address from " + TableName + "\nwhere 1 = 1";
             if (status.Length == 0)
                 sql += " and status <> '" + Type.RecordStatus_Deleted + "'";
             else
@@ -55,16 +55,16 @@ namespace kBit.ERP.IC
             string sql = "";
             if (m.Id == 0)
             {
-                m.InsertBy = App.session.Username;
-                sql = "insert into " + TableName + " (code, description, address, name, phone, fax, email, note, insert_by)\n" +
-                    "values (:Code, :Description, :Address, :Name, :Phone, :Fax, :Email, :Note, :InsertBy) returning id";
+                m.InsertBy = App.session.Username;         
+                sql = SqlFacade.SqlInsert(TableName, "code, description, address, name, phone, fax, email, note, insert_by",
+                    ":Code, :Description, :Address, :Name, :Phone, :Fax, :Email, :Note, :InsertBy", true);
                 m.Id = SqlFacade.Connection.Query<long>(sql, m).Single();
             }
             else
             {
                 m.ChangeBy = App.session.Username;
-                sql = "update ic_location set code=:Code, description=:Description, address=:Address, name=:Name, phone=:Phone, fax=:Fax, email=:Email, " +
-                    "note=:Note, change_by=:ChangeBy, change_at=now() where id=:Id";
+                sql = SqlFacade.SqlUpdate(TableName, "code=:Code, description=:Description, address=:Address, name=:Name, phone=:Phone, fax=:Fax, email=:Email, " +
+                    "note=:Note, change_by=:ChangeBy, change_at=now()", "id=:Id");
                 SqlFacade.Connection.Execute(sql, m);
                 ////if (IsLocked(m.id)) ReleaseLock(m.id);  // If record is locked then unlock
             }
@@ -73,12 +73,13 @@ namespace kBit.ERP.IC
 
         public static Location Select(long Id)
         {
-            return SqlFacade.Connection.Query<Location>("select * from " + TableName + " where id=@Id", new { Id = Id }).Single();
+            var sql = SqlFacade.SqlSelect(TableName, "*", "id=@Id");
+            return SqlFacade.Connection.Query<Location>(sql, new { Id = Id }).Single();
         }
 
         public static void SetStatus(long Id, string s)
         {
-            var sql = "update " + TableName + " set status=:Status, change_by=:ChangeBy, change_at=now() where id=:Id";
+            var sql = SqlFacade.SqlUpdate(TableName + "status=:Status, change_by=:ChangeBy, change_at=now()", "id=:Id");
             SqlFacade.Connection.Execute(sql, new { Status = s, ChangeBy = App.session.Username, Id = Id });
         }
 
@@ -110,17 +111,19 @@ namespace kBit.ERP.IC
         ////    SqlFacade.Connection.UpdateOnly(new Location { lock_by = null }, p => p.LockBy, p => p.Id == Id);
         ////}
 
-        public static bool IsExist(string Code, long Id = 0)
+        public static bool Exists(string Code, long Id = 0)
         {
             //return false; ////return SqlFacade.Connection.Exists<Location>("Id <> @Id and Status <> 'X' and Code = @Code", new { Id = Id, Code = Code });  // Also check in 'Inactive', except 'X' (Deleted)
-            return SqlFacade.Connection.ExecuteScalar<bool>("select exists(select 1 from ic_location where id<>@Id and status <> 'X' and code = @Code)", new { Id = Id, Code = Code });
+            //return SqlFacade.Connection.ExecuteScalar<bool>("select exists(select 1 from " + TableName +" where id<>@Id and status <> 'X' and code = @Code)", new { Id = Id, Code = Code });            
+            var sql = SqlFacade.SqlExists(TableName, "id<>@Id and status <> 'X' and code = @Code");
+            return SqlFacade.Connection.ExecuteScalar<bool>(sql, new { Id = Id, Code = Code });
         }
 
         public static void Export()
         {
-            string sql = "select id \"Id\", code \"Code\", description \"Description\", address \"Address\", name \"Contact Name\", phone \"Phone\", fax \"Fax\"," +
-                "email \"Email\", note \"Note\", status \"Status\", insert_by \"Inserted By\", insert_at \"Inserted At\", change_by \"Changed By\", change_at \"Changed At\"\n" +
-                "from ic_location\nwhere status <> 'X'\norder by code";
+            string sql = SqlFacade.SqlSelect(TableName, "id \"Id\", code \"Code\", description \"Description\", address \"Address\", name \"Contact Name\", phone \"Phone\", fax \"Fax\", " +
+                "email \"Email\", note \"Note\", status \"Status\", insert_by \"Inserted By\", insert_at \"Inserted At\", change_by \"Changed By\", change_at \"Changed At\"",
+                "status <> '" + Type.RecordStatus_Deleted + "'", "code");
             SqlFacade.ExportToCSV(sql);
         }
     }
