@@ -36,7 +36,7 @@ WITH (
 );
 
 -- Table: sm_function
-REATE TABLE sm_function
+CREATE TABLE IF NOT EXISTS sm_function
 (
   id bigserial NOT NULL,
   name text NOT NULL,
