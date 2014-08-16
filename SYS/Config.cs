@@ -6,8 +6,7 @@ using System.Data;
 using Npgsql;
 
 namespace kBit.ERP.SYS
-{
-    //[Alias("SysConfig")]
+{    
     class Config
     {
         public long Id { get; set; }
@@ -25,6 +24,7 @@ namespace kBit.ERP.SYS
 
     static class ConfigFacade
     {
+
     
     }
 }

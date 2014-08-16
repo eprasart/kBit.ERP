@@ -11,7 +11,7 @@ namespace kBit.ERP.SYS
 {
     class ErrorLog
     {
-        public long Id { get; set; }        
+        public long Id { get; set; }
         public long SessionId { get; set; }
         public DateTime? At { get; set; }
         public string Message { get; set; }
@@ -29,6 +29,7 @@ namespace kBit.ERP.SYS
             get { return logFile.FileName; }
             set { logFile.FileName = value; }
         }
+
         public static DataTable GetDataTable(string where, string filter = "")
         {
             var sql = "select l.id, username, login_at, logout_at, version, machine_name, machine_user_name, log_at, priority, module, type, message\n" +
@@ -49,7 +50,6 @@ namespace kBit.ERP.SYS
 
         private static void Save(ErrorLog m)
         {
-
             try
             {
                 if (m.Id == 0)
@@ -72,13 +72,13 @@ namespace kBit.ERP.SYS
         public static ErrorLog Select(long Id)
         {
             var sql = "select * from sys_error_log where id=@id";
-            return SqlFacade.Connection.Query<ErrorLog>(sql, new { id = Id }).Single();
+            return SqlFacade.Connection.Query<ErrorLog>(sql, new { Id }).FirstOrDefault();
         }
 
         public static void SetStatus(long Id, string s)
         {
-            var sql = "update sys_error_log set status=@Status where id=@Id";
-            SqlFacade.Connection.Execute(sql, new { Status = s, Id = Id });
+            var sql = "update sys_error_log set status = @Status where id = @Id";
+            SqlFacade.Connection.Execute(sql, new { Status = s,  Id });
         }
 
         /// <summary>

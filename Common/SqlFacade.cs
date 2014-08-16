@@ -31,22 +31,14 @@ namespace kBit.ERP
             Connection.Open();
         }
 
+        public static DateTime GetCurrentTimeStamp()
+        {                        
+            return Connection.ExecuteScalar<DateTime>("select now()");
+        }
 
-
-        //public static DateTime GetCurrentTimeStamp()
-        //{
-        //    DateTime? ts=null;
-        //    using(var cnn = GetOpenConnection())
-        //    {
-        //       ts = cnn.Query<DateTime>("select now()");
-        //        cnn.Close();
-        //    }
-        //    return ts; // Connection.Scalar<DateTime>("select now()");
-        //}
-
-        public static string ExcuteString(string sql)
+        public static string ExecuteString(string sql)
         {
-            return "";  //todo: Connection.Scalar<string>(sql);
+            return Connection.ExecuteScalar<string>(sql);
         }
 
         public static DataTable GetDataTable(string sql)

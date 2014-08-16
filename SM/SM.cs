@@ -94,12 +94,12 @@ namespace kBit.ERP.SM
 
         public static User Select(long Id)
         {
-            return SqlFacade.Connection.Query<User>("select * from " + TableName + " where id=@Id", new { Id = Id }).Single();
+            return SqlFacade.Connection.Query<User>("select * from " + TableName + " where id=@Id", new { Id = Id }).FirstOrDefault();
         }
 
         public static User Select(string usr)
         {
-            return SqlFacade.Connection.Query<User>("select * from " + TableName + " where username=@usr", new { usr = usr }).Single();
+            return SqlFacade.Connection.Query<User>("select * from " + TableName + " where username=@usr", new { usr = usr }).FirstOrDefault();
         }
 
         //public static void SetStatus(long Id, string s)

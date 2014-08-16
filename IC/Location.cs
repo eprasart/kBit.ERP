@@ -20,8 +20,6 @@ namespace kBit.ERP.IC
         public string Email { get; set; }
         public string Note { get; set; }
         public String Status { get; set; }
-        public string LockBy { get; set; }
-        public DateTime? LockAt { get; set; }
         public string InsertBy { get; set; }
         public DateTime? InsertAt { get; set; }
         public string ChangeBy { get; set; }
@@ -55,10 +53,10 @@ namespace kBit.ERP.IC
             string sql = "";
             if (m.Id == 0)
             {
-                m.InsertBy = App.session.Username;         
+                m.InsertBy = App.session.Username;
                 sql = SqlFacade.SqlInsert(TableName, "code, description, address, name, phone, fax, email, note, insert_by",
                     ":Code, :Description, :Address, :Name, :Phone, :Fax, :Email, :Note, :InsertBy", true);
-                m.Id = SqlFacade.Connection.Query<long>(sql, m).Single();
+                m.Id = SqlFacade.Connection.ExecuteScalar<long>(sql, m);
             }
             else
             {
@@ -74,13 +72,13 @@ namespace kBit.ERP.IC
         public static Location Select(long Id)
         {
             var sql = SqlFacade.SqlSelect(TableName, "*", "id=@Id");
-            return SqlFacade.Connection.Query<Location>(sql, new { Id = Id }).Single();
+            return SqlFacade.Connection.Query<Location>(sql, new { Id }).FirstOrDefault();
         }
 
         public static void SetStatus(long Id, string s)
         {
             var sql = SqlFacade.SqlUpdate(TableName + "status=:Status, change_by=:ChangeBy, change_at=now()", "id=:Id");
-            SqlFacade.Connection.Execute(sql, new { Status = s, ChangeBy = App.session.Username, Id = Id });
+            SqlFacade.Connection.Execute(sql, new { Status = s, ChangeBy = App.session.Username, Id });
         }
 
         ////public static bool IsLocked(long Id)
@@ -115,8 +113,8 @@ namespace kBit.ERP.IC
         {
             //return false; ////return SqlFacade.Connection.Exists<Location>("Id <> @Id and Status <> 'X' and Code = @Code", new { Id = Id, Code = Code });  // Also check in 'Inactive', except 'X' (Deleted)
             //return SqlFacade.Connection.ExecuteScalar<bool>("select exists(select 1 from " + TableName +" where id<>@Id and status <> 'X' and code = @Code)", new { Id = Id, Code = Code });            
-            var sql = SqlFacade.SqlExists(TableName, "id<>@Id and status <> 'X' and code = @Code");
-            return SqlFacade.Connection.ExecuteScalar<bool>(sql, new { Id = Id, Code = Code });
+            var sql = SqlFacade.SqlExists(TableName, "id<>@Id and status <> '" + Type.RecordStatus_Deleted + "' and code = @Code");
+            return SqlFacade.Connection.ExecuteScalar<bool>(sql, new { Id, Code });
         }
 
         public static void Export()
