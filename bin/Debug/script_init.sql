@@ -34,3 +34,25 @@ CREATE TABLE IF NOT EXISTS sm_lock
 WITH (
   OIDS=FALSE
 );
+
+-- Table: sm_function
+REATE TABLE sm_function
+(
+  id bigserial NOT NULL,
+  name text NOT NULL,
+  code text,
+  type text,
+  "right" text,
+  note text,
+  status text,
+  lock_by text,
+  lock_at timestamp without time zone,
+  insert_by text,
+  insert_at timestamp without time zone DEFAULT now(),
+  change_by text,
+  change_at timestamp without time zone,
+  CONSTRAINT sm_function_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
