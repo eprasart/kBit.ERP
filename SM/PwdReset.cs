@@ -44,9 +44,9 @@ namespace kBit.ERP.SM
                 Id = Id,
                 Pwd = txtPwd.Text
             };
-            ////UserFacade.UpdatePwd(usr);
+            UserFacade.UpdatePwd(usr);
             DialogResult = System.Windows.Forms.DialogResult.OK;
-            ////SessionLogFacade.Log(Type.Priority_Caution, "User", Type.Log_ResetPwd, "Password reset successfully. Username=" + txtUsernane.Text);
+            SessionLogFacade.Log(Type.Priority_Caution, "User", Type.Log_ResetPwd, "Password reset successfully. Username=" + txtUsernane.Text);
         }
     }
 }

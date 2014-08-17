@@ -73,7 +73,7 @@ namespace kBit.ERP.SM
 
         private bool IsValidated()
         {
-            return true;    //// todo: 
+            return true;     //todo: 
         }
 
         private void LoadData()

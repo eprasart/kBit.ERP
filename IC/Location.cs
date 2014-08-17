@@ -56,14 +56,14 @@ namespace kBit.ERP.IC
             {
                 m.Insert_By = App.session.Username;
                 sql = SqlFacade.SqlInsert(TableName, "code, description, address, name, phone, fax, email, note, insert_by",
-                    ":Code, :Description, :Address, :Name, :Phone, :Fax, :Email, :Note, :InsertBy", true);
+                    ":Code, :Description, :Address, :Name, :Phone, :Fax, :Email, :Note, :Insert_By", true);
                 m.Id = SqlFacade.Connection.ExecuteScalar<long>(sql, m);
             }
             else
             {
                 m.Change_By = App.session.Username;
                 sql = SqlFacade.SqlUpdate(TableName, "code=:Code, description=:Description, address=:Address, name=:Name, phone=:Phone, fax=:Fax, email=:Email, " +
-                    "note=:Note, change_by=:ChangeBy, change_at=now()", "id=:Id");
+                    "note=:Note, change_by=:Change_By, change_at=now()", "id=:Id");
                 SqlFacade.Connection.Execute(sql, m);
                 ReleaseLock(m.Id);  // Unlock
             }
@@ -78,8 +78,8 @@ namespace kBit.ERP.IC
 
         public static void SetStatus(long Id, string status)
         {
-            var sql = SqlFacade.SqlUpdate(TableName + "status=:Status, change_by=:ChangeBy, change_at=now()", "id=:Id");
-            SqlFacade.Connection.Execute(sql, new { Status = status, ChangeBy = App.session.Username, Id });
+            var sql = SqlFacade.SqlUpdate(TableName , "status=:Status, change_by=:Change_By, change_at=now()", "id=:Id");
+            SqlFacade.Connection.Execute(sql, new { Status = status, Change_By = App.session.Username, Id });
         }
 
         public static Lock GetLock(long Id)

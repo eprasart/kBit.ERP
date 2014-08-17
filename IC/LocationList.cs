@@ -286,7 +286,7 @@ namespace kBit.ERP.IC
                 if (!Privilege.CanAccess(Type.Function_IC_Location, "O"))
                 {
                     MessageBox.Show(msg, "Delete", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ////SessionLogFacade.Log(Type.Priority_Caution, Module, Type.Log_Delete, "Cannot delete. Currently locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+                    SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Location, Type.Log_Delete, "Cannot delete. Currently locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
                     return;
                 }
             }

@@ -1,4 +1,6 @@
-﻿-- Table: ic_location
+﻿--CREATE EXTENSION IF NOT EXISTS pgcrypto SCHEMA public; -- for password encryption
+
+-- Table: ic_location
 -- DROP TABLE ic_location;
 CREATE TABLE IF NOT EXISTS ic_location
 (
@@ -35,18 +37,6 @@ CREATE TABLE IF NOT EXISTS sm_function
   change_by text,
   change_at timestamp without time zone,
   CONSTRAINT sm_function_pkey PRIMARY KEY (id)
-);
-
--- Table: sm_lock
--- DROP TABLE sm_lock;
-CREATE TABLE IF NOT EXISTS sm_lock
-(
-  id bigserial NOT NULL,
-  table_name text,
-  username text,
-  lock_id bigint NOT NULL,
-  lock_at timestamp without time zone DEFAULT now(),
-  CONSTRAINT sm_lock_pkey PRIMARY KEY (id)
 );
 
 -- Table: sm_function

@@ -38,17 +38,17 @@ namespace kBit.ERP.SYS
         private void button2_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            ////new SM.frmUserList().Show();
+            new SM.frmUserList().Show();
             Cursor = Cursors.Default;
         }
 
         private void btnLocation_Click(object sender, EventArgs e)
         {
-            ////if (!SM.Privilege.CanAccess("IC_LOC", "V"))
-            ////{
-            ////    MessageBox.Show("You don't have the privilege to access this function.");
-            ////    return;
-            ////}
+            if (!SM.Privilege.CanAccess("IC_LOC", "V"))
+            {
+                MessageBox.Show("You don't have the privilege to access this function.");
+                return;
+            }
             Cursor = Cursors.WaitCursor;
             if (App.fLocationList == null || App.fLocationList.IsDisposed == true)
             {

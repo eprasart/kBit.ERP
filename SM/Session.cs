@@ -36,6 +36,8 @@ namespace kBit.ERP.SM
 
     static class SessionFacade
     {
+        const string TableName = "sm_session";
+
         public static DataTable GetDataTable(string filter = "", string status = "")
         {
             var sql = "select id, username, login_at, logout_at, version, machine_name, machine_user_name from sm_session where 1 = 1";
@@ -75,37 +77,32 @@ namespace kBit.ERP.SM
             //SqlFacade.Connection.UpdateOnly(m, p => new { p.LogoutAt }, p => p.Id == m.Id);
         }
 
-        ////public static Session Select(long Id)
-        ////{
-        ////    return SqlFacade.Connection<Session>(Id);
-        ////}
-
-        public static void SetStatus(long Id, string s)
+        public static Session Select(long Id)
         {
-            ////DateTime? ts = SqlFacade.GetCurrentTimeStamp();
-            ////SqlFacade.Connection.UpdateOnly(new Session { Status = s }, p => p.Id == Id);
+            var sql = SqlFacade.SqlSelect(TableName, "*", "id=@Id");
+            return SqlFacade.Connection.Query<Session>(sql, new { Id }).FirstOrDefault();            
         }
     }
 
     static class SessionLogFacade
     {
-        ////      public static DataTable GetDataTable(string where, string filter = "")
-        ////{
-        ////    var sql = "select l.id, username, login_at, logout_at, version, machine_name, machine_user_name, log_at, priority, module, type, message\n" +
-        ////        "from sm_session s\nleft join sm_session_log l on s.id = l.session_id where 1 = 1";
-        ////    //if (status.Length > 0)
-        ////    //    sql += " and status = '" + status + "'";
-        ////    if (filter.Length > 0)
-        ////        sql += " and (message ~* :filter or type ~* :filter or module ~* :filter)";
-        ////    sql += "\norder by login_at desc, log_at desc";
-        ////    var cmd = new NpgsqlCommand(sql, new NpgsqlConnection(SqlFacade.ConnectionString));
-        ////    if (filter.Length > 0)
-        ////        cmd.Parameters.AddWithValue(":filter", filter);
-        ////    var da = new NpgsqlDataAdapter(cmd);
-        ////    var dt = new DataTable();
-        ////    da.Fill(dt);
-        ////    return dt;
-        ////}        
+              public static DataTable GetDataTable(string where, string filter = "")
+        {
+            var sql = "select l.id, username, login_at, logout_at, version, machine_name, machine_user_name, log_at, priority, module, type, message\n" +
+                "from sm_session s\nleft join sm_session_log l on s.id = l.session_id where 1 = 1";
+            //if (status.Length > 0)
+            //    sql += " and status = '" + status + "'";
+            if (filter.Length > 0)
+                sql += " and (message ~* :filter or type ~* :filter or module ~* :filter)";
+            sql += "\norder by login_at desc, log_at desc";
+            var cmd = new NpgsqlCommand(sql, new NpgsqlConnection(SqlFacade.ConnectionString));
+            if (filter.Length > 0)
+                cmd.Parameters.AddWithValue(":filter", filter);
+            var da = new NpgsqlDataAdapter(cmd);
+            var dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+        }        
 
         private static void Save(SessionLog m)
         {

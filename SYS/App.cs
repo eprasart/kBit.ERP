@@ -22,8 +22,8 @@ namespace kBit.ERP.SYS
         public static Session session = new Session();
 
         public static IC.frmLocationList fLocationList;
-        ////public static SM.frmUserList fUserList;
-        ////public static SM.frmAuditLog fAuditLog;
+        public static SM.frmUserList fUserList;
+        public static SM.frmAuditLog fAuditLog;
 
         public static FileLog AccessLog = new FileLog();
 
@@ -61,7 +61,7 @@ namespace kBit.ERP.SYS
                 fSplash.ShowError(ex.Message);
                 fSplash.Visible = false;
                 fSplash.ShowDialog();
-                //todo: uncomm. ErrorLogFacade.LogToFile(ex);
+                ErrorLogFacade.LogToFile(ex);
                 return false;
             }
             // Create tables if not exist

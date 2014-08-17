@@ -69,20 +69,22 @@ namespace kBit.ERP.SM
 
         //public static long Save(User m)
         //{
-        //    DateTime? ts = SqlFacade.GetCurrentTimeStamp();
+        //    var sql = "";
         //    if (m.Id == 0)
         //    {
         //        m.Status = Type.RecordStatus_Active;
-        //        m.InsertBy = App.session.Username;
-        //        m.InsertAt = ts;
+        //        m.Insert_By = App.session.Username;
+        //        m.Insert_At = ts;
         //        string sqlPwd = "select crypt('" + m.Pwd + "', gen_salt('bf'))";    // Blowfish algorithm
         //        m.Pwd = SqlFacade.ExcuteString(sqlPwd);
-        //        m.Id = SqlFacade.Connection.Insert(m, true); // New inserted sequence
+
+        //        sql=SqlFacade.SqlInsert(TableName,)
+        //            m.Id = SqlFacade.Connection.Insert(m, true); // New inserted sequence
         //    }
         //    else
         //    {
-        //        m.ChangeBy = App.session.Username;
-        //        m.ChangeAt = ts;
+        //        m.Change_By = App.session.Username;
+        //        m.Change_At = ts;
 
         //        SqlFacade.Connection.UpdateOnly(m, p => new { p.Username, p.FullName, p.StartOn, p.EndOn, p.Phone, p.Email, p.Note, p.ChangeBy, p.ChangeAt },
         //            p => p.Id == m.Id);
@@ -141,12 +143,13 @@ namespace kBit.ERP.SM
         //    return SqlFacade.Connection.Exists<User>("Id <> @Id and Username = @Username", new { Id = Id, Username = Username });
         //}
 
-        //public static void UpdatePwd(User m)
-        //{
-        //    string sqlPwd = "select crypt('" + m.Pwd + "', gen_salt('bf'))";
-        //    m.Pwd = SqlFacade.ExcuteString(sqlPwd);
-        //    SqlFacade.Connection.UpdateOnly(m, p => new { p.Pwd }, p => p.Id == m.Id);
-        //}
+        public static void UpdatePwd(User m)
+        {
+            string sqlPwd = "select crypt('" + m.Pwd + "', gen_salt('bf'))";
+            m.Pwd = SqlFacade.Connection.ExecuteScalar<string>(sqlPwd);
+            var sql = SqlFacade.SqlUpdate(TableName, "Pwd = @Pwd", "Id = @Id");
+            SqlFacade.Connection.Execute(sql, m);
+        }
 
         public static bool IsPwdCorrect(long id, string pwd)
         {
