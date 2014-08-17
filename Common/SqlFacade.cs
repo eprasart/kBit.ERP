@@ -14,6 +14,47 @@ namespace kBit.ERP
         public static string ConnectionString = "";
         public static NpgsqlConnection Connection = null;
 
+        #region "Sql Query Builder"
+        public static string SqlSelect(string table, string columns, string where = "", string orderby = "", long limit = 0, long offset = 0)
+        {
+            var sql = "select " + columns + " from " + table;
+            if (where.Length > 0) sql += "\nwhere " + where;
+            if (orderby.Length > 0) sql += "\norder by " + orderby;
+            if (limit > 0) sql += "\nlimit " + limit;
+            if (offset > 0) sql += " offset " + offset;
+            return sql;
+        }
+
+        public static string SqlExists(string table, string where)
+        {
+            var sql = SqlSelect(table, "1", where);
+            sql = "select exists(" + sql + ")";
+            return sql;
+        }
+
+        public static string SqlInsert(string table, string columns, string values, bool returnSeq = false)
+        {
+            var sql = string.Format("insert into {0} ({1})\nvalues ({2})", table, columns, values);
+            if (returnSeq) sql += "\nreturning id";
+            return sql;
+        }
+
+        public static string SqlUpdate(string table, string sets, string where = "")
+        {
+            var sql = "update " + table + " set " + sets;
+            if (where.Length > 0) sql += "\nwhere " + where;
+            return sql;
+        }
+
+        public static string SqlDelete(string table, string where = "")
+        {
+            var sql = "delete from " + table;
+            if (where.Length > 0) sql += " where " + where;
+            return sql;
+        }
+
+        #endregion
+
         public static void EnsureDBSetup()
         {
             var ScriptPath = Path.Combine(Application.StartupPath, "script_init.sql");
@@ -32,7 +73,7 @@ namespace kBit.ERP
         }
 
         public static DateTime GetCurrentTimeStamp()
-        {                        
+        {
             return Connection.ExecuteScalar<DateTime>("select now()");
         }
 
@@ -122,33 +163,5 @@ namespace kBit.ERP
             return result;
         }
 
-        public static string SqlSelect(string table, string columns, string where = "", string orderby = "")
-        {
-            var sql = "select " + columns + " from " + table;
-            if (where.Length > 0) sql += "\nwhere " + where;
-            if (orderby.Length > 0) sql += "\norder by " + orderby;
-            return sql;
-        }
-
-        public static string SqlExists(string table, string where)
-        {
-            var sql = SqlSelect(table, "1", where);
-            sql = "select exists(" + sql + ")";
-            return sql;
-        }
-
-        public static string SqlInsert(string table, string columns, string values, bool returnSeq = false)
-        {
-            var sql = string.Format("insert into {0} ({1})\nvalues ({2})", table, columns, values);
-            if (returnSeq) sql += "\nreturning id";
-            return sql;
-        }
-
-        public static string SqlUpdate(string table, string sets, string where = "")
-        {
-            var sql = "update " + table + " set " + sets;
-            if (where.Length > 0) sql += "\nwhere " + where;
-            return sql;
-        }
     }
 }

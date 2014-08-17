@@ -2,6 +2,7 @@
  * msg => English and/or Khmer (use both font in rtf to make it render nice)
  * spliterDistance: save in table by user
  * Column header auto size make grid load slow. How about allow to resize and store the column width in table?
+ * Afer save the grid seem to flash out (might be load a few times)
 */
 
 using System;
@@ -277,23 +278,23 @@ namespace kBit.ERP.IC
             // If referenced
             //todo: check if exist in ic_item
             // If locked
-            ////var lInfo = LocationFacade.GetLockInfo(Id);
+            var lInfo = LocationFacade.GetLock(Id);
             string msg = "";
-            ////if (lInfo.IsLocked)
-            ////{
-            ////    msg = "Record cannot be deleted because it is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
-            ////    if (!Privilege.CanAccess(Function, "O"))
-            ////    {
-            ////        MessageBox.Show(msg, "Delete", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            ////        ////SessionLogFacade.Log(Type.Priority_Caution, Module, Type.Log_Delete, "Cannot delete. Currently locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
-            ////        return;
-            ////    }
-            ////}
+            if (lInfo.Locked)
+            {
+                msg = "Record cannot be deleted because it is currently locked by '" + lInfo.Lock_By + "' since '" + lInfo.Lock_At + "'";
+                if (!Privilege.CanAccess(Type.Function_IC_Location, "O"))
+                {
+                    MessageBox.Show(msg, "Delete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ////SessionLogFacade.Log(Type.Priority_Caution, Module, Type.Log_Delete, "Cannot delete. Currently locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+                    return;
+                }
+            }
             // Delete            
             msg = "Are you sure you want to delete?";
-            ////if (lInfo.IsLocked) msg = "Record is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'\n" + msg;
-            ////if (MessageBox.Show(msg, "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
-            ////    return;
+            if (lInfo.Locked) msg = "Record is currently locked by '" + lInfo.Lock_By + "' since '" + lInfo.Lock_At + "'\n" + msg;
+            if (MessageBox.Show(msg, "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+                return;
             LocationFacade.SetStatus(Id, Type.RecordStatus_Deleted);
             RefreshGrid();
 
@@ -303,7 +304,7 @@ namespace kBit.ERP.IC
 
         private void btnCopy_Click(object sender, EventArgs e)
         {
-            if (!Privilege.CanAccess(Type.Function_IC_Location,Type.Privilege_New))
+            if (!Privilege.CanAccess(Type.Function_IC_Location, Type.Privilege_New))
             {
                 MessageBox.Show("You don't have the privilege for perform this command.", "Copy", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_NoAccess, "Copy: No access");
@@ -349,20 +350,20 @@ namespace kBit.ERP.IC
             // If referenced
             //todo: check if already used in ic_item
 
-            // If locked
-            ////var lInfo = LocationFacade.GetLockInfo(Id);
-            ////if (lInfo.IsLocked)
-            ////{
-            ////    string msg = "Record is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
-            ////    if (!Privilege.CanAccess(Function, "O"))
-            ////    {
-            ////        MessageBox.Show(msg, "Active/Inactive", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            ////        return;
-            ////    }
-            ////    else
-            ////        if (MessageBox.Show(msg + "\nAre you sure you want to proceed?", "Active/Inactive", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
-            ////            return;
-            ////}
+            //If locked
+            var lInfo = LocationFacade.GetLock(Id);
+            if (lInfo.Locked)
+            {
+                string msg = "Record is currently locked by '" + lInfo.Lock_By + "' since '" + lInfo.Lock_At + "'";
+                if (!Privilege.CanAccess(Type.Function_IC_Location, "O"))
+                {
+                    MessageBox.Show(msg, "Active/Inactive", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                else
+                    if (MessageBox.Show(msg + "\nAre you sure you want to proceed?", "Active/Inactive", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+                        return;
+            }
 
             LocationFacade.SetStatus(Id, status);
             RefreshGrid();
@@ -394,7 +395,7 @@ namespace kBit.ERP.IC
                 }
                 LockControls(true);
                 dgvList.Focus();
-                ////LocationFacade.ReleaseLock(dgvList.Id);
+                LocationFacade.ReleaseLock(dgvList.Id);
                 if (dgvList.CurrentRow != null && !dgvList.CurrentRow.Selected)
                     dgvList.CurrentRow.Selected = true;
                 SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_Unlock, "Unlock cancel. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
@@ -404,24 +405,24 @@ namespace kBit.ERP.IC
             }
             // Unlock
             if (Id == 0) return;
-            ////var lInfo = LocationFacade.GetLockInfo(Id);
+            var lInfo = LocationFacade.GetLock(Id);
 
-            ////if (lInfo.IsLocked) // Check if record is locked
-            ////{
-            ////    string msg = "Record is currently locked by '" + lInfo.LockBy + "' since '" + lInfo.LockAt + "'";
-            ////    if (!Privilege.CanAccess(Function, "O"))
-            ////    {
-            ////        MessageBox.Show(msg, "Unlock", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            ////        return;
-            ////    }
-            ////    else
-            ////        if (MessageBox.Show(msg + "\nDo you want to override?", "Unlock", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
-            ////            return;
-            ////}
+            if (lInfo.Locked) // Check if record is locked
+            {
+                string msg = "Record is currently locked by '" + lInfo.Lock_By + "' since '" + lInfo.Lock_At + "'.";
+                if (!Privilege.CanAccess(Type.Function_IC_Location, "O"))
+                {
+                    MessageBox.Show(msg, "Unlock", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                else
+                    if (MessageBox.Show(msg + "\nDo you want to override?", "Unlock", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+                        return;
+            }
             txtDesc.SelectionStart = txtDesc.Text.Length;
             txtDesc.Focus();
             LockControls(false);
-            ////LocationFacade.Lock(dgvList.Id);
+            LocationFacade.Lock(dgvList.Id, txtCode.Text);
             SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_Lock, "Locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
             btnUnlock.ToolTipText = "Cancel (Esc or Ctrl+L)";
         }
@@ -571,6 +572,11 @@ namespace kBit.ERP.IC
             Application.DoEvents();
             LocationFacade.Export();
             Cursor = Cursors.Default;
+        }
+
+        private void dgvList_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

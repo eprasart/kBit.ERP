@@ -4,6 +4,7 @@ using System.Linq;
 using System.Data;
 using Npgsql;
 using Dapper;
+using kBit.ERP.SYS;
 
 namespace kBit.ERP.SM
 {
@@ -12,20 +13,20 @@ namespace kBit.ERP.SM
         public long Id { get; set; }
         public long UserId { get; set; }
         public string Username { get; set; }
-        public DateTime? LoginAt { get; set; }
-        public DateTime? LogoutAt { get; set; }
+        public DateTime? Login_At { get; set; }
+        public DateTime? Logout_At { get; set; }
         public string Version { get; set; }
-        public string MachineName { get; set; }
-        public string MachineUserName { get; set; }
+        public string Machine_Name { get; set; }
+        public string Machine_User_Name { get; set; }
         public String Status { get; set; }
     }
 
     class SessionLog
     {
         public long Id { get; set; }
-        public DateTime? LogAt { get; set; }
+        public DateTime? Log_At { get; set; }
         //[References(typeof(Session))]
-        public long SessionId { get; set; }
+        public long Session_Id { get; set; }
         public string Priority { get; set; }
         public string Module { get; set; }
         public string Type { get; set; }
@@ -107,15 +108,15 @@ namespace kBit.ERP.SM
         ////}        
 
         private static void Save(SessionLog m)
-        {            
+        {
             try
             {
                 if (m.Id == 0)
                 {
                     var sql = "insert into sm_session_log (log_at, session_id, priority, module, type, message)\n" +
                         "values (@LogAt, session_id=@SessionId, priority=@Priority, module=@Module, type=@Type)";
-                    m.SessionId = SYS.App.session.Id;                    
-                    SqlFacade.Connection.Execute(sql,m);
+                    m.Session_Id = SYS.App.session.Id;
+                    SqlFacade.Connection.Execute(sql, m);
                 }
                 else
                 {
@@ -132,11 +133,6 @@ namespace kBit.ERP.SM
         //{
         //    return SqlFacade.Connection.SingleById<SessionLog>(Id);
         //}
-
-        public static void SetStatus(long Id, string s)
-        {
-            
-        }
 
         public static void Log(string priority, string module, string type, string message)
         {
@@ -159,9 +155,77 @@ namespace kBit.ERP.SM
     public class Lock
     {
         public long Id { get; set; }
-        public string TableName { get; set; }
-        public string Username { get; set; }
-        public long LockId { get; set; }
-        public DateTime? LockAt { get; set; }
+        public string Table_Name { get; set; }
+        public long Lock_Id { get; set; }
+        public string Ref { get; set; }
+        public string Lock_By { get; set; }
+        public string Machine_Name { get; set; }
+        public string Machine_Username { get; set; }
+        public DateTime? Lock_At { get; set; }
+        public bool Locked { get; set; }
+    }
+
+    static class LockFacade
+    {
+        private static readonly string TableName = "sm_lock";
+
+        public static DataTable GetDataTable(string filter = "", string status = "")
+        {
+            var sql = "select id, code, description, name, phone, fax, email, address from " + TableName + "\nwhere 1 = 1";
+            if (status.Length == 0)
+                sql += " and status <> '" + Type.RecordStatus_Deleted + "'";
+            else
+                sql += " and status = '" + status + "'";
+            if (filter.Length > 0)
+                sql += " and (code ilike :filter or description ilike :filter or phone ilike :filter or fax ilike :filter or email ilike :filter or address ilike :filter or note ilike :filter)";
+            sql += "\norder by code\nlimit 1000";   // todo: in db
+
+            var cmd = new NpgsqlCommand(sql);
+            if (filter.Length > 0)
+                cmd.Parameters.AddWithValue(":filter", "%" + filter + "%");
+
+            return SqlFacade.GetDataTable(cmd);
+        }
+
+        public static long Save(Lock m)
+        {
+            m.Lock_By = App.session.Username;
+            m.Machine_Name = App.session.Machine_Name;
+            m.Machine_Username = App.session.Machine_User_Name;
+            var sql = SqlFacade.SqlInsert(TableName, "table_name, lock_id, ref, lock_by, machine_name, machine_username", ":Table_Name, :Lock_Id, :Ref, :Lock_By, :Machine_Name, :Machine_Username", true);
+            m.Id = SqlFacade.Connection.ExecuteScalar<long>(sql, m);
+            return m.Id;
+        }
+
+        public static Lock Select(long Id)
+        {
+            var sql = SqlFacade.SqlSelect(TableName, "*", "id=:Id");
+            return SqlFacade.Connection.Query<Lock>(sql, new { Id }).FirstOrDefault();
+        }
+
+        public static Lock Select(string table, long lockId)
+        {
+            var sql = SqlFacade.SqlSelect(TableName, "*", "table_name = :Table and lock_id = :LockId", "lock_at desc", 1);
+            var m = SqlFacade.Connection.Query<Lock>(sql, new { table, lockId }).FirstOrDefault();
+            if (m == null)
+                m = new Lock();  // Locked = false
+            else
+                m.Locked = true;
+            return m;
+        }
+
+        public static void Delete(string table, long lockId)
+        {
+            var sql = SqlFacade.SqlDelete(TableName, "table_name = :table and lock_id = :LockId");
+            SqlFacade.Connection.Execute(sql, new { table, lockId });
+        }
+
+        public static void Export()
+        {
+            string sql = SqlFacade.SqlSelect(TableName, "id \"Id\", code \"Code\", description \"Description\", address \"Address\", name \"Contact Name\", phone \"Phone\", fax \"Fax\", " +
+                "email \"Email\", note \"Note\", status \"Status\", insert_by \"Inserted By\", insert_at \"Inserted At\", change_by \"Changed By\", change_at \"Changed At\"",
+                "status <> '" + Type.RecordStatus_Deleted + "'", "code");
+            SqlFacade.ExportToCSV(sql);
+        }
     }
 }

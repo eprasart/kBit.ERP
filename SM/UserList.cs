@@ -82,14 +82,14 @@ namespace kBit.ERP.SM
             if (Id == 0) return;
             var m = UserFacade.Select(Id);
             txtUsernane.Text = m.Username;
-            txtFullName.Text = m.FullName;
+            txtFullName.Text = m.Full_Name;
             txtPhone.Text = m.Phone;
             txtEmail.Text = m.Email;
             //txtPwd.Text = m.Pwd;
-            dtpStart.Checked = (m.StartOn != null);
-            if (dtpStart.Checked) dtpStart.Value = (DateTime)m.StartOn;
-            dtpEnd.Checked = (m.EndOn != null);
-            if (dtpEnd.Checked) dtpEnd.Value = (DateTime)m.EndOn;
+            dtpStart.Checked = (m.Start_On != null);
+            if (dtpStart.Checked) dtpStart.Value = (DateTime)m.Start_On;
+            dtpEnd.Checked = (m.End_On != null);
+            if (dtpEnd.Checked) dtpEnd.Value = (DateTime)m.End_On;
             txtNote.Text = m.Note;
             SetStatus(m.Status);
             LockControls();
@@ -133,13 +133,13 @@ namespace kBit.ERP.SM
             var log = new SessionLog { Module = Module };
             m.Id = Id;
             m.Username = txtUsernane.Text.Trim();
-            m.FullName = txtFullName.Text;
+            m.Full_Name = txtFullName.Text;
             m.Pwd = txtPwd.Text;
             m.Phone = txtPhone.Text;
             m.Email = txtEmail.Text;
             m.Note = txtNote.Text;
-            if (dtpStart.Checked) m.StartOn = dtpStart.Value;
-            if (dtpEnd.Checked) m.EndOn = dtpEnd.Value;
+            if (dtpStart.Checked) m.Start_On = dtpStart.Value;
+            if (dtpEnd.Checked) m.End_On = dtpEnd.Value;
             if (m.Id == 0)
             {
                 log.Priority = Type.Priority_Information;

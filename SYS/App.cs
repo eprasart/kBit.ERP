@@ -69,13 +69,13 @@ namespace kBit.ERP.SYS
 
             //Session            
             session.Username = "Visal"; //todo: to be removed
-            session.MachineName = Environment.MachineName;
-            session.MachineUserName = Environment.UserName;
+            session.Machine_Name = Environment.MachineName;
+            session.Machine_User_Name = Environment.UserName;
             session.Version = version;
             // Log
             ErrorLogFacade.logFile.FileName = Path.Combine(Application.StartupPath, "Error.log");
             AccessLog.FileName = Path.Combine(Application.StartupPath, "Access.log");
-            AccessLog.Write(DateTime.Now.ToString("yyy-MM-dd ddd hh:mm:ss tt") + " Application started. Process Id: " + ProcessID + ", Machine: " + session.MachineName + ", machine's username: " + session.MachineUserName + ", version: " + session.Version);
+            AccessLog.Write(DateTime.Now.ToString("yyy-MM-dd ddd hh:mm:ss tt") + " Application started. Process Id: " + ProcessID + ", Machine: " + session.Machine_Name + ", machine's username: " + session.Machine_User_Name + ", version: " + session.Version);
             session.Id = SessionFacade.Save(session);
             SessionLogFacade.Log(Type.Priority_Information, "Application", Type.Log_Launch, "Application started");
 

@@ -13,29 +13,29 @@ namespace kBit.ERP.SM
     {
         public long Id { get; set; }
         public string Username { get; set; }
-        public string FullName { get; set; }
+        public string Full_Name { get; set; }
         public string Pwd { get; set; }
-        public DateTime? PwdChangeOn { get; set; }
-        public bool PwdChangeForce { get; set; }
-        public int TimeLevel { get; set; }
-        public DateTime? StartOn { get; set; }
-        public DateTime? EndOn { get; set; }
+        public DateTime? Pwd_Change_On { get; set; }
+        public bool Pwd_Change_Force { get; set; }
+        public int Time_Level { get; set; }
+        public DateTime? Start_On { get; set; }
+        public DateTime? End_On { get; set; }
         public int Success { get; set; }
         public int Fail { get; set; }
         public bool Locked { get; set; }
         public string Right { get; set; }
-        public string SecurityNo { get; set; }
+        public string Security_No { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Note { get; set; }
         public String Status { get; set; }
-        public long SessionId { get; set; }
-        public string LockBy { get; set; }
-        public DateTime? LockAt { get; set; }
-        public string InsertBy { get; set; }
-        public DateTime? InsertAt { get; set; }
-        public string ChangeBy { get; set; }
-        public DateTime? ChangeAt { get; set; }
+        public long Session_Id { get; set; }
+        public string Lock_By { get; set; }
+        public DateTime? Lock_At { get; set; }
+        public string Insert_By { get; set; }
+        public DateTime? Insert_At { get; set; }
+        public string Change_By { get; set; }
+        public DateTime? Change_At { get; set; }
     }
 
     public static class UserFacade
