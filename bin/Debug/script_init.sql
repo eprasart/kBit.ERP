@@ -203,6 +203,16 @@ CREATE TABLE IF NOT EXISTS sy_error_log
   message text,
   trace text,
   info text,
-  status text,
+  status text DEFAULT 'A',
   CONSTRAINT sy_error_log_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS sy_config
+(
+  id bigserial NOT NULL,
+  name text NOT NULL,
+  value text,
+  note text,
+  status text default 'A',
+  CONSTRAINT sy_config_pkey PRIMARY KEY (id)
 );

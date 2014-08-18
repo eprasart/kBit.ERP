@@ -120,7 +120,7 @@
     <Compile Include="SM\UserList.Designer.cs">
       <DependentUpon>UserList.cs</DependentUpon>
     </Compile>
-    <Compile Include="SYS\Config.cs" />
+    <Compile Include="SYS\SY.cs" />
     <Compile Include="SYS\Log.cs" />
     <Compile Include="SYS\Msg.cs">
       <SubType>Form</SubType>

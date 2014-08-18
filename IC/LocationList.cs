@@ -8,6 +8,7 @@
 using System;
 using System.Windows.Forms;
 using kBit.ERP.SM;
+using kBit.ERP.SYS;
 
 namespace kBit.ERP.IC
 {
@@ -328,7 +329,7 @@ namespace kBit.ERP.IC
             }
             else
             {
-                splitContainer1.SplitterDistance = 228; // TODO: load from var or db
+                splitContainer1.SplitterDistance = LocationFacade.Config_SplitterDistance;
                 splitContainer1.FixedPanel = FixedPanel.Panel1;
             }
             dgvList.ShowLessColumns(IsExpand);

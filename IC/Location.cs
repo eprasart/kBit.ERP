@@ -29,7 +29,7 @@ namespace kBit.ERP.IC
 
     static class LocationFacade
     {
-        const string TableName = "ic_location";
+        public static readonly string TableName = "ic_location";
 
         public static DataTable GetDataTable(string filter = "", string status = "")
         {
@@ -39,7 +39,7 @@ namespace kBit.ERP.IC
             else
                 sql += " and status = '" + status + "'";
             if (filter.Length > 0)
-                sql += " and ("+ SqlFacade.SqlILikeOr("code, description, phone, fax, email, address, note") +")";                
+                sql += " and (" + SqlFacade.SqlILike("code, description, phone, fax, email, address, note") + ")";
             sql += "\norder by code\nlimit 1000";   // todo: in db
 
             var cmd = new NpgsqlCommand(sql);
@@ -60,7 +60,7 @@ namespace kBit.ERP.IC
             }
             else
             {
-                m.Change_By = App.session.Username;                
+                m.Change_By = App.session.Username;
                 sql = SqlFacade.SqlUpdate(TableName, "code, description, address, name, phone, fax, email, note, change_by, change_at", "change_at = now()", "id = :id");
                 SqlFacade.Connection.Execute(sql, m);
                 ReleaseLock(m.Id);  // Unlock
@@ -109,5 +109,19 @@ namespace kBit.ERP.IC
                 "status <> '" + Type.RecordStatus_Deleted + "'", "code");
             SqlFacade.ExportToCSV(sql);
         }
+
+        #region Congig
+        public static int Config_SplitterDistance
+        {
+            get
+            {
+                return (int)ConfigFacade.Get(LocationFacade.TableName + ConfigName.SpliterDistance, 228);
+            }
+            set
+            {
+                ConfigFacade.Set(LocationFacade.TableName + ConfigName.SpliterDistance, value);
+            }
+        }
+        #endregion
     }
 }

@@ -60,5 +60,14 @@ namespace kBit
         public static readonly string Privilege_Print = "";
         public static readonly string Privilege_Generate = "";
 
+
+    }
+
+    public static class ConfigName
+    {
+        public static readonly string SelectLimit = "sy_select_limit";
+
+        public static readonly string SpliterDistance ="_spliter_distance";
+        
     }
 }

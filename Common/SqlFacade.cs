@@ -25,13 +25,13 @@ namespace kBit.ERP
             return sql;
         }
 
-        public static string SqlILikeOr(string columns, string parameter = ":filter")
+        public static string SqlILike(string columns, string parameter = ":filter")
         {
             //code ilike :filter or description ilike :filter or phone ilike :filter or fax ilike :filter or email ilike :filter or address ilike :filter or note ilike :filter
             //code, description, phone => code ilike :filter or description ilike :filter
 
-            var sLike= " ilike " + parameter;
-            var sql = columns.Replace(", ",  sLike + " or ");
+            var sLike = " ilike " + parameter;
+            var sql = columns.Replace(", ", sLike + " or ");
             sql += sLike;
             return sql;
         }
