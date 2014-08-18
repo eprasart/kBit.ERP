@@ -20,7 +20,7 @@ namespace kBit.ERP.IC
         public string Fax { get; set; }
         public string Email { get; set; }
         public string Note { get; set; }
-        public String Status { get; set; }        
+        public String Status { get; set; }
         public string Insert_By { get; set; }
         public DateTime? Insert_At { get; set; }
         public string Change_By { get; set; }
@@ -33,13 +33,13 @@ namespace kBit.ERP.IC
 
         public static DataTable GetDataTable(string filter = "", string status = "")
         {
-            var sql = "select id, code, description, name, phone, fax, email, address from " + TableName + "\nwhere 1 = 1";
+            var sql = SqlFacade.SqlSelect(TableName, "id, code, description, name, phone, fax, email, address", "1 = 1");
             if (status.Length == 0)
                 sql += " and status <> '" + Type.RecordStatus_Deleted + "'";
             else
                 sql += " and status = '" + status + "'";
             if (filter.Length > 0)
-                sql += " and (code ilike :filter or description ilike :filter or phone ilike :filter or fax ilike :filter or email ilike :filter or address ilike :filter or note ilike :filter)";
+                sql += " and ("+ SqlFacade.SqlILikeOr("code, description, phone, fax, email, address, note") +")";                
             sql += "\norder by code\nlimit 1000";   // todo: in db
 
             var cmd = new NpgsqlCommand(sql);
@@ -55,15 +55,13 @@ namespace kBit.ERP.IC
             if (m.Id == 0)
             {
                 m.Insert_By = App.session.Username;
-                sql = SqlFacade.SqlInsert(TableName, "code, description, address, name, phone, fax, email, note, insert_by",
-                    ":Code, :Description, :Address, :Name, :Phone, :Fax, :Email, :Note, :Insert_By", true);
+                sql = SqlFacade.SqlInsert(TableName, "code, description, address, name, phone, fax, email, note, insert_by", "", true);
                 m.Id = SqlFacade.Connection.ExecuteScalar<long>(sql, m);
             }
             else
             {
-                m.Change_By = App.session.Username;
-                sql = SqlFacade.SqlUpdate(TableName, "code=:Code, description=:Description, address=:Address, name=:Name, phone=:Phone, fax=:Fax, email=:Email, " +
-                    "note=:Note, change_by=:Change_By, change_at=now()", "id=:Id");
+                m.Change_By = App.session.Username;                
+                sql = SqlFacade.SqlUpdate(TableName, "code, description, address, name, phone, fax, email, note, change_by, change_at", "change_at = now()", "id = :id");
                 SqlFacade.Connection.Execute(sql, m);
                 ReleaseLock(m.Id);  // Unlock
             }
@@ -72,14 +70,14 @@ namespace kBit.ERP.IC
 
         public static Location Select(long Id)
         {
-            var sql = SqlFacade.SqlSelect(TableName, "*", "id=@Id");
+            var sql = SqlFacade.SqlSelect(TableName, "*", "id = :id");
             return SqlFacade.Connection.Query<Location>(sql, new { Id }).FirstOrDefault();
         }
 
         public static void SetStatus(long Id, string status)
         {
-            var sql = SqlFacade.SqlUpdate(TableName , "status=:Status, change_by=:Change_By, change_at=now()", "id=:Id");
-            SqlFacade.Connection.Execute(sql, new { Status = status, Change_By = App.session.Username, Id });
+            var sql = SqlFacade.SqlUpdate(TableName, "status, change_by, change_at", "change_at = now()", "id = :id");
+            SqlFacade.Connection.Execute(sql, new { status, Change_By = App.session.Username, Id });
         }
 
         public static Lock GetLock(long Id)
@@ -89,7 +87,7 @@ namespace kBit.ERP.IC
 
         public static void Lock(long Id, string code)
         {
-            var m = new Lock { Table_Name = TableName, Lock_Id = Id, Ref=code };
+            var m = new Lock { Table_Name = TableName, Lock_Id = Id, Ref = code };
             LockFacade.Save(m);
         }
 
@@ -100,8 +98,8 @@ namespace kBit.ERP.IC
 
         public static bool Exists(string Code, long Id = 0)
         {
-            var sql = SqlFacade.SqlExists(TableName, "id<>:Id and status <> '" + Type.RecordStatus_Deleted + "' and code = :Code");
-            return SqlFacade.Connection.ExecuteScalar<bool>(sql, new { Id, Code });
+            var sql = SqlFacade.SqlExists(TableName, "id <> :id and status <> :status and code = :code");
+            return SqlFacade.Connection.ExecuteScalar<bool>(sql, new { Id, Status = Type.RecordStatus_Deleted, Code });
         }
 
         public static void Export()

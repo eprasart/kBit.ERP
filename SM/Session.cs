@@ -189,7 +189,7 @@ namespace kBit.ERP.SM
             m.Lock_By = App.session.Username;
             m.Machine_Name = App.session.Machine_Name;
             m.Machine_Username = App.session.Machine_User_Name;
-            var sql = SqlFacade.SqlInsert(TableName, "table_name, lock_id, ref, lock_by, machine_name, machine_username", ":Table_Name, :Lock_Id, :Ref, :Lock_By, :Machine_Name, :Machine_Username", true);
+            var sql = SqlFacade.SqlInsert(TableName, "table_name, lock_id, ref, lock_by, machine_name, machine_username", "", true);
             m.Id = SqlFacade.Connection.ExecuteScalar<long>(sql, m);
             return m.Id;
         }

@@ -25,6 +25,17 @@ namespace kBit.ERP
             return sql;
         }
 
+        public static string SqlILikeOr(string columns, string parameter = ":filter")
+        {
+            //code ilike :filter or description ilike :filter or phone ilike :filter or fax ilike :filter or email ilike :filter or address ilike :filter or note ilike :filter
+            //code, description, phone => code ilike :filter or description ilike :filter
+
+            var sLike= " ilike " + parameter;
+            var sql = columns.Replace(", ",  sLike + " or ");
+            sql += sLike;
+            return sql;
+        }
+
         public static string SqlExists(string table, string where)
         {
             var sql = SqlSelect(table, "1", where);
@@ -34,14 +45,48 @@ namespace kBit.ERP
 
         public static string SqlInsert(string table, string columns, string values, bool returnSeq = false)
         {
+            if (values.Length == 0) values = ":" + columns.Replace(", ", ", :");    // if values is blank then will make it as parameter (:) of all columns
             var sql = string.Format("insert into {0} ({1})\nvalues ({2})", table, columns, values);
             if (returnSeq) sql += "\nreturning id";
             return sql;
         }
 
-        public static string SqlUpdate(string table, string sets, string where = "")
+        public static string SqlInsert2(string table, string columns, bool returnSeq = false)
+        {
+            var sql = string.Format("insert into {0} ({1})\nvalues ({2})", table, columns);
+            if (returnSeq) sql += "\nreturning id";
+            return sql;
+        }
+
+        public static string SqlUpdate0(string table, string sets, string where = "")
         {
             var sql = "update " + table + " set " + sets;
+            if (where.Length > 0) sql += "\nwhere " + where;
+            return sql;
+        }
+
+        public static string SqlUpdate(string table, string columns, string values, string where = "")
+        {
+            var sql = "update " + table + " set ";
+
+            var cols = columns.Replace(" ", "").Split(',');
+            var sVals = values.Replace(" ", "").Split(',');
+            for (var i = 0; i < cols.Length; i++)
+            {
+                var bFound = false;
+                foreach (var v in sVals)
+                {
+                    if (v.Contains(cols[i]))
+                    {
+                        bFound = true;
+                        cols[i] += " = " + v.Substring(v.IndexOf('=') + 1);
+                        break;
+                    }
+                }
+                if (!bFound)
+                    cols[i] += " = :" + cols[i];
+            }
+            sql += string.Join(", ", cols);
             if (where.Length > 0) sql += "\nwhere " + where;
             return sql;
         }

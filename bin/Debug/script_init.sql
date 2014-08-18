@@ -194,8 +194,8 @@ CREATE TABLE IF NOT EXISTS sm_user_role
 );
 
 -- Table: sys_error_log
--- DROP TABLE sys_error_log;
-CREATE TABLE IF NOT EXISTS sys_error_log
+-- DROP TABLE sy_error_log;
+CREATE TABLE IF NOT EXISTS sy_error_log
 (
   id bigserial NOT NULL,
   session_id bigint NOT NULL,
@@ -204,5 +204,5 @@ CREATE TABLE IF NOT EXISTS sys_error_log
   trace text,
   info text,
   status text,
-  CONSTRAINT sys_error_log_pkey PRIMARY KEY (id)
+  CONSTRAINT sy_error_log_pkey PRIMARY KEY (id)
 );

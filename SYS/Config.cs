@@ -14,12 +14,10 @@ namespace kBit.ERP.SYS
         public string Value { get; set; }
         public string Note { get; set; }
         public String Status { get; set; }
-        public string LockBy { get; set; }
-        public DateTime? LockAt { get; set; }
-        public string InsertBy { get; set; }
-        public DateTime? InsertAt { get; set; }
-        public string ChangeBy { get; set; }
-        public DateTime? ChangeAt { get; set; }
+        public string Insert_By { get; set; }
+        public DateTime? Insert_At { get; set; }
+        public string Change_By { get; set; }
+        public DateTime? Change_At { get; set; }
     }
 
     static class ConfigFacade

@@ -12,7 +12,7 @@ namespace kBit.ERP.SYS
     class ErrorLog
     {
         public long Id { get; set; }
-        public long SessionId { get; set; }
+        public long Session_Id { get; set; }
         public DateTime? At { get; set; }
         public string Message { get; set; }
         public string Trace { get; set; }
@@ -54,8 +54,8 @@ namespace kBit.ERP.SYS
             {
                 if (m.Id == 0)
                 {
-                    m.SessionId = App.session.Id;
-                    var sql = "insert into sys_error_log (session_id, at, message, trace, info) values (@session_id, @at, @message, @trace, @info)";
+                    m.Session_Id = App.session.Id;
+                    var sql = "insert into sy_error_log (session_id, at, message, trace, info) values (@session_id, @at, @message, @trace, @info)";
                     SqlFacade.Connection.Execute(sql, m);
                 }
                 else
@@ -71,13 +71,13 @@ namespace kBit.ERP.SYS
 
         public static ErrorLog Select(long Id)
         {
-            var sql = "select * from sys_error_log where id=@id";
+            var sql = "select * from sy_error_log where id=@id";
             return SqlFacade.Connection.Query<ErrorLog>(sql, new { Id }).FirstOrDefault();
         }
 
         public static void SetStatus(long Id, string s)
         {
-            var sql = "update sys_error_log set status = @Status where id = @Id";
+            var sql = "update sy_error_log set status = @Status where id = @Id";
             SqlFacade.Connection.Execute(sql, new { Status = s,  Id });
         }
 
