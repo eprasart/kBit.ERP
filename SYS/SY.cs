@@ -20,9 +20,10 @@ namespace kBit.ERP.SYS
     {
         const string TableName = "sy_config";
 
-        private static void Add(string name, string value)
+        private static void Add(string name, object value)
         {
-
+            var sql = SqlFacade.SqlInsert(TableName, "name, value","");
+            SqlFacade.Connection.Execute(sql, new { name, value });
         }
 
         public static object Get(string name, object defaultValue = null)
@@ -30,7 +31,10 @@ namespace kBit.ERP.SYS
             var sql = SqlFacade.SqlSelect(TableName, "value", "name = @name");
             var result = SqlFacade.Connection.ExecuteScalar(sql, new { name });
             if (result == null)
+            {
+                Add(name, defaultValue);
                 return defaultValue;
+            }
             return result;
         }
 
