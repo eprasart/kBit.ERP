@@ -6,6 +6,7 @@ using Npgsql;
 using Dapper;
 using System.Text;
 using System.IO;
+using kBit.ERP.SYS;
 
 namespace kBit.ERP
 {
@@ -153,12 +154,10 @@ namespace kBit.ERP
             return cmd.ExecuteReader(CommandBehavior.CloseConnection);
         }
 
-        public static int ExportToCSV(string sql, string delimiter = ",", bool open = true)
+        public static int ExportToCSV(string sql)
         {
             //sql = "COPY (" + sql + ") TO '" + path + "' DELIMITER '" + delimiter + "' CSV HEADER ENCODING 'UTF8';";
-            //Connection.ExecuteNonQuery(sql);
-
-            //todo: delimiter and open var should be from table
+            //Connection.ExecuteNonQuery(sql);            
             var result = 0;
 
             var sfd = new SaveFileDialog
@@ -179,7 +178,7 @@ namespace kBit.ERP
             for (int i = 0; i < dr.FieldCount; i++) // Column headers
             {
                 sLine += dr.GetName(i);
-                if (i < dr.FieldCount - 1) sLine += delimiter;
+                if (i < dr.FieldCount - 1) sLine += ConfigFacade.sy_export_delimiter;
             }
             sb.AppendLine(sLine);
 
@@ -189,7 +188,7 @@ namespace kBit.ERP
                 for (int i = 0; i < dr.FieldCount; i++)
                 {
                     sLine += "\"" + dr[i].ToString() + "\"";
-                    if (i < dr.FieldCount - 1) sLine += delimiter;
+                    if (i < dr.FieldCount - 1) sLine += ConfigFacade.sy_export_delimiter;
                 }
                 sb.AppendLine(sLine);
             }
@@ -204,7 +203,7 @@ namespace kBit.ERP
             {
                 sw.Write(sb);
             }
-            if (open) System.Diagnostics.Process.Start(path);   // Open file
+            if (ConfigFacade.sy_export_open_file_after) System.Diagnostics.Process.Start(path);   // Open file
             return result;
         }
 

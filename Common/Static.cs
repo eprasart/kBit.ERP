@@ -62,12 +62,4 @@ namespace kBit
 
 
     }
-
-    public static class ConfigName
-    {
-        public static readonly string SelectLimit = "sy_select_limit";
-
-        public static readonly string SpliterDistance ="_spliter_distance";
-        
-    }
 }

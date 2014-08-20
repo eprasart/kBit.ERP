@@ -111,7 +111,7 @@ namespace kBit.ERP.SM
                 if (m.Id == 0)
                 {
                     var sql = "insert into sm_session_log (log_at, session_id, priority, module, type, message)\n" +
-                        "values (@LogAt, session_id=@SessionId, priority=@Priority, module=@Module, type=@Type)";
+                        "values (:Log_At, :Session_Id, :Priority, :Module, :Type, :Message)";
                     m.Session_Id = SYS.App.session.Id;
                     SqlFacade.Connection.Execute(sql, m);
                 }
@@ -175,7 +175,7 @@ namespace kBit.ERP.SM
                 sql += " and status = '" + status + "'";
             if (filter.Length > 0)
                 sql += " and (code ilike :filter or description ilike :filter or phone ilike :filter or fax ilike :filter or email ilike :filter or address ilike :filter or note ilike :filter)";
-            sql += "\norder by code\nlimit 1000";   // todo: in db
+            sql += "\norder by code\nlimit " + ConfigFacade.sy_select_limit ;
 
             var cmd = new NpgsqlCommand(sql);
             if (filter.Length > 0)

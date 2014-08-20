@@ -1,7 +1,6 @@
 ﻿/*TODO: 
  * msg => English and/or Khmer (use both font in rtf to make it render nice)
- * spliterDistance: save in table by user
- * Column header auto size make grid load slow. How about allow to resize and store the column width in table?
+  * Column header auto size make grid load slow. How about allow to resize and store the column width in table?
  * Afer save the grid seem to flash out (might be load a few times)
 */
 
@@ -19,6 +18,7 @@ namespace kBit.ERP.IC
         bool IsExpand = false;
         bool IsDirty = false;
         bool IsIgnore = true;
+
 
         public frmLocationList()
         {
@@ -185,9 +185,34 @@ namespace kBit.ERP.IC
             }
         }
 
+        private void SetIconDisplayType(string type)
+        {
+            ToolStripItemDisplayStyle ds;
+            switch (type)
+            {
+                case "I":
+                    ds = ToolStripItemDisplayStyle.Image;
+                    break;
+                case "T":
+                    ds = ToolStripItemDisplayStyle.Text;
+                    break;
+                default:
+                    ds = ToolStripItemDisplayStyle.ImageAndText;
+                    break;
+            }
+            if (ds == ToolStripItemDisplayStyle.ImageAndText) return;   // If IT=ImageAndText, then do nothing (the designer already take care this)
+            foreach (var c in toolStrip1.Items)
+            {
+                if (c is ToolStripButton)
+                    ((ToolStripButton)c).DisplayStyle = ds;
+            }
+        }
+
         private void frmLocationList_Load(object sender, EventArgs e)
         {
             Icon = Properties.Resources.Icon;
+            SetIconDisplayType(ConfigFacade.sy_toolbar_icon_display_type);
+            splitContainer1.SplitterDistance = ConfigFacade.ic_location_splitter_distance;
             dgvList.ShowLessColumns(true);
             RefreshGrid();
             LoadData();
@@ -329,7 +354,7 @@ namespace kBit.ERP.IC
             }
             else
             {
-                splitContainer1.SplitterDistance = LocationFacade.Config_SplitterDistance;
+                splitContainer1.SplitterDistance = ConfigFacade.ic_location_splitter_distance;
                 splitContainer1.FixedPanel = FixedPanel.Panel1;
             }
             dgvList.ShowLessColumns(IsExpand);
@@ -513,6 +538,9 @@ namespace kBit.ERP.IC
             IsDirty = false;
             if (btnUnlock.Text == "Cance&l")
                 btnUnlock_Click(null, null);
+            // Save SplitterDistance
+            if (!IsExpand)
+                ConfigFacade.ic_location_splitter_distance = splitContainer1.SplitterDistance;
         }
 
         private void txtCode_Leave(object sender, EventArgs e)
@@ -530,12 +558,13 @@ namespace kBit.ERP.IC
             splitContainer1.IsSplitterFixed = !IsExpand;
             if (!IsExpand)
             {
+                ConfigFacade.ic_location_splitter_distance = splitContainer1.SplitterDistance;
                 splitContainer1.SplitterDistance = splitContainer1.Size.Width;
                 splitContainer1.FixedPanel = FixedPanel.Panel2;
             }
             else
             {
-                splitContainer1.SplitterDistance = 228; // TODO: load from var or db
+                splitContainer1.SplitterDistance = ConfigFacade.ic_location_splitter_distance;
                 splitContainer1.FixedPanel = FixedPanel.Panel1;
             }
             dgvList.ShowLessColumns(IsExpand);
@@ -544,7 +573,7 @@ namespace kBit.ERP.IC
 
         private void btnFilter_Click(object sender, EventArgs e)
         {
-            mnuShow.Show(toolStrip1, 784, 27);
+            mnuShow.Show(toolStrip1, btnFilter.Bounds.Left, 27); //784
         }
 
         private void btnFind_Click(object sender, EventArgs e)
@@ -573,11 +602,6 @@ namespace kBit.ERP.IC
             Application.DoEvents();
             LocationFacade.Export();
             Cursor = Cursors.Default;
-        }
-
-        private void dgvList_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
     }
 }
