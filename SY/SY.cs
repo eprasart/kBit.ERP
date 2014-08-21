@@ -40,7 +40,7 @@ namespace kBit.ERP.SYS
 
         public bool ValueBool
         {
-            get { return Value == "Y" ? true : false; }
+            get { return Value == "Y" || Value == "T" ? true : false; }
         }
 
         private void Add()
@@ -61,6 +61,7 @@ namespace kBit.ERP.SYS
 
         public void Save()
         {
+            //todo: only save if change
             var sql = SqlFacade.SqlUpdate(TableName, "value", "", "name = :name");
             SqlFacade.Connection.Execute(sql, new { Value, Name });
         }
@@ -72,10 +73,11 @@ namespace kBit.ERP.SYS
 
         static string spliterDistance = "_splitter_distance";
 
-        static Config _sy_select_limit = new Config(syPrefix + "select_limit", "1000", "Maximum row display in datagrid [1000]");
+        static Config _sy_select_limit = new Config(syPrefix + "select_limit", "1000", "Maximum number of row [1000] display in data grid");
         static Config _sy_toolbar_icon_display_type = new Config(syPrefix + "toolbar_icon_display_type", "IT", "Icon display type. [IT]=ImageAndText, I=Image, T=Text");
         static Config _sy_export_delimiter = new Config(syPrefix + "export_delimiter", ",", "Export delimiter [,]");
-        static Config _sy_export_open_file_after = new Config(syPrefix + "export_open_file_after", "Y", "Open file after export [Y/N]");
+        static Config _sy_export_open_file_after = new Config(syPrefix + "export_open_file_after", "Y", "Open file after export. [Y]=Yes or N=No");
+        static Config _sy_code_casing = new Config(syPrefix + "code_casing", "U", "Code character casing. [U]=Upper, L=Lower or N=Normal");
 
         static Config _ic_location_spitter_distance = new Config(LocationFacade.TableName + spliterDistance, "228", "Data grid splitter distance [228]");
 
@@ -103,8 +105,16 @@ namespace kBit.ERP.SYS
             set { _sy_export_open_file_after.Value = value == true ? "Y" : "N"; }
         }
 
+        public static string sy_code_casing
+        {
+            get { return _sy_code_casing.Value; }
+            set { _sy_export_open_file_after.Value = value; }
+        }
 
 
+
+
+        // ic_location
         public static int ic_location_splitter_distance
         {
             get { return _ic_location_spitter_distance.ValueInt; }
@@ -117,6 +127,7 @@ namespace kBit.ERP.SYS
             _sy_toolbar_icon_display_type.Save();
             _sy_export_delimiter.Save();
             _sy_export_open_file_after.Save();
+            _sy_code_casing.Save();
 
             _ic_location_spitter_distance.Save();
 

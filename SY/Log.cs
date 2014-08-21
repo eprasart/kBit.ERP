@@ -51,17 +51,10 @@ namespace kBit.ERP.SYS
         private static void Save(ErrorLog m)
         {
             try
-            {
-                if (m.Id == 0)
-                {
+            {             
                     m.Session_Id = App.session.Id;
-                    var sql = "insert into sy_error_log (session_id, at, message, trace, info) values (@session_id, @at, @message, @trace, @info)";
-                    SqlFacade.Connection.Execute(sql, m);
-                }
-                else
-                {
-                    //SqlFacade.Connection.UpdateOnly(m, p => new { p.Username }, p => p.Id == m.Id);
-                }
+                    var sql = "insert into sy_error_log (session_id, at, message, trace, info) values (:session_id, :at, :message, :trace, :info)";
+                    SqlFacade.Connection.Execute(sql, m);               
             }
             catch (Exception ex)
             {
@@ -90,7 +83,7 @@ namespace kBit.ERP.SYS
         {
             var log = new ErrorLog()
             {
-                Message = ex.ToString(),
+                Message = ex.Message,
                 Trace = ex.StackTrace,
                 Info = info
             };

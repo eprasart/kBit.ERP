@@ -205,12 +205,32 @@ namespace kBit.ERP.IC
             }
         }
 
+        private void SetCodeCasing()
+        {
+            CharacterCasing cs;
+            switch (ConfigFacade.sy_code_casing)
+            {
+                case "U":
+                    cs = CharacterCasing.Upper;
+                    break;
+                case "L":
+                    cs = CharacterCasing.Lower;
+                    break;
+                default:
+                    cs = CharacterCasing.Normal;
+                    break;
+            }
+            txtCode.CharacterCasing = cs;
+        }
+
         private void frmLocationList_Load(object sender, EventArgs e)
         {
             Icon = Properties.Resources.Icon;
             SetIconDisplayType(ConfigFacade.sy_toolbar_icon_display_type);
             splitContainer1.SplitterDistance = ConfigFacade.ic_location_splitter_distance;
             dgvList.ShowLessColumns(true);
+            SetCodeCasing();
+
             RefreshGrid();
             LoadData();
             //LockControls();
