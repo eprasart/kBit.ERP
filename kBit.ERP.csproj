@@ -85,7 +85,6 @@
     <Compile Include="Common\Static.cs" />
     <Compile Include="Common\Security.cs" />
     <Compile Include="Common\Setting.cs" />
-    <Compile Include="Common\Lock.cs" />
     <Compile Include="IC\Location.cs" />
     <Compile Include="IC\LocationList.cs">
       <SubType>Form</SubType>
@@ -119,6 +118,12 @@
     </Compile>
     <Compile Include="SM\UserList.Designer.cs">
       <DependentUpon>UserList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SY\MsgValidation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SY\MsgValidation.Designer.cs">
+      <DependentUpon>MsgValidation.cs</DependentUpon>
     </Compile>
     <Compile Include="SY\SY.cs" />
     <Compile Include="SY\Log.cs" />
@@ -173,6 +178,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SY\MsgValidation.resx">
+      <DependentUpon>MsgValidation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SY\Splash.resx">
       <DependentUpon>Splash.cs</DependentUpon>

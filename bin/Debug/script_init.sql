@@ -193,6 +193,24 @@ CREATE TABLE IF NOT EXISTS sm_user_role
   CONSTRAINT sm_user_role_pkey PRIMARY KEY (id)
 );
 
+-- Table: sys_branch
+-- DROP TABLE sy_branch;
+CREATE TABLE IF NOT EXISTS sy_branch
+(
+  id bigserial NOT NULL,
+  code text NOT NULL,
+  description text,
+  note text,
+  status text default 'A',
+  insert_by text,
+  insert_at timestamp without time zone DEFAULT now(),
+  change_by text,
+  change_at timestamp without time zone,
+  CONSTRAINT sy_branch_pkey PRIMARY KEY (id)
+);
+
+insert into sy_branch (code, description) select '000', 'Head Office' where not exists (select id from sy_branch);
+
 -- Table: sys_error_log
 -- DROP TABLE sy_error_log;
 CREATE TABLE IF NOT EXISTS sy_error_log
@@ -207,6 +225,8 @@ CREATE TABLE IF NOT EXISTS sy_error_log
   CONSTRAINT sy_error_log_pkey PRIMARY KEY (id)
 );
 
+-- Table: sys_config
+-- DROP TABLE sy_config;
 CREATE TABLE IF NOT EXISTS sy_config
 (
   id bigserial NOT NULL,

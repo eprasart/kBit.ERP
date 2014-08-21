@@ -1,7 +1,5 @@
 ﻿/*TODO: 
- * msg => English and/or Khmer (use both font in rtf to make it render nice)
-  * Column header auto size make grid load slow. How about allow to resize and store the column width in table?
- * Afer save the grid seem to flash out (might be load a few times)
+ * msg => English and/or Khmer (use Noto font)  
 */
 
 using System;
@@ -18,7 +16,6 @@ namespace kBit.ERP.IC
         bool IsExpand = false;
         bool IsDirty = false;
         bool IsIgnore = true;
-
 
         public frmLocationList()
         {

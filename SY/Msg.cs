@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace kBit
+namespace kBit.ERP
 {
     public partial class frmMsg : Form
     {
