@@ -80,13 +80,13 @@ namespace kBit.ERP.SM
         public static Session Select(long Id)
         {
             var sql = SqlFacade.SqlSelect(TableName, "*", "id=@Id");
-            return SqlFacade.Connection.Query<Session>(sql, new { Id }).FirstOrDefault();            
+            return SqlFacade.Connection.Query<Session>(sql, new { Id }).FirstOrDefault();
         }
     }
 
     static class SessionLogFacade
     {
-              public static DataTable GetDataTable(string where, string filter = "")
+        public static DataTable GetDataTable(string where, string filter = "")
         {
             var sql = "select l.id, username, login_at, logout_at, version, machine_name, machine_user_name, log_at, priority, module, type, message\n" +
                 "from sm_session s\nleft join sm_session_log l on s.id = l.session_id where 1 = 1";
@@ -102,7 +102,7 @@ namespace kBit.ERP.SM
             var dt = new DataTable();
             da.Fill(dt);
             return dt;
-        }        
+        }
 
         private static void Save(SessionLog m)
         {
@@ -175,7 +175,7 @@ namespace kBit.ERP.SM
                 sql += " and status = '" + status + "'";
             if (filter.Length > 0)
                 sql += " and (code ilike :filter or description ilike :filter or phone ilike :filter or fax ilike :filter or email ilike :filter or address ilike :filter or note ilike :filter)";
-            sql += "\norder by code\nlimit " + ConfigFacade.sy_select_limit ;
+            sql += "\norder by code\nlimit " + ConfigFacade.sy_select_limit;
 
             var cmd = new NpgsqlCommand(sql);
             if (filter.Length > 0)

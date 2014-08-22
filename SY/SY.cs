@@ -51,7 +51,7 @@ namespace kBit.ERP.SYS
 
         private void Get()
         {
-            var sql = SqlFacade.SqlSelect(TableName, "value", "name = @name");
+            var sql = SqlFacade.SqlSelect(TableName, "upper(value)", "name = :name");
             var result = SqlFacade.Connection.ExecuteScalar(sql, new { Name });
             if (result == null)
                 Add();
@@ -85,7 +85,6 @@ namespace kBit.ERP.SYS
         {
             get { return _sy_select_limit.ValueInt; }
             set { _sy_select_limit.Value = value.ToString(); }
-
         }
 
         public static string sy_toolbar_icon_display_type
@@ -93,6 +92,7 @@ namespace kBit.ERP.SYS
             get { return _sy_toolbar_icon_display_type.Value; }
             set { _sy_toolbar_icon_display_type.Value = value; }
         }
+
         public static string sy_export_delimiter
         {
             get { return _sy_export_delimiter.Value; }
