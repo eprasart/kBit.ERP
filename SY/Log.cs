@@ -51,10 +51,10 @@ namespace kBit.ERP.SYS
         private static void Save(ErrorLog m)
         {
             try
-            {             
-                    m.Session_Id = App.session.Id;
-                    var sql = "insert into sy_error_log (session_id, at, message, trace, info) values (:session_id, :at, :message, :trace, :info)";
-                    SqlFacade.Connection.Execute(sql, m);               
+            {
+                m.Session_Id = App.session.Id;
+                var sql = "insert into sy_error_log (session_id, message, trace, info) values (:session_id, :message, :trace, :info)";
+                SqlFacade.Connection.Execute(sql, m);
             }
             catch (Exception ex)
             {
@@ -71,7 +71,7 @@ namespace kBit.ERP.SYS
         public static void SetStatus(long Id, string s)
         {
             var sql = "update sy_error_log set status = @Status where id = @Id";
-            SqlFacade.Connection.Execute(sql, new { Status = s,  Id });
+            SqlFacade.Connection.Execute(sql, new { Status = s, Id });
         }
 
         /// <summary>

@@ -27,6 +27,7 @@ namespace kBit
         public static readonly string Log_Lock = "Lock";
         public static readonly string Log_Unlock = "Unlock";
         public static readonly string Log_Open = "Open";
+        public static readonly string Log_View = "View";
         public static readonly string Log_Copy = "Copy";
         public static readonly string Log_Save = "Save";
         public static readonly string Log_SaveAndNew = "Save and New";

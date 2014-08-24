@@ -12,10 +12,57 @@ namespace kBit.ERP
 {
     class SqlFacade
     {
-        public static string ConnectionString = "";
+        private static string _ConnectionString;
+        public static NpgsqlConnectionStringBuilder ConnectionStringBldr = new NpgsqlConnectionStringBuilder();
+
+        public static string ConnectionString
+        {
+            get { return _ConnectionString; }
+            set
+            {
+                ConnectionStringBldr.ConnectionString = value;
+                // Check if username and password encrypted
+                var usr = ConnectionStringBldr.UserName;
+                string usrEncrypted = "", pwdEncrypted="";
+
+                if (Security.IsEncrypted(usr))
+                {
+                    usrEncrypted = usr;
+                    ConnectionStringBldr.UserName = Security.DecryptString(usr);
+                }
+                else
+                    usrEncrypted = Security.EncryptString(usr);
+                var pwd = Security.ByteArrayToString(ConnectionStringBldr.PasswordAsByteArray);
+                if (Security.IsEncrypted(pwd))
+                {
+                    pwdEncrypted = pwd;
+                    ConnectionStringBldr.Password = Security.DecryptString(pwd);
+                }
+                else
+                    pwdEncrypted = Security.EncryptString(pwd);
+                _ConnectionString = ConnectionStringBldr.ConnectionString;
+
+                var nsb = new NpgsqlConnectionStringBuilder(value);
+                nsb.UserName = usrEncrypted;
+                nsb.Password = pwdEncrypted;
+                if (nsb.ConnectionString != value)
+                    App.setting.Set("ConnectionString", nsb.ConnectionString); // Save back after changed/encrypted
+            }
+        }
+
         public static NpgsqlConnection Connection = null;
 
         #region "Sql Query Builder"
+        /// <summary>
+        /// Select SQL
+        /// </summary>
+        /// <param name="table">Table name</param>
+        /// <param name="columns">Columns separated by comma</param>
+        /// <param name="where">Full where clause</param>
+        /// <param name="orderby"></param>
+        /// <param name="limit"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
         public static string SqlSelect(string table, string columns, string where = "", string orderby = "", long limit = 0, long offset = 0)
         {
             var sql = "select " + columns + " from " + table;
@@ -44,6 +91,14 @@ namespace kBit.ERP
             return sql;
         }
 
+        /// <summary>
+        /// Insert SQL
+        /// </summary>
+        /// <param name="table">Table name</param>
+        /// <param name="columns">Columns, separated by comma</param>
+        /// <param name="values">Values parameters. Make it empty for default, otherwise specify the complete one</param>
+        /// <param name="returnSeq">True if want to return new inserted Id</param>
+        /// <returns></returns>
         public static string SqlInsert(string table, string columns, string values, bool returnSeq = false)
         {
             if (values.Length == 0) values = ":" + columns.Replace(", ", ", :");    // if values is blank then will make it as parameter (:) of all columns
@@ -66,6 +121,14 @@ namespace kBit.ERP
             return sql;
         }
 
+        /// <summary>
+        /// Update SQL
+        /// </summary>
+        /// <param name="table">Table name</param>
+        /// <param name="columns">Columns to update, separated by comma</param>
+        /// <param name="values">Blank for default or specify the one(s) with values. E.g. "change_at = now()"</param>
+        /// <param name="where">Full where clause, e.g. "id = :id"</param>
+        /// <returns></returns>
         public static string SqlUpdate(string table, string columns, string values, string where = "")
         {
             var sql = "update " + table + " set ";

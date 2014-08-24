@@ -35,9 +35,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(509, 193);
+            this.ControlBox = false;
             this.Font = new System.Drawing.Font("Noto Sans Khmer", 8.25F);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "MsgValidation";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "MsgValidation";
+            this.TopMost = true;
             this.ResumeLayout(false);
 
         }

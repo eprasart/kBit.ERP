@@ -69,9 +69,11 @@ namespace kBit.ERP.SYS
 
             //Session            
             session.Username = "Visal"; //todo: to be removed
+            session.Branch_Code = "000"; 
             session.Machine_Name = Environment.MachineName;
             session.Machine_User_Name = Environment.UserName;
             session.Version = version;
+            
             // Log
             ErrorLogFacade.logFile.FileName = Path.Combine(Application.StartupPath, "Error.log");
             AccessLog.FileName = Path.Combine(Application.StartupPath, "Access.log");
@@ -92,6 +94,7 @@ namespace kBit.ERP.SYS
         {
             setting.Path = Path.Combine(Application.StartupPath, "setting.ini");
             SqlFacade.ConnectionString = setting.Get("ConnectionString", @"server=localhost;uid=erp;pwd=erp");
+            
         }
 
         public static void Close()

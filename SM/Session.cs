@@ -13,6 +13,7 @@ namespace kBit.ERP.SM
         public long Id { get; set; }
         public long UserId { get; set; }
         public string Username { get; set; }
+        public string Branch_Code { get; set; }
         public DateTime? Login_At { get; set; }
         public DateTime? Logout_At { get; set; }
         public string Version { get; set; }
@@ -40,7 +41,7 @@ namespace kBit.ERP.SM
 
         public static DataTable GetDataTable(string filter = "", string status = "")
         {
-            var sql = "select id, username, login_at, logout_at, version, machine_name, machine_user_name from sm_session where 1 = 1";
+            var sql = "select id, username, branch_code, login_at, logout_at, version, machine_name, machine_user_name from sm_session where 1 = 1";
             if (status.Length > 0)
                 sql += " and status = '" + status + "'";
             //if (filter.Length > 0)
@@ -58,15 +59,11 @@ namespace kBit.ERP.SM
         public static long Save(Session m)
         {
             long seq = 0;   // New inserted sequence
-            //if (m.Id == 0)
-            //{
-            //    m.LoginAt = ts;
-            //    seq = SqlFacade.Connection.Insert(m, true);
-            //}
-            //else
-            //{
-            //    SqlFacade.Connection.UpdateOnly(m, p => new { p.Username }, p => p.Id == m.Id);
-            //}
+            if (m.Id == 0)
+            {
+                var sql = SqlFacade.SqlInsert(TableName, "username, branch_code, version, machine_name, machine_user_name", "", true);
+                seq = SqlFacade.Connection.ExecuteScalar<long>(sql, m);
+            }
             return seq;
         }
 
@@ -79,7 +76,7 @@ namespace kBit.ERP.SM
 
         public static Session Select(long Id)
         {
-            var sql = SqlFacade.SqlSelect(TableName, "*", "id=@Id");
+            var sql = SqlFacade.SqlSelect(TableName, "*", "id = :id");
             return SqlFacade.Connection.Query<Session>(sql, new { Id }).FirstOrDefault();
         }
     }
@@ -110,8 +107,8 @@ namespace kBit.ERP.SM
             {
                 if (m.Id == 0)
                 {
-                    var sql = "insert into sm_session_log (log_at, session_id, priority, module, type, message)\n" +
-                        "values (:Log_At, :Session_Id, :Priority, :Module, :Type, :Message)";
+                    var sql = "insert into sm_session_log (session_id, priority, module, type, message)\n" +
+                        "values (:Session_Id, :Priority, :Module, :Type, :Message)";
                     m.Session_Id = SYS.App.session.Id;
                     SqlFacade.Connection.Execute(sql, m);
                 }
@@ -153,6 +150,7 @@ namespace kBit.ERP.SM
     {
         public long Id { get; set; }
         public string Table_Name { get; set; }
+        public string Branch_Code { get; set; }
         public long Lock_Id { get; set; }
         public string Ref { get; set; }
         public string Lock_By { get; set; }
@@ -187,9 +185,10 @@ namespace kBit.ERP.SM
         public static long Save(Lock m)
         {
             m.Lock_By = App.session.Username;
+            m.Branch_Code = App.session.Branch_Code; 
             m.Machine_Name = App.session.Machine_Name;
-            m.Machine_Username = App.session.Machine_User_Name;
-            var sql = SqlFacade.SqlInsert(TableName, "table_name, lock_id, ref, lock_by, machine_name, machine_username", "", true);
+            m.Machine_Username = App.session.Machine_User_Name;            
+            var sql = SqlFacade.SqlInsert(TableName, "table_name, branch_code, lock_id, ref, lock_by, machine_name, machine_username", "", true);
             m.Id = SqlFacade.Connection.ExecuteScalar<long>(sql, m);
             return m.Id;
         }

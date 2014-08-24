@@ -2,6 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace kBit
 {
@@ -36,6 +37,18 @@ namespace kBit
                 descryptedBytes = InMemoryCrypt(encryptedBytes, decryptor);
             }
             return Encoding.UTF8.GetString(descryptedBytes);
+        }
+
+        public static bool IsEncrypted(string text)
+        {
+            //IsBase64String
+            text = text.Trim();
+            return (text.Length % 4 == 0) && Regex.IsMatch(text, @"^[a-zA-Z0-9\+/]*={0,3}$", RegexOptions.None);
+        }
+
+        public static string ByteArrayToString(byte[] by)
+        {
+            return System.Text.Encoding.UTF8.GetString(by);
         }
 
         // Performs an in-memory encrypt/decrypt transformation on a byte array.

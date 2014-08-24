@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -61,6 +62,18 @@ namespace kBit.ERP
                 sr.Close();
             }
             return content;
+        }
+
+        public static string RemoveCharacters(string value, string characters)
+        {
+            return new Regex("[" + characters + "]").Replace(value, "");
+        }
+
+        public static bool IsEmailValid(string email)
+        {
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(email);
+            return match.Success;
         }
     }
 

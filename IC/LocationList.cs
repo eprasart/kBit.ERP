@@ -37,7 +37,16 @@ namespace kBit.ERP.IC
             Cursor = Cursors.WaitCursor;
             //IsIgnore = true;
             if (dgvList.SelectedRows.Count > 0) RowIndex = dgvList.SelectedRows[0].Index;
-            dgvList.DataSource = LocationFacade.GetDataTable(txtFind.Text, GetStatus());
+            try
+            {
+                dgvList.DataSource = LocationFacade.GetDataTable(txtFind.Text, GetStatus());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error while retrieving data to the data grid.\n" + ex.Message, "Location", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorLogFacade.Log(ex);
+                return;
+            }
             if (dgvList.RowCount > 0)
             {
                 if (seq == 0)
@@ -116,7 +125,7 @@ namespace kBit.ERP.IC
 
         private bool IsValidated()
         {
-            //todo: show all error in just a message box with scroll down
+            //todo: show all error in just a message box with scroll down            
             string Code = txtCode.Text.Trim();
             if (Code.Length == 0)
             {
@@ -129,6 +138,13 @@ namespace kBit.ERP.IC
                 MessageBox.Show("Code already exists. Enter a unique code.", "Save", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 txtCode.Focus();
                 txtCode.SelectAll();
+                return false;
+            }
+            if (txtEmail.Text.Length > 0 && !Util.IsEmailValid(txtEmail.Text))
+            {
+                MessageBox.Show("Email address is not valid.", "Save", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                txtEmail.Focus();
+                txtEmail.SelectAll();
                 return false;
             }
             return true;
@@ -166,6 +182,7 @@ namespace kBit.ERP.IC
                     SetStatus(m.Status);
                     LockControls();
                     IsDirty = false;
+                    SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_View, "View. Id=" + m.Id + ", Code=" + m.Code);
                 }
                 catch (Exception ex)
                 {
@@ -223,18 +240,42 @@ namespace kBit.ERP.IC
             txtCode.CharacterCasing = cs;
         }
 
+        private void SetSettings()
+        {
+            try
+            {
+                SetIconDisplayType(ConfigFacade.sy_toolbar_icon_display_type);
+                splitContainer1.SplitterDistance = ConfigFacade.ic_location_splitter_distance;
+
+                SetCodeCasing();
+                var lo = ConfigFacade.ic_location_location;
+                if (lo != new System.Drawing.Point(-1, -1))
+                    Location = lo;
+                var si = ConfigFacade.ic_location_size;
+                if (si != new System.Drawing.Size(-1, -1))
+                    Size = si;
+                WindowState = (FormWindowState)ConfigFacade.ic_location_window_state;
+            }
+            catch (Exception ex)
+            {
+                ErrorLogFacade.Log(ex, "Set settings");
+            }
+        }
+
+        private void SetLabels()
+        {
+
+        }
+
         private void frmLocationList_Load(object sender, EventArgs e)
         {
             Icon = Properties.Resources.Icon;
-            SetIconDisplayType(ConfigFacade.sy_toolbar_icon_display_type);
-            splitContainer1.SplitterDistance = ConfigFacade.ic_location_splitter_distance;
             dgvList.ShowLessColumns(true);
-            SetCodeCasing();
-
+            SetSettings();
+            SetLabels();
+            SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_Open, "Opened");
             RefreshGrid();
             LoadData();
-            //LockControls();
-            SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_Open, "Opened");
         }
 
         private void btnNew_Click(object sender, EventArgs e)
@@ -281,12 +322,20 @@ namespace kBit.ERP.IC
                 log.Priority = Type.Priority_Caution;
                 log.Type = Type.Log_Update;
             }
-            m.Id = LocationFacade.Save(m);
+            try
+            {
+                m.Id = LocationFacade.Save(m);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error while saving data.\n" + ex.Message, "Save", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorLogFacade.Log(ex);
+            }
             if (dgvList.RowCount > 0) RowIndex = dgvList.CurrentRow.Index;
             RefreshGrid(m.Id);
             LockControls();
             Cursor = Cursors.Default;
-            log.Message = "Saved. Id=" + m.Id + " , Code=" + txtCode.Text;
+            log.Message = "Saved. Id=" + m.Id + ", Code=" + txtCode.Text;
             SessionLogFacade.Log(log);
             IsDirty = false;
         }
@@ -338,9 +387,16 @@ namespace kBit.ERP.IC
             if (lInfo.Locked) msg = "Record is currently locked by '" + lInfo.Lock_By + "' since '" + lInfo.Lock_At + "'\n" + msg;
             if (MessageBox.Show(msg, "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
                 return;
-            LocationFacade.SetStatus(Id, Type.RecordStatus_Deleted);
+            try
+            {
+                LocationFacade.SetStatus(Id, Type.RecordStatus_Deleted);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error while deleting.\n" + ex.Message, "Delete", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorLogFacade.Log(ex);
+            }
             RefreshGrid();
-
             // log
             SessionLogFacade.Log(Type.Priority_Warning, Type.Module_IC_Location, Type.Log_Delete, "Deleted. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
         }
@@ -407,8 +463,15 @@ namespace kBit.ERP.IC
                     if (MessageBox.Show(msg + "\nAre you sure you want to proceed?", "Active/Inactive", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
                         return;
             }
-
-            LocationFacade.SetStatus(Id, status);
+            try
+            {
+                LocationFacade.SetStatus(Id, status);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error while active/inactive." + ex.Message, "Active/Inactive", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorLogFacade.Log(ex);
+            }
             RefreshGrid();
             SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Location, status == Type.RecordStatus_InActive ? Type.Log_Inactive : Type.Log_Active, "Id=" + dgvList.Id + ", Code=" + txtCode.Text);
         }
@@ -438,7 +501,15 @@ namespace kBit.ERP.IC
                 }
                 LockControls(true);
                 dgvList.Focus();
-                LocationFacade.ReleaseLock(dgvList.Id);
+                try
+                {
+                    LocationFacade.ReleaseLock(dgvList.Id);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error while unlocking record." + ex.Message, "Unlock", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    ErrorLogFacade.Log(ex);
+                }
                 if (dgvList.CurrentRow != null && !dgvList.CurrentRow.Selected)
                     dgvList.CurrentRow.Selected = true;
                 SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_Unlock, "Unlock cancel. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
@@ -465,7 +536,15 @@ namespace kBit.ERP.IC
             txtDesc.SelectionStart = txtDesc.Text.Length;
             txtDesc.Focus();
             LockControls(false);
-            LocationFacade.Lock(dgvList.Id, txtCode.Text);
+            try
+            {
+                LocationFacade.Lock(dgvList.Id, txtCode.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error while locking record." + ex.Message, "Lock", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorLogFacade.Log(ex);
+            }
             SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_Lock, "Locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
             btnUnlock.ToolTipText = "Cancel (Esc or Ctrl+L)";
         }
@@ -555,9 +634,13 @@ namespace kBit.ERP.IC
             IsDirty = false;
             if (btnUnlock.Text == "Cance&l")
                 btnUnlock_Click(null, null);
-            // Save SplitterDistance
+
+            // Set config values
             if (!IsExpand)
                 ConfigFacade.ic_location_splitter_distance = splitContainer1.SplitterDistance;
+            ConfigFacade.ic_location_location = Location;
+            ConfigFacade.ic_location_window_state = (int)WindowState;
+            if (WindowState == FormWindowState.Normal) ConfigFacade.ic_location_size = Size;
         }
 
         private void txtCode_Leave(object sender, EventArgs e)
