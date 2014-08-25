@@ -136,6 +136,7 @@ namespace kBit.ERP.SYS
         static Config _sy_export_delimiter = new Config(Username, syPrefix + "export_delimiter", ",", "Export delimiter [,]");
         static Config _sy_export_open_file_after = new Config(Username, syPrefix + "export_open_file_after", "Y", "Open file after export. [Y]=Yes or N=No");
         static Config _sy_code_casing = new Config("", syPrefix + "code_casing", "U", "Code character casing. [U]=Upper, L=Lower or N=Normal");
+        static Config _sy_language = new Config(Username, syPrefix + "language", "ENG", "Language. e.g ENG or KHM");
 
         static Config _ic_location_spitter_distance = new Config(Username, LocationFacade.TableName + spliterDistance, "228", "Data grid splitter distance [228]");
         static Config _ic_location_window_state = new Config(Username, LocationFacade.TableName + window_state, "0", "Window state. Normal, Maximize and Minimize");
@@ -173,7 +174,11 @@ namespace kBit.ERP.SYS
             set { _sy_export_open_file_after.Value = value; }
         }
 
-
+        public static string sy_language
+        {
+            get { return _sy_language.Value; }
+            set { _sy_language.Value = value; }
+        }
 
 
         // ic_location
@@ -223,7 +228,7 @@ namespace kBit.ERP.SYS
 
     class Label
     {
-        const string TableName = "sy_label";
+
 
         Dictionary<string, string> labels = new Dictionary<string, string>();
 
@@ -232,8 +237,8 @@ namespace kBit.ERP.SYS
 
         public Label(string function, string language)
         {
-            var sql = SqlFacade.SqlSelect(TableName, "field_name, value","function_code = :function and language = :language");
-            var labels = SqlFacade.Connection.query
+            //var sql = SqlFacade.SqlSelect(TableName, "field_name, value","function_code = :function and language = :language");
+            //var labels = SqlFacade.Connection.query
         }
 
         private void Load(string function, string language)
@@ -244,6 +249,11 @@ namespace kBit.ERP.SYS
 
     class LabelFacade
     {
-
+        const string TableName = "sy_label";
+        public static string GetLabel(string function_code, string language, string field_name)
+        {
+            var sql = SqlFacade.SqlSelect(TableName, "value", "function_code = :function_code and language = :language and field_name = :field_name");
+            return SqlFacade.Connection.ExecuteScalar<string>(sql, new { function_code, language, field_name });
+        }
     }
 }

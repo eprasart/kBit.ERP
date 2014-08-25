@@ -264,6 +264,25 @@ namespace kBit.ERP.IC
 
         private void SetLabels()
         {
+            var funCode = "icloc";
+            var lang = ConfigFacade.sy_language;
+            lblCode.Text = LabelFacade.GetLabel(funCode, lang, "code");
+            colCode.HeaderText = lblCode.Text;
+            lblDescription.Text = LabelFacade.GetLabel(funCode, lang, "description");
+            colDescription.HeaderText = lblDescription.Text;
+            lblAddress.Text = LabelFacade.GetLabel(funCode, lang, "address");
+            colAddress.HeaderText = lblAddress.Text;
+            lblName.Text = LabelFacade.GetLabel(funCode, lang, "name");
+            colName.HeaderText = lblName.Text;
+            lblPhone.Text = LabelFacade.GetLabel(funCode, lang, "phone");
+            colPhone.HeaderText = lblPhone.Text;
+            lblFax.Text = LabelFacade.GetLabel(funCode, lang, "fax");
+            colFax.HeaderText = lblFax.Text;
+            lblEmail.Text = LabelFacade.GetLabel(funCode, lang, "email");
+            colEmail.HeaderText = lblEmail.Text;
+            glbLocation.Caption = LabelFacade.GetLabel(funCode, lang, "location");
+            glbContact.Caption = LabelFacade.GetLabel(funCode, lang, "contact");
+            glbNote.Caption = LabelFacade.GetLabel(funCode, lang, "note");
 
         }
 
