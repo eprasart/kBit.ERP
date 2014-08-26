@@ -138,7 +138,7 @@ namespace kBit.ERP.SYS
         static Config _sy_code_casing = new Config("", syPrefix + "code_casing", "U", "Code character casing. [U]=Upper, L=Lower or N=Normal");
         static Config _sy_language = new Config(Username, syPrefix + "language", "ENG", "Language. e.g ENG or KHM");
 
-        static Config _ic_location_spitter_distance = new Config(Username, LocationFacade.TableName + spliterDistance, "228", "Data grid splitter distance [228]");
+        static Config _ic_location_spitter_distance = new Config(Username, LocationFacade.TableName + spliterDistance, "207", "Data grid splitter distance [228]");
         static Config _ic_location_window_state = new Config(Username, LocationFacade.TableName + window_state, "0", "Window state. Normal, Maximize and Minimize");
         static Config _ic_location_location = new Config(Username, LocationFacade.TableName + location, "-1, -1", "Window location");
         static Config _ic_location_size = new Config(Username, LocationFacade.TableName + size, "1024, 601", "Form size [1024, 601]");
@@ -250,10 +250,51 @@ namespace kBit.ERP.SYS
     class LabelFacade
     {
         const string TableName = "sy_label";
+
+        public static string sy_button_new;
+        public static string sy_button_copy;
+        public static string sy_button_cancel;
+        public static string sy_button_unlock;
+        public static string sy_button_save;
+        public static string sy_button_save_new;
+        public static string sy_button_active;
+        public static string sy_button_inactive;
+        public static string sy_button_delete;
+        public static string sy_button_mode;
+        public static string sy_button_export;
+
+        public static string sy_button_find;
+        public static string sy_button_clear;
+        public static string sy_button_filter;
+
+
+        public static void LoadSystemButtonLabel()
+        {
+            var funCode = "sybtn";
+            var lang = ConfigFacade.sy_language;
+            sy_button_new = LabelFacade.GetLabel(funCode, lang, "new");
+            sy_button_copy = LabelFacade.GetLabel(funCode, lang, "copy");
+            sy_button_cancel = LabelFacade.GetLabel(funCode, lang, "cancel");
+            sy_button_unlock = LabelFacade.GetLabel(funCode, lang, "unlock");
+            sy_button_save = LabelFacade.GetLabel(funCode, lang, "save");
+            sy_button_save_new = LabelFacade.GetLabel(funCode, lang, "save_new");
+            sy_button_active = LabelFacade.GetLabel(funCode, lang, "active");
+            sy_button_inactive = LabelFacade.GetLabel(funCode, lang, "inactive");
+            sy_button_delete = LabelFacade.GetLabel(funCode, lang, "delete");
+            sy_button_mode = LabelFacade.GetLabel(funCode, lang, "mode");
+            sy_button_export = LabelFacade.GetLabel(funCode, lang, "export");
+
+            sy_button_find = LabelFacade.GetLabel(funCode, lang, "find");
+            sy_button_clear = LabelFacade.GetLabel(funCode, lang, "clear");
+            sy_button_filter = LabelFacade.GetLabel(funCode, lang, "filter");
+        }
+
         public static string GetLabel(string function_code, string language, string field_name)
         {
             var sql = SqlFacade.SqlSelect(TableName, "value", "function_code = :function_code and language = :language and field_name = :field_name");
             return SqlFacade.Connection.ExecuteScalar<string>(sql, new { function_code, language, field_name });
         }
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿--CREATE EXTENSION IF NOT EXISTS pgcrypto SCHEMA public; -- for password encryption
+--CREATE EXTENSION hstore
 
 -- DROP TABLE ic_location;
 CREATE TABLE IF NOT EXISTS ic_location
@@ -22,17 +23,18 @@ CREATE TABLE IF NOT EXISTS ic_location
   CONSTRAINT ic_location_pkey PRIMARY KEY (id)
 );
 
--- DROP TABLE sm_change;
-CREATE TABLE IF NOT EXISTS sm_change
+-- DROP TABLE sm_audit_log;
+CREATE TABLE IF NOT EXISTS sm_audit_log 
 (
-  id bigserial NOT NULL,
-  change_no int,
-  status text DEFAULT 'A',
-  insert_by text,
-  insert_at timestamp without time zone DEFAULT now(),
-  change_by text,
-  change_at timestamp without time zone,
-  CONSTRAINT sm_change_pkey PRIMARY KEY (id)
+  id​ bigserial NOT NULL PRIMARY KEY,
+  relid oid NOT NULL,
+  table_name text,
+  ref_id bigint,
+  at timestamp without time zone NOT NULL DEFAULT now(),
+  client_addr inet,
+  operation text,
+  old_values hstore,
+  new_values hstore
 );
 
 -- DROP TABLE sm_function;
@@ -107,6 +109,7 @@ CREATE TABLE IF NOT EXISTS sm_session
   logout_at timestamp without time zone,
   version text,
   machine_name text,
+  client_addr inet DEFAULT inet_client_addr(),
   machine_user_name text,
   status text DEFAULT 'A',
   CONSTRAINT sm_session_pkey PRIMARY KEY (id)

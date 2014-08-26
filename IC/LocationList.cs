@@ -98,7 +98,7 @@ namespace kBit.ERP.IC
             btnDelete.Enabled = dgvList.Id != 0 && l;
             splitContainer1.Panel1.Enabled = l;
             btnUnlock.Enabled = !l || dgvList.RowCount > 0;
-            btnUnlock.Text = l ? "Un&lock" : "Cance&l";
+            btnUnlock.Text = l ? LabelFacade.sy_button_unlock : LabelFacade.sy_button_cancel;
             txtFind.ReadOnly = !l;
             btnFind.Enabled = l;
             btnClear.Enabled = l;
@@ -109,15 +109,15 @@ namespace kBit.ERP.IC
         {
             if (stat == Type.RecordStatus_Active)
             {
-                if (btnActive.Text.StartsWith(Type.RecordStatus_InActive)) return;
-                btnActive.Text = "Inactiv&e";
+                if (btnActive.Text == LabelFacade.sy_button_inactive) return;
+                btnActive.Text = LabelFacade.sy_button_inactive;
                 if (btnActive.Image != Properties.Resources.Inactive)
                     btnActive.Image = Properties.Resources.Inactive;
             }
             else
             {
-                if (btnActive.Text.StartsWith(Type.RecordStatus_Active)) return;
-                btnActive.Text = "Activ&e";
+                if (btnActive.Text == LabelFacade.sy_button_active) return;
+                btnActive.Text = LabelFacade.sy_button_active;
                 if (btnActive.Image != Properties.Resources.Active)
                     btnActive.Image = Properties.Resources.Active;
             }
@@ -266,6 +266,20 @@ namespace kBit.ERP.IC
         {
             var funCode = "icloc";
             var lang = ConfigFacade.sy_language;
+
+            btnNew.Text = LabelFacade.sy_button_new;
+            btnCopy.Text = LabelFacade.sy_button_copy;
+            btnUnlock.Text = LabelFacade.sy_button_unlock;
+            btnSave.Text = LabelFacade.sy_button_save;
+            btnSaveNew.Text = LabelFacade.sy_button_save_new;
+            btnActive.Text = LabelFacade.sy_button_inactive;
+            btnDelete.Text = LabelFacade.sy_button_delete;
+            btnMode.Text = LabelFacade.sy_button_mode;
+            btnExport.Text = LabelFacade.sy_button_export;
+            btnFind.Text = "     " + LabelFacade.sy_button_find;
+            btnClear.Text = "     " + LabelFacade.sy_button_clear;
+            btnFilter.Text = "     " + LabelFacade.sy_button_filter;
+
             lblCode.Text = LabelFacade.GetLabel(funCode, lang, "code");
             colCode.HeaderText = lblCode.Text;
             lblDescription.Text = LabelFacade.GetLabel(funCode, lang, "description");
@@ -402,9 +416,9 @@ namespace kBit.ERP.IC
                 }
             }
             // Delete            
-            msg = "Are you sure you want to delete?";
+            msg = "ច្បាស់ទេ​ថា Are you sure you want to delete?";
             if (lInfo.Locked) msg = "Record is currently locked by '" + lInfo.Lock_By + "' since '" + lInfo.Lock_At + "'\n" + msg;
-            if (MessageBox.Show(msg, "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+            if (MessageBox.Show(msg, "លប់ Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
                 return;
             try
             {
@@ -464,7 +478,7 @@ namespace kBit.ERP.IC
             var Id = dgvList.Id;
             if (Id == 0) return;
 
-            string status = btnActive.Text.StartsWith("I") ? Type.RecordStatus_InActive : Type.RecordStatus_Active;
+            string status = btnActive.Text == LabelFacade.sy_button_inactive ? Type.RecordStatus_InActive : Type.RecordStatus_Active;
             // If referenced
             //todo: check if already used in ic_item
 
@@ -506,7 +520,7 @@ namespace kBit.ERP.IC
             if (IsExpand) picExpand_Click(sender, e);
             Id = dgvList.Id;
             // Cancel
-            if (btnUnlock.Text == "Cance&l")
+            if (btnUnlock.Text == LabelFacade.sy_button_cancel)
             {
                 if (IsDirty)
                 {
@@ -692,7 +706,7 @@ namespace kBit.ERP.IC
 
         private void btnFilter_Click(object sender, EventArgs e)
         {
-            mnuShow.Show(toolStrip1, btnFilter.Bounds.Left, 27); //784
+            mnuShow.Show(btnFilter, 0, 27);
         }
 
         private void btnFind_Click(object sender, EventArgs e)
