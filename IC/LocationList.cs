@@ -83,6 +83,7 @@ namespace kBit.ERP.IC
             else
                 txtCode.ReadOnly = l;
             txtDesc.ReadOnly = l;
+            cboType.Enabled = !l;
             txtAddress.ReadOnly = l;
             txtName.ReadOnly = l;
             txtPhone.ReadOnly = l;
@@ -140,6 +141,12 @@ namespace kBit.ERP.IC
                 txtCode.SelectAll();
                 return false;
             }
+            if (cboType.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please sepecify a location type.", "Save", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                cboType.Focus();
+                return false;
+            }
             if (txtEmail.Text.Length > 0 && !Util.IsEmailValid(txtEmail.Text))
             {
                 MessageBox.Show("Email address is not valid.", "Save", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -173,6 +180,7 @@ namespace kBit.ERP.IC
                     var m = LocationFacade.Select(Id);
                     txtCode.Text = m.Code;
                     txtDesc.Text = m.Description;
+                    cboType.SelectedIndex = m.Type == "P" ? 0 : 1;
                     txtAddress.Text = m.Address;
                     txtName.Text = m.Name;
                     txtPhone.Text = m.Phone;
@@ -284,6 +292,7 @@ namespace kBit.ERP.IC
             colCode.HeaderText = lblCode.Text;
             lblDescription.Text = LabelFacade.GetLabel(funCode, lang, "description");
             colDescription.HeaderText = lblDescription.Text;
+            lblType.Text = LabelFacade.GetLabel(funCode, lang, "type");
             lblAddress.Text = LabelFacade.GetLabel(funCode, lang, "address");
             colAddress.HeaderText = lblAddress.Text;
             lblName.Text = LabelFacade.GetLabel(funCode, lang, "name");
@@ -339,6 +348,7 @@ namespace kBit.ERP.IC
             m.Id = Id;
             m.Code = txtCode.Text.Trim();
             m.Description = txtDesc.Text;
+            m.Type = cboType.Text.Substring(0, 1);
             m.Address = txtAddress.Text;
             m.Name = txtName.Text;
             m.Phone = txtPhone.Text;
@@ -469,6 +479,7 @@ namespace kBit.ERP.IC
 
         private void dgvList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1) return;
             if (IsExpand) picExpand_Click(sender, e);
             dgvList_SelectionChanged(sender, e);    // reload data since SelectionChanged will not occured on current row
         }

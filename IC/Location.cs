@@ -15,6 +15,7 @@ namespace kBit.ERP.IC
         public string Branch_Code { get; set; }
         public string Code { get; set; }
         public string Description { get; set; }
+        public string Type { get; set; }
         public string Address { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
@@ -34,7 +35,7 @@ namespace kBit.ERP.IC
 
         public static DataTable GetDataTable(string filter = "", string status = "")
         {
-            var sql = SqlFacade.SqlSelect(TableName, "id, branch_code, code, description, name, phone, fax, email, address", "1 = 1");
+            var sql = SqlFacade.SqlSelect(TableName, "id, branch_code, code, description, type, name, phone, fax, email, address", "1 = 1");
             if (status.Length == 0)
                 sql += " and status <> '" + Type.RecordStatus_Deleted + "'";
             else
@@ -57,13 +58,13 @@ namespace kBit.ERP.IC
             if (m.Id == 0)
             {
                 m.Insert_By = App.session.Username;
-                sql = SqlFacade.SqlInsert(TableName, "branch_code, code, description, address, name, phone, fax, email, note, insert_by", "", true);
+                sql = SqlFacade.SqlInsert(TableName, "branch_code, code, description, type, address, name, phone, fax, email, note, insert_by", "", true);
                 m.Id = SqlFacade.Connection.ExecuteScalar<long>(sql, m);
             }
             else
             {
                 m.Change_By = App.session.Username;
-                sql = SqlFacade.SqlUpdate(TableName, "branch_code, code, description, address, name, phone, fax, email, note, change_by, change_at, change_no", "change_at = now(), change_no = change_no + 1", "id = :id");
+                sql = SqlFacade.SqlUpdate(TableName, "branch_code, code, description, type, address, name, phone, fax, email, note, change_by, change_at, change_no", "change_at = now(), change_no = change_no + 1", "id = :id");
                 SqlFacade.Connection.Execute(sql, m);
                 ReleaseLock(m.Id);  // Unlock
             }
@@ -106,7 +107,7 @@ namespace kBit.ERP.IC
 
         public static void Export()
         {
-            string sql = SqlFacade.SqlSelect(TableName, "id \"Id\", branch_code \"Branch Code\", code \"Code\", description \"Description\", address \"Address\", name \"Contact Name\", phone \"Phone\", fax \"Fax\", " +
+            string sql = SqlFacade.SqlSelect(TableName, "id \"Id\", branch_code \"Branch Code\", code \"Code\", description \"Description\", type \"Type\", address \"Address\", name \"Contact Name\", phone \"Phone\", fax \"Fax\", " +
                 "email \"Email\", note \"Note\", status \"Status\", insert_by \"Inserted By\", insert_at \"Inserted At\", change_by \"Changed By\", change_at \"Changed At\"",
                 "status <> '" + Type.RecordStatus_Deleted + "'", "code");
             SqlFacade.ExportToCSV(sql);

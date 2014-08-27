@@ -166,7 +166,7 @@ namespace kBit.ERP
 
         public static void EnsureDBSetup()
         {
-            var ScriptPath = Path.Combine(Application.StartupPath, "script_init.sql");
+            var ScriptPath = Path.Combine(Application.StartupPath, "1_script_init.sql");
             var sql = Util.ReadTextFile(ScriptPath);
             if (sql.Length == 0) return;
             SqlFacade.Connection.Execute(sql);
