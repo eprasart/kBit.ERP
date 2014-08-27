@@ -23,7 +23,7 @@ namespace kBit.ERP
                 ConnectionStringBldr.ConnectionString = value;
                 // Check if username and password encrypted
                 var usr = ConnectionStringBldr.UserName;
-                string usrEncrypted = "", pwdEncrypted="";
+                string usrEncrypted = "", pwdEncrypted = "";
 
                 if (Security.IsEncrypted(usr))
                 {

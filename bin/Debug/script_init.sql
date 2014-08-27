@@ -1,7 +1,4 @@
-﻿--CREATE EXTENSION IF NOT EXISTS pgcrypto SCHEMA public; -- for password encryption
---CREATE EXTENSION hstore
-
--- DROP TABLE ic_location;
+﻿-- DROP TABLE ic_location;
 CREATE TABLE IF NOT EXISTS ic_location
 (
   id bigserial NOT NULL,

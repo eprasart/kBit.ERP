@@ -45,18 +45,14 @@ namespace kBit.ERP.SYS
             {
                 fSplash.ShowMsg("Loading settings...");
                 LoadSettings();
+
+                fSplash.ShowMsg("Connecting to the database ...");
+                SqlFacade.OpenConnection(); // Database connection: open/test
+                
+                fSplash.ShowMsg("Ensuring database setup ...");
+                SqlFacade.EnsureDBSetup();  // Create tables if not exist
             }
             catch (Exception ex)
-            {
-                ErrorLogFacade.LogToFile(ex);
-            }
-            // Database connection: open/test
-            try
-            {
-                fSplash.ShowMsg("Connecting to the database ...");
-                SqlFacade.OpenConnection();
-            }
-            catch (Npgsql.NpgsqlException ex)
             {
                 fSplash.ShowError(ex.Message);
                 fSplash.Visible = false;
@@ -64,8 +60,6 @@ namespace kBit.ERP.SYS
                 ErrorLogFacade.LogToFile(ex);
                 return false;
             }
-            // Create tables if not exist
-            SqlFacade.EnsureDBSetup();            
 
             //Session            
             session.Username = "Visal"; //todo: to be removed
