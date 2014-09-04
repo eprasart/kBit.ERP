@@ -1,6 +1,6 @@
 ﻿namespace kBit.ERP
 {
-    partial class MsgValidation
+    partial class frmMsgValidation
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@
         {
             this.SuspendLayout();
             // 
-            // MsgValidation
+            // frmMsgValidation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -38,10 +38,13 @@
             this.ControlBox = false;
             this.Font = new System.Drawing.Font("Noto Sans Khmer", 8.25F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "MsgValidation";
+            this.Name = "frmMsgValidation";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "MsgValidation";
             this.TopMost = true;
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
             this.ResumeLayout(false);
 
         }

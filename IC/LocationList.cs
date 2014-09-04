@@ -288,7 +288,7 @@ namespace kBit.ERP.IC
             btnClear.Text = "     " + LabelFacade.sy_button_clear;
             btnFilter.Text = "     " + LabelFacade.sy_button_filter;
 
-            lblCode.Text = LabelFacade.GetLabel(funCode, lang, "code");
+            lblCode.Text = "* " + LabelFacade.GetLabel(funCode, lang, "code");
             colCode.HeaderText = lblCode.Text;
             lblDescription.Text = LabelFacade.GetLabel(funCode, lang, "description");
             colDescription.HeaderText = lblDescription.Text;
@@ -742,6 +742,8 @@ namespace kBit.ERP.IC
 
         private void btnExport_Click(object sender, EventArgs e)
         {
+            new frmMsgValidation().Show();
+            return;
             Cursor = Cursors.WaitCursor;
             Application.DoEvents();
             LocationFacade.Export();

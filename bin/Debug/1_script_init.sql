@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS sm_audit_log
   relid oid NOT NULL,
   table_name text,
   ref_id bigint,
+  change_no int,
   at timestamp without time zone NOT NULL DEFAULT now(),
   client_addr inet,
   operation text,
