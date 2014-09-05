@@ -15,20 +15,20 @@ namespace kBit.ERP
         private bool dragging = false;
         private Point dragCursorPoint;
         private Point dragFormPoint;
-        
+
         public frmMsgValidation()
         {
             InitializeComponent();
         }
 
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        private void frm_MouseDown(object sender, MouseEventArgs e)
         {
             dragging = true;
             dragCursorPoint = Cursor.Position;
             dragFormPoint = this.Location;
         }
 
-        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        private void frm_MouseMove(object sender, MouseEventArgs e)
         {
             if (dragging)
             {
@@ -37,9 +37,37 @@ namespace kBit.ERP
             }
         }
 
-        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        private void frm_MouseUp(object sender, MouseEventArgs e)
         {
             dragging = false;
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void txtMsg_TextChanged(object sender, EventArgs e)
+        {
+            TextBox tb = txtMsg;
+            Size tS = TextRenderer.MeasureText(tb.Text, tb.Font);
+            bool Hsb = tb.ClientSize.Height < tS.Height + Convert.ToInt32(tb.Font.Size);
+            bool Vsb = tb.ClientSize.Width < tS.Width;
+
+            if (Hsb && Vsb)
+                tb.ScrollBars = ScrollBars.Both;
+            else if (!Hsb && !Vsb)
+                tb.ScrollBars = ScrollBars.None;
+            else if (Hsb && !Vsb)
+                tb.ScrollBars = ScrollBars.Vertical;
+            else if (!Hsb && Vsb)
+                tb.ScrollBars = ScrollBars.Horizontal;
+        }
+
+        private void frmMsgValidation_Load(object sender, EventArgs e)
+        {
+            txtMsg_TextChanged(null, null);
         }
     }
 }

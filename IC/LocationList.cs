@@ -574,7 +574,9 @@ namespace kBit.ERP.IC
                     return;
                 }
                 else
-                    if (MessageBox.Show(msg + "\nDo you want to override?", "Unlock", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+                    if (MessageBox.Show(msg + "\nDo you want to override?", "Unlock", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
+                        SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Location, Type.Log_Lock, "Override lock. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+                    else
                         return;
             }
             txtDesc.SelectionStart = txtDesc.Text.Length;
