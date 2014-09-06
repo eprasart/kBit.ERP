@@ -23,7 +23,7 @@ namespace kBit.ERP
         public static void ShowMsg(string msg, string title = "", MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information)
         {
             var fMsg = new frmMsg(msg);
-            fMsg.Title = title;
+            fMsg.Text = title;
             fMsg.ShowDialog();
         }
 

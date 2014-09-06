@@ -744,7 +744,7 @@ namespace kBit.ERP.IC
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            new frmMsgValidation().Show();
+            new frmMsg().Show();
             return;
             Cursor = Cursors.WaitCursor;
             Application.DoEvents();

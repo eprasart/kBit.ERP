@@ -119,20 +119,14 @@
     <Compile Include="SM\UserList.Designer.cs">
       <DependentUpon>UserList.cs</DependentUpon>
     </Compile>
-    <Compile Include="SY\MsgValidation.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SY\MsgValidation.Designer.cs">
-      <DependentUpon>MsgValidation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SY\SY.cs" />
-    <Compile Include="SY\Log.cs" />
     <Compile Include="SY\Msg.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SY\Msg.Designer.cs">
       <DependentUpon>Msg.cs</DependentUpon>
     </Compile>
+    <Compile Include="SY\SY.cs" />
+    <Compile Include="SY\Log.cs" />
     <Compile Include="SY\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -168,9 +162,6 @@
     <EmbeddedResource Include="SM\UserList.resx">
       <DependentUpon>UserList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SY\Msg.resx">
-      <DependentUpon>Msg.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="SY\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -179,8 +170,8 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="SY\MsgValidation.resx">
-      <DependentUpon>MsgValidation.cs</DependentUpon>
+    <EmbeddedResource Include="SY\Msg.resx">
+      <DependentUpon>Msg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SY\Splash.resx">
       <DependentUpon>Splash.cs</DependentUpon>
