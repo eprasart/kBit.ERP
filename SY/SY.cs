@@ -6,9 +6,16 @@ using Npgsql;
 using Dapper;
 using kBit.ERP.IC;
 using System.Drawing;
+using System.Windows.Forms;
+using System.Linq.Expressions;
 
 namespace kBit.ERP.SYS
 {
+    public static class SY
+    {
+
+    }
+
     class Config
     {
         const string TableName = "sy_config";
@@ -226,30 +233,11 @@ namespace kBit.ERP.SYS
         }
     }
 
-    class Label
-    {
-
-
-        Dictionary<string, string> labels = new Dictionary<string, string>();
-
-        public Label()
-        { }
-
-        public Label(string function, string language)
-        {
-            //var sql = SqlFacade.SqlSelect(TableName, "field_name, value","function_code = :function and language = :language");
-            //var labels = SqlFacade.Connection.query
-        }
-
-        private void Load(string function, string language)
-        {
-
-        }
-    }
-
     class LabelFacade
     {
         const string TableName = "sy_label";
+
+        public static string sy_close;
 
         public static string sy_button_new;
         public static string sy_button_copy;
@@ -270,31 +258,105 @@ namespace kBit.ERP.SYS
 
         public static void LoadSystemButtonLabel()
         {
+            //todo: recall when switching a language
             var funCode = "sybtn";
-            var lang = ConfigFacade.sy_language;
-            sy_button_new = LabelFacade.GetLabel(funCode, lang, "new");
-            sy_button_copy = LabelFacade.GetLabel(funCode, lang, "copy");
-            sy_button_cancel = LabelFacade.GetLabel(funCode, lang, "cancel");
-            sy_button_unlock = LabelFacade.GetLabel(funCode, lang, "unlock");
-            sy_button_save = LabelFacade.GetLabel(funCode, lang, "save");
-            sy_button_save_new = LabelFacade.GetLabel(funCode, lang, "save_new");
-            sy_button_active = LabelFacade.GetLabel(funCode, lang, "active");
-            sy_button_inactive = LabelFacade.GetLabel(funCode, lang, "inactive");
-            sy_button_delete = LabelFacade.GetLabel(funCode, lang, "delete");
-            sy_button_mode = LabelFacade.GetLabel(funCode, lang, "mode");
-            sy_button_export = LabelFacade.GetLabel(funCode, lang, "export");
+            sy_button_new = GetLabel(funCode, "new");
+            sy_button_copy = GetLabel(funCode, "copy");
+            sy_button_cancel = GetLabel(funCode, "cancel");
+            sy_button_unlock = GetLabel(funCode, "unlock");
+            sy_button_save = GetLabel(funCode, "save");
+            sy_button_save_new = GetLabel(funCode, "save_new");
+            sy_button_active = GetLabel(funCode, "active");
+            sy_button_inactive = GetLabel(funCode, "inactive");
+            sy_button_delete = GetLabel(funCode, "delete");
+            sy_button_mode = GetLabel(funCode, "mode");
+            sy_button_export = GetLabel(funCode, "export");
 
-            sy_button_find = LabelFacade.GetLabel(funCode, lang, "find");
-            sy_button_clear = LabelFacade.GetLabel(funCode, lang, "clear");
-            sy_button_filter = LabelFacade.GetLabel(funCode, lang, "filter");
+            sy_button_find = LabelFacade.GetLabel(funCode, "find");
+            sy_button_clear = LabelFacade.GetLabel(funCode, "clear");
+            sy_button_filter = LabelFacade.GetLabel(funCode, "filter");
         }
 
-        public static string GetLabel(string function_code, string language, string field_name)
+        public static string GetLabel(string function_code, string code)
         {
-            var sql = SqlFacade.SqlSelect(TableName, "value", "function_code = :function_code and language = :language and field_name = :field_name");
-            return SqlFacade.Connection.ExecuteScalar<string>(sql, new { function_code, language, field_name });
+            var language = ConfigFacade.sy_language;
+            var sql = SqlFacade.SqlSelect(TableName, "value", "function_code = :function_code and language = :language and code = :code");
+            return SqlFacade.Connection.ExecuteScalar<string>(sql, new { function_code, language, code });
+        }
+    }
+
+    class MessageFacade
+    {
+        const string TableName = "sy_message";
+
+        public static string active_inactive;
+        public static string active_inactive_error;
+        public static string data_retrieve_error;
+
+        public static string delete_confirmation;
+        public static string delete_error;
+        public static string delete_locked;
+        public static string lock_currently;
+        public static string lock_error;
+        public static string lock_override;
+        public static string privilege_no_access;
+        public static string proceed_confirmation;
+        public static string record_load_error;
+        public static string save_confirmation;
+        public static string save_error;
+        public static string unlock_error;
+
+        public static string code_already_exists;
+        public static string code_not_empty;
+
+        public static string email_not_valid;
+        public static string location_type_not_empty;
+
+        public static DialogResult Show(string msg, string title = "", MessageBoxButtons buttons = MessageBoxButtons.OK,
+            MessageBoxIcon icon = MessageBoxIcon.Information, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
+        {
+            var fMsg = new frmMsg(msg, title, buttons, icon, defaultButton);
+            fMsg.Text = title;
+            DialogResult dResult = DialogResult.OK;
+            if (buttons == MessageBoxButtons.OK)
+                fMsg.Show();
+            else
+                dResult = fMsg.ShowDialog();
+            return dResult;
         }
 
+        public static void LoadSystemMessage()
+        {
+            //todo: reload when language changed
+            active_inactive = GetMessage(Util.GetMemberName(() => active_inactive));
+            active_inactive_error = GetMessage(Util.GetMemberName(() => active_inactive_error));
+            data_retrieve_error = GetMessage(Util.GetMemberName(() => data_retrieve_error));
+            delete_confirmation = GetMessage(Util.GetMemberName(() => delete_confirmation));
+            delete_error = GetMessage(Util.GetMemberName(() => delete_error));
+            delete_locked = GetMessage(Util.GetMemberName(() => delete_locked));
+            lock_currently = GetMessage(Util.GetMemberName(() => lock_currently));
+            lock_error = GetMessage(Util.GetMemberName(() => lock_error));
+            lock_override = GetMessage(Util.GetMemberName(() => lock_override));
+            privilege_no_access = GetMessage(Util.GetMemberName(() => privilege_no_access));
+            proceed_confirmation = GetMessage(Util.GetMemberName(() => proceed_confirmation));
+            record_load_error = GetMessage(Util.GetMemberName(() => record_load_error));
+            save_confirmation = GetMessage(Util.GetMemberName(() => save_confirmation));
+            save_error = GetMessage(Util.GetMemberName(() => save_error));
+            unlock_error = GetMessage(Util.GetMemberName(() => unlock_error));
 
+            code_already_exists = GetMessage(Util.GetMemberName(() => code_already_exists));
+            code_not_empty = GetMessage(Util.GetMemberName(() => code_not_empty));
+
+            email_not_valid = GetMessage(Util.GetMemberName(() => email_not_valid));
+            location_type_not_empty = GetMessage(Util.GetMemberName(() => location_type_not_empty));
+
+        }
+
+        public static string GetMessage(string code)
+        {
+            var language = ConfigFacade.sy_language;
+            var sql = SqlFacade.SqlSelect(TableName, "value", "code = lower(:code) and language = :language");
+            return SqlFacade.Connection.ExecuteScalar<string>(sql, new { code, language });
+        }
     }
 }

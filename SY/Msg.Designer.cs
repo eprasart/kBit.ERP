@@ -33,13 +33,13 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtMsg = new System.Windows.Forms.TextBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.btnNo = new System.Windows.Forms.Button();
+            this.btnYes = new System.Windows.Forms.Button();
+            this.btnIgnore = new System.Windows.Forms.Button();
+            this.btnRetry = new System.Windows.Forms.Button();
+            this.btnAbort = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -50,8 +50,8 @@
             this.lblTitle.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.Location = new System.Drawing.Point(0, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(580, 28);
-            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Size = new System.Drawing.Size(441, 28);
+            this.lblTitle.TabIndex = 2;
             this.lblTitle.Text = "Message Box";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frm_MouseDown);
@@ -67,7 +67,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(582, 193);
+            this.panel1.Size = new System.Drawing.Size(443, 173);
             this.panel1.TabIndex = 1;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frm_MouseDown);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frm_MouseMove);
@@ -76,142 +76,154 @@
             // txtMsg
             // 
             this.txtMsg.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtMsg.Font = new System.Drawing.Font("Noto Sans Khmer", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMsg.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMsg.Location = new System.Drawing.Point(0, 28);
             this.txtMsg.Margin = new System.Windows.Forms.Padding(0);
             this.txtMsg.Multiline = true;
             this.txtMsg.Name = "txtMsg";
             this.txtMsg.ReadOnly = true;
             this.txtMsg.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMsg.Size = new System.Drawing.Size(580, 130);
-            this.txtMsg.TabIndex = 5;
+            this.txtMsg.Size = new System.Drawing.Size(441, 110);
+            this.txtMsg.TabIndex = 1;
             this.txtMsg.Text = "Line\r\nសូម​រក្សាសិទ្ទ\r\nLine";
             this.txtMsg.TextChanged += new System.EventHandler(this.txtMsg_TextChanged);
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.Controls.Add(this.btnCancel);
             this.flowLayoutPanel1.Controls.Add(this.btnOK);
-            this.flowLayoutPanel1.Controls.Add(this.button1);
-            this.flowLayoutPanel1.Controls.Add(this.button2);
-            this.flowLayoutPanel1.Controls.Add(this.button3);
-            this.flowLayoutPanel1.Controls.Add(this.button4);
-            this.flowLayoutPanel1.Controls.Add(this.button6);
-            this.flowLayoutPanel1.Controls.Add(this.button5);
+            this.flowLayoutPanel1.Controls.Add(this.btnNo);
+            this.flowLayoutPanel1.Controls.Add(this.btnYes);
+            this.flowLayoutPanel1.Controls.Add(this.btnIgnore);
+            this.flowLayoutPanel1.Controls.Add(this.btnRetry);
+            this.flowLayoutPanel1.Controls.Add(this.btnAbort);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 158);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 138);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(580, 33);
-            this.flowLayoutPanel1.TabIndex = 2;
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(441, 33);
+            this.flowLayoutPanel1.TabIndex = 0;
             this.flowLayoutPanel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.frm_MouseDown);
             this.flowLayoutPanel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.frm_MouseMove);
             this.flowLayoutPanel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.frm_MouseUp);
             // 
+            // btnCancel
+            // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Font = new System.Drawing.Font("Noto Sans Khmer", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.Image = ((System.Drawing.Image)(resources.GetObject("btnCancel.Image")));
+            this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancel.Location = new System.Drawing.Point(363, 3);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 26);
+            this.btnCancel.TabIndex = 6;
+            this.btnCancel.Text = "      Cancel";
+            this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Visible = false;
+            this.btnCancel.Click += new System.EventHandler(this.btn_Click);
+            // 
             // btnOK
             // 
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Font = new System.Drawing.Font("Noto Sans Khmer", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOK.Image = ((System.Drawing.Image)(resources.GetObject("btnOK.Image")));
             this.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOK.Location = new System.Drawing.Point(502, 3);
+            this.btnOK.Location = new System.Drawing.Point(282, 3);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 26);
-            this.btnOK.TabIndex = 1;
+            this.btnOK.TabIndex = 5;
             this.btnOK.Text = "      OK";
             this.btnOK.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            this.btnOK.Click += new System.EventHandler(this.btn_Click);
             // 
-            // button1
+            // btnNo
             // 
-            this.button1.Font = new System.Drawing.Font("Noto Sans Khmer", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(421, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 26);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "      Cancel";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.btnOK_Click);
+            this.btnNo.DialogResult = System.Windows.Forms.DialogResult.No;
+            this.btnNo.Font = new System.Drawing.Font("Noto Sans Khmer", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNo.Image = ((System.Drawing.Image)(resources.GetObject("btnNo.Image")));
+            this.btnNo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNo.Location = new System.Drawing.Point(201, 3);
+            this.btnNo.Name = "btnNo";
+            this.btnNo.Size = new System.Drawing.Size(75, 26);
+            this.btnNo.TabIndex = 4;
+            this.btnNo.Text = "      No";
+            this.btnNo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNo.UseVisualStyleBackColor = true;
+            this.btnNo.Visible = false;
+            this.btnNo.Click += new System.EventHandler(this.btn_Click);
             // 
-            // button2
+            // btnYes
             // 
-            this.button2.Font = new System.Drawing.Font("Noto Sans Khmer", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.Location = new System.Drawing.Point(340, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 26);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "      No";
-            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Visible = false;
-            this.button2.Click += new System.EventHandler(this.btnOK_Click);
+            this.btnYes.DialogResult = System.Windows.Forms.DialogResult.Yes;
+            this.btnYes.Font = new System.Drawing.Font("Noto Sans Khmer", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnYes.Image = ((System.Drawing.Image)(resources.GetObject("btnYes.Image")));
+            this.btnYes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnYes.Location = new System.Drawing.Point(120, 3);
+            this.btnYes.Name = "btnYes";
+            this.btnYes.Size = new System.Drawing.Size(75, 26);
+            this.btnYes.TabIndex = 3;
+            this.btnYes.Text = "      Yes";
+            this.btnYes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnYes.UseVisualStyleBackColor = true;
+            this.btnYes.Visible = false;
+            this.btnYes.Click += new System.EventHandler(this.btn_Click);
             // 
-            // button3
+            // btnIgnore
             // 
-            this.button3.Font = new System.Drawing.Font("Noto Sans Khmer", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
-            this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button3.Location = new System.Drawing.Point(259, 3);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 26);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "      Yes";
-            this.button3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.btnOK_Click);
+            this.btnIgnore.DialogResult = System.Windows.Forms.DialogResult.Ignore;
+            this.btnIgnore.Font = new System.Drawing.Font("Noto Sans Khmer", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnIgnore.Image = ((System.Drawing.Image)(resources.GetObject("btnIgnore.Image")));
+            this.btnIgnore.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnIgnore.Location = new System.Drawing.Point(39, 3);
+            this.btnIgnore.Name = "btnIgnore";
+            this.btnIgnore.Size = new System.Drawing.Size(75, 26);
+            this.btnIgnore.TabIndex = 2;
+            this.btnIgnore.Text = "      Ignore";
+            this.btnIgnore.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnIgnore.UseVisualStyleBackColor = true;
+            this.btnIgnore.Visible = false;
+            this.btnIgnore.Click += new System.EventHandler(this.btn_Click);
             // 
-            // button4
+            // btnRetry
             // 
-            this.button4.Font = new System.Drawing.Font("Noto Sans Khmer", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
-            this.button4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button4.Location = new System.Drawing.Point(178, 3);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 26);
-            this.button4.TabIndex = 1;
-            this.button4.Text = "      Retry";
-            this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.btnOK_Click);
+            this.btnRetry.DialogResult = System.Windows.Forms.DialogResult.Retry;
+            this.btnRetry.Font = new System.Drawing.Font("Noto Sans Khmer", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRetry.Image = ((System.Drawing.Image)(resources.GetObject("btnRetry.Image")));
+            this.btnRetry.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRetry.Location = new System.Drawing.Point(363, 35);
+            this.btnRetry.Name = "btnRetry";
+            this.btnRetry.Size = new System.Drawing.Size(75, 26);
+            this.btnRetry.TabIndex = 1;
+            this.btnRetry.Text = "      Retry";
+            this.btnRetry.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRetry.UseVisualStyleBackColor = true;
+            this.btnRetry.Visible = false;
+            this.btnRetry.Click += new System.EventHandler(this.btn_Click);
             // 
-            // button5
+            // btnAbort
             // 
-            this.button5.Font = new System.Drawing.Font("Noto Sans Khmer", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Image = ((System.Drawing.Image)(resources.GetObject("button5.Image")));
-            this.button5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button5.Location = new System.Drawing.Point(16, 3);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 26);
-            this.button5.TabIndex = 1;
-            this.button5.Text = "      Abort";
-            this.button5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.btnOK_Click);
-            // 
-            // button6
-            // 
-            this.button6.Font = new System.Drawing.Font("Noto Sans Khmer", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.Image = ((System.Drawing.Image)(resources.GetObject("button6.Image")));
-            this.button6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button6.Location = new System.Drawing.Point(97, 3);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 26);
-            this.button6.TabIndex = 1;
-            this.button6.Text = "      Ignore";
-            this.button6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.btnOK_Click);
+            this.btnAbort.DialogResult = System.Windows.Forms.DialogResult.Abort;
+            this.btnAbort.Font = new System.Drawing.Font("Noto Sans Khmer", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAbort.Image = ((System.Drawing.Image)(resources.GetObject("btnAbort.Image")));
+            this.btnAbort.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAbort.Location = new System.Drawing.Point(282, 35);
+            this.btnAbort.Name = "btnAbort";
+            this.btnAbort.Size = new System.Drawing.Size(75, 26);
+            this.btnAbort.TabIndex = 0;
+            this.btnAbort.Text = "      Abort";
+            this.btnAbort.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAbort.UseVisualStyleBackColor = true;
+            this.btnAbort.Visible = false;
+            this.btnAbort.Click += new System.EventHandler(this.btn_Click);
             // 
             // frmMsg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(582, 193);
+            this.ClientSize = new System.Drawing.Size(443, 173);
             this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Noto Sans Khmer", 8.25F);
@@ -238,11 +250,11 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.TextBox txtMsg;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnNo;
+        private System.Windows.Forms.Button btnYes;
+        private System.Windows.Forms.Button btnRetry;
+        private System.Windows.Forms.Button btnIgnore;
+        private System.Windows.Forms.Button btnAbort;
     }
 }

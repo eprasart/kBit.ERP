@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -18,13 +19,6 @@ namespace kBit.ERP
                 return RemoveLastDotZero(v.Substring(0, v.Length - 2));
             else
                 return s;
-        }
-
-        public static void ShowMsg(string msg, string title = "", MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information)
-        {
-            var fMsg = new frmMsg(msg);
-            fMsg.Text = title;
-            fMsg.ShowDialog();
         }
 
         public static bool IsFileLocked(string path)
@@ -74,6 +68,12 @@ namespace kBit.ERP
             Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             Match match = regex.Match(email);
             return match.Success;
+        }
+
+        public static string GetMemberName<T>(Expression<Func<T>> memberExpression)
+        {
+            MemberExpression expressionBody = (MemberExpression)memberExpression.Body;
+            return expressionBody.Member.Name;
         }
     }
 

@@ -202,6 +202,18 @@ CREATE TABLE IF NOT EXISTS sy_branch
 
 insert into sy_branch (code, description) select '000', 'Head Office' where not exists (select id from sy_branch);
 
+-- DROP TABLE sy_config;
+CREATE TABLE IF NOT EXISTS sy_config
+(
+  id bigserial NOT NULL,
+  username text,
+  code text NOT NULL,
+  value text,
+  note text,
+  status text default 'A',
+  CONSTRAINT sy_config_pkey PRIMARY KEY (id)
+);
+
 -- DROP TABLE sy_error_log;
 CREATE TABLE IF NOT EXISTS sy_error_log
 (
@@ -221,21 +233,21 @@ CREATE TABLE IF NOT EXISTS sy_label
   id bigserial NOT NULL,
   function_code text NOT NULL,
   language text NOT NULL,
-  field_name text NOT NULL,
+  code text NOT NULL,
   value text NOT NULL,
   note text,
-  status text default 'A',
-  CONSTRAINT sy_label_pkey PRIMARY KEY (id)
+  status text DEFAULT 'A'::text,
+  CONSTRAINT sy_label_pkey PRIMARY KEY (id),  
 );
 
--- DROP TABLE sy_config;
-CREATE TABLE IF NOT EXISTS sy_config
+-- DROP TABLE sy_message;
+CREATE TABLE sy_message
 (
   id bigserial NOT NULL,
-  username text,
   code text NOT NULL,
-  value text,
+  language text NOT NULL,
+  value text NOT NULL,
   note text,
-  status text default 'A',
-  CONSTRAINT sy_config_pkey PRIMARY KEY (id)
+  status text DEFAULT 'A'::text,
+  CONSTRAINT sy_message_pkey PRIMARY KEY (id)
 );

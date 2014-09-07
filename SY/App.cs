@@ -69,6 +69,7 @@ namespace kBit.ERP.SYS
             session.Version = version;
 
             LabelFacade.LoadSystemButtonLabel();
+            MessageFacade.LoadSystemMessage();
 
             // Log
             ErrorLogFacade.logFile.FileName = Path.Combine(Application.StartupPath, "Error.log");

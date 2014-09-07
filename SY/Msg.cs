@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -21,10 +20,42 @@ namespace kBit.ERP
             InitializeComponent();
         }
 
-        public frmMsg(string msg, string title = "", MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information)
+        public frmMsg(string msg, string title = "", MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information,
+            MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
+            : this()
         {
-            txtMsg.Text = msg;
             lblTitle.Text = title;
+            txtMsg.Text = msg;
+            btnOK.Visible = false;
+            switch (buttons)
+            {
+                case MessageBoxButtons.AbortRetryIgnore:
+                    btnAbort.Visible = true;
+                    btnRetry.Visible = true;
+                    btnIgnore.Visible = true;
+                    break;
+                case MessageBoxButtons.OK:
+                    btnOK.Visible = true;
+                    break;
+                case MessageBoxButtons.OKCancel:
+                    btnOK.Visible = true;
+                    btnCancel.Visible = true;
+                    break;
+                case MessageBoxButtons.RetryCancel:
+                    btnRetry.Visible = true;
+                    btnCancel.Visible = true;
+                    break;
+                case MessageBoxButtons.YesNo:
+                    btnYes.Visible = true;
+                    btnNo.Visible = true;
+                    break;
+                case MessageBoxButtons.YesNoCancel:
+                    btnYes.Visible = true;
+                    btnNo.Visible = true;
+                    btnCancel.Visible = true;
+                    break;
+            }
+            //todo: default button
         }
 
         private void frm_MouseDown(object sender, MouseEventArgs e)
@@ -48,10 +79,9 @@ namespace kBit.ERP
             dragging = false;
         }
 
-        private void btnOK_Click(object sender, EventArgs e)
+        private void btn_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
-            Close();            
+            Close();
         }
 
         private void txtMsg_TextChanged(object sender, EventArgs e)
