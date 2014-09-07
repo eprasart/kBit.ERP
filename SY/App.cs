@@ -68,7 +68,7 @@ namespace kBit.ERP.SYS
             session.Machine_User_Name = Environment.UserName;
             session.Version = version;
 
-            LabelFacade.LoadSystemButtonLabel();
+            LabelFacade.LoadSystemLabel();
             MessageFacade.LoadSystemMessage();
 
             // Log

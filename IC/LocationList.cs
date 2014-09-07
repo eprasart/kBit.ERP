@@ -43,7 +43,7 @@ namespace kBit.ERP.IC
             }
             catch (Exception ex)
             {
-                MessageFacade.Show(MessageFacade.data_retrieve_error + "\n" + ex.Message, MessageFacade.location, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageFacade.Show(MessageFacade.data_retrieve_error + "\n" + ex.Message, LabelFacade.sy_location, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ErrorLogFacade.Log(ex);
                 return;
             }
@@ -151,7 +151,7 @@ namespace kBit.ERP.IC
             }
             if (sMsg.Length > 0)
             {
-                MessageFacade.Show(sMsg, MessageFacade.save, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageFacade.Show(sMsg, LabelFacade.sy_save, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 cFocus.Focus();
                 return false;
             }
@@ -195,7 +195,7 @@ namespace kBit.ERP.IC
                 }
                 catch (Exception ex)
                 {
-                    MessageFacade.Show(MessageFacade.record_load_error + "\n" + ex.Message, MessageFacade.location, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageFacade.Show(MessageFacade.record_load_error + "\n" + ex.Message ,LabelFacade.sy_location , MessageBoxButtons.OK, MessageBoxIcon.Error);
                     SYS.ErrorLogFacade.Log(ex);
                 }
             else    // when delete all => disable buttons and clear all controls
@@ -273,7 +273,7 @@ namespace kBit.ERP.IC
 
         private void SetLabels()
         {
-            var funCode = "icloc";
+            var prefix = "ic_location_";
 
             btnNew.Text = LabelFacade.sy_button_new;
             btnCopy.Text = LabelFacade.sy_button_copy;
@@ -288,24 +288,24 @@ namespace kBit.ERP.IC
             btnClear.Text = "     " + LabelFacade.sy_button_clear;
             btnFilter.Text = "     " + LabelFacade.sy_button_filter;
 
-            lblCode.Text = "* " + LabelFacade.GetLabel(funCode, "code");
-            colCode.HeaderText = LabelFacade.GetLabel(funCode, "code");
-            lblDescription.Text = LabelFacade.GetLabel(funCode, "description");
+            colCode.HeaderText = LabelFacade.GetLabel(prefix + "code");
+            lblCode.Text = "* " + colCode.HeaderText;
+            lblDescription.Text = LabelFacade.GetLabel(prefix + "description");
             colDescription.HeaderText = lblDescription.Text;
-            lblType.Text = LabelFacade.GetLabel(funCode, "type");
-            lblAddress.Text = LabelFacade.GetLabel(funCode, "address");
+            lblType.Text = LabelFacade.GetLabel(prefix + "type");
+            lblAddress.Text = LabelFacade.GetLabel(prefix + "address");
             colAddress.HeaderText = lblAddress.Text;
-            lblName.Text = LabelFacade.GetLabel(funCode, "name");
+            lblName.Text = LabelFacade.GetLabel(prefix + "name");
             colName.HeaderText = lblName.Text;
-            lblPhone.Text = LabelFacade.GetLabel(funCode, "phone");
+            lblPhone.Text = LabelFacade.GetLabel(prefix + "phone");
             colPhone.HeaderText = lblPhone.Text;
-            lblFax.Text = LabelFacade.GetLabel(funCode, "fax");
+            lblFax.Text = LabelFacade.GetLabel(prefix + "fax");
             colFax.HeaderText = lblFax.Text;
-            lblEmail.Text = LabelFacade.GetLabel(funCode, "email");
+            lblEmail.Text = LabelFacade.GetLabel(prefix + "email");
             colEmail.HeaderText = lblEmail.Text;
-            glbLocation.Caption = LabelFacade.GetLabel(funCode, "location");
-            glbContact.Caption = LabelFacade.GetLabel(funCode, "contact");
-            glbNote.Caption = LabelFacade.GetLabel(funCode, "note");
+            glbLocation.Caption = LabelFacade.GetLabel(prefix + "location");
+            glbContact.Caption = LabelFacade.GetLabel(prefix + "contact");
+            glbNote.Caption = LabelFacade.GetLabel(prefix + "note");
 
         }
 
@@ -324,7 +324,7 @@ namespace kBit.ERP.IC
         {
             if (!Privilege.CanAccess(Type.Function_IC_Location, Type.Privilege_New))
             {
-                MessageFacade.Show(MessageFacade.privilege_no_access, MessageFacade.New, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageFacade.Show(MessageFacade.privilege_no_access, LabelFacade.sy_new, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Location, Type.Log_NoAccess, "New: No access");
                 return;
             }
@@ -371,7 +371,7 @@ namespace kBit.ERP.IC
             }
             catch (Exception ex)
             {
-                MessageFacade.Show(MessageFacade.save_error + "\n" + ex.Message, MessageFacade.save, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageFacade.Show(MessageFacade.save_error + "\n" + ex.Message, LabelFacade.sy_save, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ErrorLogFacade.Log(ex);
             }
             if (dgvList.RowCount > 0) RowIndex = dgvList.CurrentRow.Index;
@@ -420,7 +420,7 @@ namespace kBit.ERP.IC
                 msg = string.Format(MessageFacade.delete_locked, lInfo.Lock_By, lInfo.Lock_At);
                 if (!Privilege.CanAccess(Type.Function_IC_Location, "O"))
                 {
-                    MessageFacade.Show(msg, MessageFacade.delete, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageFacade.Show(msg, LabelFacade.sy_delete, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Location, Type.Log_Delete, "Cannot delete. Currently locked by '" + lInfo.Lock_By + "' since '" + lInfo.Lock_At + "' . Id=" + dgvList.Id + ", Code=" + txtCode.Text);
                     return;
                 }
@@ -428,7 +428,7 @@ namespace kBit.ERP.IC
             // Delete
             msg = MessageFacade.delete_confirmation;
             if (lInfo.Locked) msg = string.Format(MessageFacade.lock_currently, lInfo.Lock_By, lInfo.Lock_At) + "'\n" + msg;
-            if (MessageFacade.Show(msg, MessageFacade.delete, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+            if (MessageFacade.Show(msg, LabelFacade.sy_delete, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
                 return;
             try
             {
@@ -436,7 +436,7 @@ namespace kBit.ERP.IC
             }
             catch (Exception ex)
             {
-                MessageFacade.Show(MessageFacade.delete_error + ".\n" + ex.Message, MessageFacade.delete, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageFacade.Show(MessageFacade.delete_error + ".\n" + ex.Message, LabelFacade.sy_delete, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ErrorLogFacade.Log(ex);
             }
             RefreshGrid();
@@ -448,7 +448,7 @@ namespace kBit.ERP.IC
         {
             if (!Privilege.CanAccess(Type.Function_IC_Location, Type.Privilege_New))
             {
-                MessageFacade.Show(MessageFacade.privilege_no_access, MessageFacade.copy, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageFacade.Show(MessageFacade.privilege_no_access, LabelFacade.sy_copy, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_NoAccess, "Copy: No access");
                 return;
             }
@@ -524,7 +524,7 @@ namespace kBit.ERP.IC
         {
             if (!Privilege.CanAccess(Type.Function_IC_Location, Type.Privilege_Update))
             {
-                MessageFacade.Show(MessageFacade.privilege_no_access , LabelFacade.sy_button_unlock, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageFacade.Show(MessageFacade.privilege_no_access, LabelFacade.sy_button_unlock, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_NoAccess, "Copy: No access");
                 return;
             }
@@ -535,7 +535,7 @@ namespace kBit.ERP.IC
             {
                 if (IsDirty)
                 {
-                    var result = MessageFacade.Show(MessageFacade.save_confirmation,  LabelFacade.sy_button_cancel , MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                    var result = MessageFacade.Show(MessageFacade.save_confirmation, LabelFacade.sy_button_cancel, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                     if (result == System.Windows.Forms.DialogResult.Yes) // Save then close
                         btnSave_Click(null, null);
                     else if (result == System.Windows.Forms.DialogResult.No)
@@ -551,7 +551,7 @@ namespace kBit.ERP.IC
                 }
                 catch (Exception ex)
                 {
-                    MessageFacade.Show(MessageFacade.unlock_error + "\n" + ex.Message, MessageFacade.unlock, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageFacade.Show(MessageFacade.unlock_error + "\n" + ex.Message, LabelFacade.sy_unlock, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     ErrorLogFacade.Log(ex);
                 }
                 if (dgvList.CurrentRow != null && !dgvList.CurrentRow.Selected)
@@ -570,11 +570,11 @@ namespace kBit.ERP.IC
                 string msg = string.Format(MessageFacade.lock_currently, lInfo.Lock_By, lInfo.Lock_At);
                 if (!Privilege.CanAccess(Type.Function_IC_Location, "O"))
                 {
-                    MessageFacade.Show(msg, MessageFacade.unlock, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageFacade.Show(msg, LabelFacade.sy_unlock, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
                 else
-                    if (MessageFacade.Show(msg + "\n" + MessageFacade.lock_currently, MessageFacade.unlock, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
+                    if (MessageFacade.Show(msg + "\n" + MessageFacade.lock_currently, LabelFacade.sy_unlock, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
                         SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Location, Type.Log_Lock, "Override lock. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
                     else
                         return;
@@ -588,7 +588,7 @@ namespace kBit.ERP.IC
             }
             catch (Exception ex)
             {
-                MessageFacade.Show(MessageFacade.lock_error + "\n" + ex.Message, MessageFacade.Lock, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageFacade.Show(MessageFacade.lock_error + "\n" + ex.Message, LabelFacade.sy_lock, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ErrorLogFacade.Log(ex);
             }
             SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_Lock, "Locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
@@ -666,7 +666,7 @@ namespace kBit.ERP.IC
         {
             if (IsDirty)
             {
-                switch (MessageFacade.Show(MessageFacade.save_confirmation, LabelFacade.cl, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+                switch (MessageFacade.Show(MessageFacade.save_confirmation, LabelFacade.sy_close, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
                 {
                     case System.Windows.Forms.DialogResult.Yes: // Save then close
                         btnSave_Click(null, null);
@@ -695,7 +695,7 @@ namespace kBit.ERP.IC
             if (txtCode.ReadOnly) return;
             if (LocationFacade.Exists(txtCode.Text.Trim()))
             {
-                MessageFacade.Show(MessageFacade.code_already_exists, MessageFacade.location, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageFacade.Show(MessageFacade.code_already_exists, LabelFacade.sy_location, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

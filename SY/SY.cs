@@ -237,7 +237,15 @@ namespace kBit.ERP.SYS
     {
         const string TableName = "sy_label";
 
+        public static string sy_cancel;
         public static string sy_close;
+        public static string sy_copy;
+        public static string sy_delete;
+        public static string sy_location;
+        public static string sy_lock;
+        public static string sy_new;
+        public static string sy_save;
+        public static string sy_unlock;
 
         public static string sy_button_new;
         public static string sy_button_copy;
@@ -256,32 +264,47 @@ namespace kBit.ERP.SYS
         public static string sy_button_filter;
 
 
-        public static void LoadSystemButtonLabel()
+        public static void LoadSystemLabel()
         {
             //todo: recall when switching a language
-            var funCode = "sybtn";
-            sy_button_new = GetLabel(funCode, "new");
-            sy_button_copy = GetLabel(funCode, "copy");
-            sy_button_cancel = GetLabel(funCode, "cancel");
-            sy_button_unlock = GetLabel(funCode, "unlock");
-            sy_button_save = GetLabel(funCode, "save");
-            sy_button_save_new = GetLabel(funCode, "save_new");
-            sy_button_active = GetLabel(funCode, "active");
-            sy_button_inactive = GetLabel(funCode, "inactive");
-            sy_button_delete = GetLabel(funCode, "delete");
-            sy_button_mode = GetLabel(funCode, "mode");
-            sy_button_export = GetLabel(funCode, "export");
 
-            sy_button_find = LabelFacade.GetLabel(funCode, "find");
-            sy_button_clear = LabelFacade.GetLabel(funCode, "clear");
-            sy_button_filter = LabelFacade.GetLabel(funCode, "filter");
+            // sy
+            sy_cancel= GetLabel(Util.GetMemberName(() => sy_cancel)); 
+            sy_close = GetLabel(Util.GetMemberName(() => sy_close));
+            sy_copy = GetLabel(Util.GetMemberName(() => sy_copy));
+            sy_delete = GetLabel(Util.GetMemberName(() => sy_delete));
+            sy_location = GetLabel(Util.GetMemberName(() => sy_location));
+            sy_lock = GetLabel(Util.GetMemberName(() => sy_lock));
+            sy_new = GetLabel(Util.GetMemberName(() => sy_new));
+            sy_save = GetLabel(Util.GetMemberName(() => sy_save));
+            sy_unlock = GetLabel(Util.GetMemberName(() => sy_unlock));
+
+
+
+
+            // Buttons            
+            sy_button_new = GetLabel(Util.GetMemberName(() => sy_button_new));
+            sy_button_copy = GetLabel(Util.GetMemberName(() => sy_button_copy));
+            sy_button_cancel = GetLabel(Util.GetMemberName(() => sy_button_cancel));
+            sy_button_unlock = GetLabel(Util.GetMemberName(() => sy_button_unlock));
+            sy_button_save = GetLabel(Util.GetMemberName(() => sy_button_save));
+            sy_button_save_new = GetLabel(Util.GetMemberName(() => sy_button_save_new));
+            sy_button_active = GetLabel(Util.GetMemberName(() => sy_button_active));
+            sy_button_inactive = GetLabel(Util.GetMemberName(() => sy_button_inactive));
+            sy_button_delete = GetLabel(Util.GetMemberName(() => sy_button_delete));
+            sy_button_mode = GetLabel(Util.GetMemberName(() => sy_button_mode));
+            sy_button_export = GetLabel(Util.GetMemberName(() => sy_button_export));
+
+            sy_button_find = GetLabel(Util.GetMemberName(() => sy_button_find));
+            sy_button_clear = GetLabel(Util.GetMemberName(() => sy_button_clear));
+            sy_button_filter = GetLabel(Util.GetMemberName(() => sy_button_filter));
         }
 
-        public static string GetLabel(string function_code, string code)
+        public static string GetLabel(string code)
         {
             var language = ConfigFacade.sy_language;
-            var sql = SqlFacade.SqlSelect(TableName, "value", "function_code = :function_code and language = :language and code = :code");
-            return SqlFacade.Connection.ExecuteScalar<string>(sql, new { function_code, language, code });
+            var sql = SqlFacade.SqlSelect(TableName, "value", "code = lower(:code) and language = :language");
+            return SqlFacade.Connection.ExecuteScalar<string>(sql, new { code, language });
         }
     }
 

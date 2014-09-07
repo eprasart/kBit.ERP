@@ -231,17 +231,16 @@ CREATE TABLE IF NOT EXISTS sy_error_log
 CREATE TABLE IF NOT EXISTS sy_label
 (
   id bigserial NOT NULL,
-  function_code text NOT NULL,
-  language text NOT NULL,
   code text NOT NULL,
+  language text NOT NULL,  
   value text NOT NULL,
   note text,
   status text DEFAULT 'A'::text,
-  CONSTRAINT sy_label_pkey PRIMARY KEY (id),  
+  CONSTRAINT sy_label_pkey PRIMARY KEY (id)
 );
 
 -- DROP TABLE sy_message;
-CREATE TABLE sy_message
+CREATE TABLE IF NOT EXISTS sy_message
 (
   id bigserial NOT NULL,
   code text NOT NULL,
