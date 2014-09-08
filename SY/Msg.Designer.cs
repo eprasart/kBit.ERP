@@ -85,7 +85,7 @@
             this.txtMsg.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtMsg.Size = new System.Drawing.Size(441, 110);
             this.txtMsg.TabIndex = 1;
-            this.txtMsg.Text = "Line\r\nសូម​រក្សាសិទ្ទ\r\nLine";
+            this.txtMsg.Text = "- Code already exists. Enter a unique code\r\n* Email address is not valid";
             this.txtMsg.TextChanged += new System.EventHandler(this.txtMsg_TextChanged);
             // 
             // flowLayoutPanel1
