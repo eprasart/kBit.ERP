@@ -6,6 +6,7 @@ using System;
 using System.Windows.Forms;
 using kBit.ERP.SM;
 using kBit.ERP.SYS;
+using System.Text;
 
 namespace kBit.ERP.IC
 {
@@ -126,32 +127,32 @@ namespace kBit.ERP.IC
 
         private bool IsValidated()
         {
-            var sMsg = "";
+            var sMsg = new StringBuilder();
             Control cFocus = null;
             string Code = txtCode.Text.Trim();
             if (Code.Length == 0)
             {
-                sMsg = MessageFacade.code_not_empty;
+                sMsg.AppendLine(LabelFacade.sy_msg_prefix + MessageFacade.code_not_empty);
                 cFocus = txtCode;
             }
             else if (LocationFacade.Exists(Code, Id))
             {
-                sMsg += MessageFacade.code_already_exists;
+                sMsg.AppendLine(MessageFacade.code_already_exists);
                 cFocus = txtCode;
             }
             if (cboType.SelectedIndex == -1)
             {
-                sMsg += MessageFacade.location_type_not_empty;
-                cFocus = cboType;
+                sMsg.AppendLine(MessageFacade.location_type_not_empty);
+                if (cFocus == null) cFocus = cboType;
             }
             if (txtEmail.Text.Length > 0 && !Util.IsEmailValid(txtEmail.Text))
             {
-                sMsg += MessageFacade.email_not_valid;
-                cFocus = txtEmail;
+                sMsg.AppendLine("* " +MessageFacade.email_not_valid);
+                if (cFocus == null) cFocus = txtEmail;
             }
             if (sMsg.Length > 0)
             {
-                MessageFacade.Show(sMsg, LabelFacade.sy_save, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageFacade.Show(sMsg.ToString(), LabelFacade.sy_save, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 cFocus.Focus();
                 return false;
             }
@@ -195,7 +196,7 @@ namespace kBit.ERP.IC
                 }
                 catch (Exception ex)
                 {
-                    MessageFacade.Show(MessageFacade.record_load_error + "\n" + ex.Message ,LabelFacade.sy_location , MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageFacade.Show(MessageFacade.record_load_error + "\n" + ex.Message, LabelFacade.sy_location, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     SYS.ErrorLogFacade.Log(ex);
                 }
             else    // when delete all => disable buttons and clear all controls

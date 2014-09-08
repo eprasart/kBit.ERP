@@ -237,6 +237,8 @@ namespace kBit.ERP.SYS
     {
         const string TableName = "sy_label";
 
+        public static readonly string sy_msg_prefix = "- ";
+
         public static string sy_cancel;
         public static string sy_close;
         public static string sy_copy;
