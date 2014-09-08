@@ -280,8 +280,6 @@ namespace kBit.ERP.SYS
             sy_unlock = GetLabel(Util.GetMemberName(() => sy_unlock));
 
 
-
-
             // Buttons            
             sy_button_new = GetLabel(Util.GetMemberName(() => sy_button_new));
             sy_button_copy = GetLabel(Util.GetMemberName(() => sy_button_copy));
