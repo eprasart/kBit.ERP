@@ -97,9 +97,9 @@ namespace kBit.ERP.SYS
 
         public static void LogToFile(Exception ex, string info = "")
         {
-            string log = "\n" + DateTime.Now.ToString("yyy-MM-dd ddd hh:mm:ss tt");
-            log += "\n" + ex.ToString() + "\n" + ex.StackTrace;
-            if (info.Length > 0) log += "\n" + info;
+            string log = "\r\n" + DateTime.Now.ToString("yyy-MM-dd ddd hh:mm:ss tt");
+            log += "\r\n" + ex.ToString() + "\r\n" + ex.StackTrace;
+            if (info.Length > 0) log += "\r\n" + info;
             logFile.Write(log);
         }
     }

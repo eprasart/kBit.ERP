@@ -90,8 +90,15 @@ namespace kBit.ERP.SYS
         private static void LoadSettings()
         {
             setting.Path = Path.Combine(Application.StartupPath, "setting.ini");
-            SqlFacade.ConnectionString = setting.Get("ConnectionString", @"server=localhost;uid=erp;pwd=erp");
-
+            //todo: error if .net is not 4.5.1 ( if 4)
+            try
+            {
+                SqlFacade.ConnectionString = setting.Get("ConnectionString", @"server=localhost;uid=erp;pwd=erp");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         public static void Close()
