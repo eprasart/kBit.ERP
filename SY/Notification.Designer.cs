@@ -42,6 +42,8 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(401, 77);
             this.panel1.TabIndex = 0;
+            this.panel1.Click += new System.EventHandler(this.panel1_Click);
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // lblMsg
             // 
@@ -50,6 +52,7 @@
             this.lblMsg.Size = new System.Drawing.Size(377, 59);
             this.lblMsg.TabIndex = 0;
             this.lblMsg.Text = "label1";
+            this.lblMsg.Click += new System.EventHandler(this.panel1_Click);
             // 
             // frmNotification
             // 
@@ -60,7 +63,7 @@
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmNotification";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Notification";

@@ -34,5 +34,15 @@ namespace kBit.ERP
             Message = msg;
             Application.DoEvents();
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel1_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }
