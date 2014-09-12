@@ -147,7 +147,7 @@ namespace kBit.ERP.IC
             }
             if (txtEmail.Text.Length > 0 && !Util.IsEmailValid(txtEmail.Text))
             {
-                sMsg.AppendLine("* " +MessageFacade.email_not_valid);
+                sMsg.AppendLine("* " + MessageFacade.email_not_valid);
                 if (cFocus == null) cFocus = txtEmail;
             }
             if (sMsg.Length > 0)
