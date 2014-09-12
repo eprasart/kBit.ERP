@@ -32,6 +32,7 @@ namespace kBit.ERP.SYS
             lblMsg.Text = msg;
             Application.DoEvents();
         }
+
         public void ShowError(string msg)
         {
             lblError.Text = msg;

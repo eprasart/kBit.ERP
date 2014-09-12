@@ -81,6 +81,7 @@
             this.mnuShowA = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuShowI = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.lblSearch = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -229,6 +230,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.lblSearch);
             this.splitContainer1.Panel1.Controls.Add(this.btnFind);
             this.splitContainer1.Panel1.Controls.Add(this.btnClear);
             this.splitContainer1.Panel1.Controls.Add(this.btnFilter);
@@ -429,6 +431,7 @@
             this.txtFind.Size = new System.Drawing.Size(224, 25);
             this.txtFind.TabIndex = 4;
             this.txtFind.TabOnEnter = false;
+            this.toolTip1.SetToolTip(this.txtFind, "Enter query to search for");
             this.txtFind.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             this.txtFind.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             // 
@@ -465,7 +468,7 @@
             this.glbNote.Location = new System.Drawing.Point(15, 195);
             this.glbNote.Margin = new System.Windows.Forms.Padding(4, 12, 4, 4);
             this.glbNote.Name = "glbNote";
-            this.glbNote.Size = new System.Drawing.Size(744, 21);
+            this.glbNote.Size = new System.Drawing.Size(741, 21);
             this.glbNote.TabIndex = 17;
             this.glbNote.TabStop = false;
             // 
@@ -664,7 +667,7 @@
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
             this.txtNote.ReadOnly = true;
-            this.txtNote.Size = new System.Drawing.Size(744, 299);
+            this.txtNote.Size = new System.Drawing.Size(741, 299);
             this.txtNote.TabIndex = 18;
             this.txtNote.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
             // 
@@ -694,6 +697,17 @@
             this.mnuShowI.Text = "Show Inactive";
             this.mnuShowI.CheckedChanged += new System.EventHandler(this.mnuShow_CheckedChanged);
             // 
+            // lblSearch
+            // 
+            this.lblSearch.AutoSize = true;
+            this.lblSearch.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSearch.ForeColor = System.Drawing.Color.DimGray;
+            this.lblSearch.Location = new System.Drawing.Point(6, 5);
+            this.lblSearch.Name = "lblSearch";
+            this.lblSearch.Size = new System.Drawing.Size(51, 17);
+            this.lblSearch.TabIndex = 6;
+            this.lblSearch.Text = "Search";
+            // 
             // frmLocationList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -708,8 +722,10 @@
             this.Name = "frmLocationList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Location";
+            this.Deactivate += new System.EventHandler(this.frmLocationList_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmLocationList_FormClosing);
             this.Load += new System.EventHandler(this.frmLocationList_Load);
+            this.Leave += new System.EventHandler(this.frmLocationList_Leave);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -776,7 +792,8 @@
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnFilter;
         private System.Windows.Forms.ComboBox cboType;
-        private System.Windows.Forms.Label lblType;        
+        private System.Windows.Forms.Label lblType;
+        private System.Windows.Forms.Label lblSearch;        
     }
 }
 

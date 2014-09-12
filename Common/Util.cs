@@ -75,6 +75,11 @@ namespace kBit.ERP
             MemberExpression expressionBody = (MemberExpression)memberExpression.Body;
             return expressionBody.Member.Name;
         }
+
+        public static string EscapeNewLine(string value)
+        {
+            return value.Replace(@"\\", @"\");
+        }
     }
 
 

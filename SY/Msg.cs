@@ -1,11 +1,11 @@
 ﻿using System;
-
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kBit.ERP.SYS;
 
 namespace kBit.ERP
 {
@@ -14,6 +14,18 @@ namespace kBit.ERP
         private bool dragging = false;
         private Point dragCursorPoint;
         private Point dragFormPoint;
+
+        public string Title
+        {
+            get { return lblTitle.Text; }
+            set { lblTitle.Text = value; }
+        }
+
+        public string Message
+        {
+            get { return txtMsg.Text; }
+            set { txtMsg.Text = value; }
+        }
 
         public frmMsg()
         {
@@ -53,6 +65,21 @@ namespace kBit.ERP
                     btnYes.Visible = true;
                     btnNo.Visible = true;
                     btnCancel.Visible = true;
+                    break;
+            }
+            switch (icon)
+            {
+                case MessageBoxIcon.Error:
+                    picIcon.Image = Properties.Resources.Error;
+                    break;
+                case MessageBoxIcon.Exclamation:
+                    picIcon.Image = Properties.Resources.Exclamation;
+                    break;
+                case MessageBoxIcon.Question:
+                    picIcon.Image = Properties.Resources.Question;
+                    break;
+                case MessageBoxIcon.None:
+                    picIcon.Image = null;
                     break;
             }
             //todo: default button
@@ -103,7 +130,30 @@ namespace kBit.ERP
 
         private void frmMsgValidation_Load(object sender, EventArgs e)
         {
+            btnAbort.Text = LabelFacade.sy_button_abort;
+            btnCancel.Text = LabelFacade.sy_button_cancel;
+            btnIgnore.Text = LabelFacade.sy_button_ignore;
+            btnNo.Text = LabelFacade.sy_button_no;
+            btnYes.Text = LabelFacade.sy_button_yes;
+            btnOK.Text = LabelFacade.sy_button_ok;
+            btnRetry.Text = LabelFacade.sy_button_retry;
+
             txtMsg_TextChanged(null, null);
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.Escape:
+                    if (btnCancel.Visible)
+                    {
+                        DialogResult = DialogResult.Cancel;
+                        Close();
+                    }
+                    break;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

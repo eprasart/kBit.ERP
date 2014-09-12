@@ -259,11 +259,19 @@ namespace kBit.ERP.SYS
         public static string sy_button_inactive;
         public static string sy_button_delete;
         public static string sy_button_mode;
-        public static string sy_button_export;
+        public static string sy_export;
 
         public static string sy_button_find;
         public static string sy_button_clear;
         public static string sy_button_filter;
+
+        // Message Box Buttons
+        public static string sy_button_abort;
+        public static string sy_button_retry;
+        public static string sy_button_ignore;
+        public static string sy_button_ok;
+        public static string sy_button_yes;
+        public static string sy_button_no;
 
 
         public static void LoadSystemLabel()
@@ -271,7 +279,7 @@ namespace kBit.ERP.SYS
             //todo: recall when switching a language
 
             // sy
-            sy_cancel= GetLabel(Util.GetMemberName(() => sy_cancel)); 
+            sy_cancel = GetLabel(Util.GetMemberName(() => sy_cancel));
             sy_close = GetLabel(Util.GetMemberName(() => sy_close));
             sy_copy = GetLabel(Util.GetMemberName(() => sy_copy));
             sy_delete = GetLabel(Util.GetMemberName(() => sy_delete));
@@ -280,8 +288,6 @@ namespace kBit.ERP.SYS
             sy_new = GetLabel(Util.GetMemberName(() => sy_new));
             sy_save = GetLabel(Util.GetMemberName(() => sy_save));
             sy_unlock = GetLabel(Util.GetMemberName(() => sy_unlock));
-
-
 
 
             // Buttons            
@@ -295,11 +301,19 @@ namespace kBit.ERP.SYS
             sy_button_inactive = GetLabel(Util.GetMemberName(() => sy_button_inactive));
             sy_button_delete = GetLabel(Util.GetMemberName(() => sy_button_delete));
             sy_button_mode = GetLabel(Util.GetMemberName(() => sy_button_mode));
-            sy_button_export = GetLabel(Util.GetMemberName(() => sy_button_export));
+            sy_export = GetLabel(Util.GetMemberName(() => sy_export));
 
             sy_button_find = GetLabel(Util.GetMemberName(() => sy_button_find));
             sy_button_clear = GetLabel(Util.GetMemberName(() => sy_button_clear));
             sy_button_filter = GetLabel(Util.GetMemberName(() => sy_button_filter));
+
+            // Message Box Buttons
+            sy_button_abort = GetLabel(Util.GetMemberName(() => sy_button_abort));
+            sy_button_retry = GetLabel(Util.GetMemberName(() => sy_button_retry));
+            sy_button_ignore = GetLabel(Util.GetMemberName(() => sy_button_ignore));
+            sy_button_ok = GetLabel(Util.GetMemberName(() => sy_button_ok));
+            sy_button_yes = GetLabel(Util.GetMemberName(() => sy_button_yes));
+            sy_button_no = GetLabel(Util.GetMemberName(() => sy_button_no));
         }
 
         public static string GetLabel(string code)
@@ -337,6 +351,10 @@ namespace kBit.ERP.SYS
         public static string email_not_valid;
         public static string location_type_not_empty;
 
+        public static string export_exporting;
+        public static string export_opening;
+        public static string file_being_used_try_again;
+
         public static DialogResult Show(string msg, string title = "", MessageBoxButtons buttons = MessageBoxButtons.OK,
             MessageBoxIcon icon = MessageBoxIcon.Information, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
         {
@@ -348,6 +366,21 @@ namespace kBit.ERP.SYS
             else
                 dResult = fMsg.ShowDialog();
             return dResult;
+        }
+
+        public static void Show(IWin32Window owner, ref frmMsg fMsg, string msg, string title)
+        {
+            if (fMsg == null || fMsg.IsDisposed)
+            {
+                fMsg = new frmMsg(msg, title);
+                fMsg.Show(owner);
+            }
+            else
+            {
+                fMsg.Title = title;
+                fMsg.Message = msg;
+            }
+            //if (fMsg.Visible == false) fMsg.Visible = true;
         }
 
         public static void LoadSystemMessage()
@@ -375,6 +408,9 @@ namespace kBit.ERP.SYS
             email_not_valid = GetMessage(Util.GetMemberName(() => email_not_valid));
             location_type_not_empty = GetMessage(Util.GetMemberName(() => location_type_not_empty));
 
+            export_exporting = GetMessage(Util.GetMemberName(() => export_exporting));
+            export_opening = GetMessage(Util.GetMemberName(() => export_opening));
+            file_being_used_try_again =Util.EscapeNewLine( GetMessage(Util.GetMemberName(() => file_being_used_try_again)));
         }
 
         public static string GetMessage(string code)

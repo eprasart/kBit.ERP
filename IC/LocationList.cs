@@ -18,6 +18,8 @@ namespace kBit.ERP.IC
         bool IsDirty = false;
         bool IsIgnore = true;
 
+        frmMsg fMsg = null;
+
         public frmLocationList()
         {
             InitializeComponent();
@@ -44,7 +46,7 @@ namespace kBit.ERP.IC
             }
             catch (Exception ex)
             {
-                MessageFacade.Show(MessageFacade.data_retrieve_error + "\n" + ex.Message, LabelFacade.sy_location, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageFacade.Show(MessageFacade.data_retrieve_error + "\r\n" + ex.Message, LabelFacade.sy_location, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ErrorLogFacade.Log(ex);
                 return;
             }
@@ -105,6 +107,7 @@ namespace kBit.ERP.IC
             btnFind.Enabled = l;
             btnClear.Enabled = l;
             btnFilter.Enabled = l;
+            if (fMsg != null && !fMsg.IsDisposed) fMsg.Close();
         }
 
         private void SetStatus(string stat)
@@ -137,22 +140,23 @@ namespace kBit.ERP.IC
             }
             else if (LocationFacade.Exists(Code, Id))
             {
-                sMsg.AppendLine(MessageFacade.code_already_exists);
+                sMsg.AppendLine(LabelFacade.sy_msg_prefix + MessageFacade.code_already_exists);
                 cFocus = txtCode;
             }
             if (cboType.SelectedIndex == -1)
             {
-                sMsg.AppendLine(MessageFacade.location_type_not_empty);
+                sMsg.AppendLine(LabelFacade.sy_msg_prefix + MessageFacade.location_type_not_empty);
                 if (cFocus == null) cFocus = cboType;
             }
             if (txtEmail.Text.Length > 0 && !Util.IsEmailValid(txtEmail.Text))
             {
-                sMsg.AppendLine("* " + MessageFacade.email_not_valid);
+                sMsg.AppendLine(LabelFacade.sy_msg_prefix + MessageFacade.email_not_valid);
                 if (cFocus == null) cFocus = txtEmail;
             }
             if (sMsg.Length > 0)
             {
-                MessageFacade.Show(sMsg.ToString(), LabelFacade.sy_save, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageFacade.Show(this, ref fMsg, sMsg.ToString(), LabelFacade.sy_save);
+                //fMsg.Show(sMsg.ToString(), LabelFacade.sy_save, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);                
                 cFocus.Focus();
                 return false;
             }
@@ -196,7 +200,7 @@ namespace kBit.ERP.IC
                 }
                 catch (Exception ex)
                 {
-                    MessageFacade.Show(MessageFacade.record_load_error + "\n" + ex.Message, LabelFacade.sy_location, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageFacade.Show(MessageFacade.record_load_error + "\r\n" + ex.Message, LabelFacade.sy_location, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     SYS.ErrorLogFacade.Log(ex);
                 }
             else    // when delete all => disable buttons and clear all controls
@@ -284,7 +288,7 @@ namespace kBit.ERP.IC
             btnActive.Text = LabelFacade.sy_button_inactive;
             btnDelete.Text = LabelFacade.sy_button_delete;
             btnMode.Text = LabelFacade.sy_button_mode;
-            btnExport.Text = LabelFacade.sy_button_export;
+            btnExport.Text = LabelFacade.sy_export;
             btnFind.Text = "     " + LabelFacade.sy_button_find;
             btnClear.Text = "     " + LabelFacade.sy_button_clear;
             btnFilter.Text = "     " + LabelFacade.sy_button_filter;
@@ -308,6 +312,51 @@ namespace kBit.ERP.IC
             glbContact.Caption = LabelFacade.GetLabel(prefix + "contact");
             glbNote.Caption = LabelFacade.GetLabel(prefix + "note");
 
+        }
+
+        private bool Save()
+        {
+            if (!IsValidated()) return false;
+            Cursor = Cursors.WaitCursor;
+            var m = new Location();
+            var log = new SessionLog { Module = Type.Module_IC_Location };
+            m.Id = Id;
+            m.Code = txtCode.Text.Trim();
+            m.Description = txtDesc.Text;
+            m.Type = cboType.Text.Substring(0, 1);
+            m.Address = txtAddress.Text;
+            m.Name = txtName.Text;
+            m.Phone = txtPhone.Text;
+            m.Fax = txtFax.Text;
+            m.Email = txtEmail.Text;
+            m.Note = txtNote.Text;
+            if (m.Id == 0)
+            {
+                log.Priority = Type.Priority_Information;
+                log.Type = Type.Log_Insert;
+            }
+            else
+            {
+                log.Priority = Type.Priority_Caution;
+                log.Type = Type.Log_Update;
+            }
+            try
+            {
+                m.Id = LocationFacade.Save(m);
+            }
+            catch (Exception ex)
+            {
+                MessageFacade.Show(MessageFacade.save_error + "\r\n" + ex.Message, LabelFacade.sy_save, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorLogFacade.Log(ex);
+            }
+            if (dgvList.RowCount > 0) RowIndex = dgvList.CurrentRow.Index;
+            RefreshGrid(m.Id);
+            LockControls();
+            Cursor = Cursors.Default;
+            log.Message = "Saved. Id=" + m.Id + ", Code=" + txtCode.Text;
+            SessionLogFacade.Log(log);
+            IsDirty = false;
+            return true;
         }
 
         private void frmLocationList_Load(object sender, EventArgs e)
@@ -342,46 +391,7 @@ namespace kBit.ERP.IC
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (!IsValidated()) return;
-            Cursor = Cursors.WaitCursor;
-            var m = new Location();
-            var log = new SessionLog { Module = Type.Module_IC_Location };
-            m.Id = Id;
-            m.Code = txtCode.Text.Trim();
-            m.Description = txtDesc.Text;
-            m.Type = cboType.Text.Substring(0, 1);
-            m.Address = txtAddress.Text;
-            m.Name = txtName.Text;
-            m.Phone = txtPhone.Text;
-            m.Fax = txtFax.Text;
-            m.Email = txtEmail.Text;
-            m.Note = txtNote.Text;
-            if (m.Id == 0)
-            {
-                log.Priority = Type.Priority_Information;
-                log.Type = Type.Log_Insert;
-            }
-            else
-            {
-                log.Priority = Type.Priority_Caution;
-                log.Type = Type.Log_Update;
-            }
-            try
-            {
-                m.Id = LocationFacade.Save(m);
-            }
-            catch (Exception ex)
-            {
-                MessageFacade.Show(MessageFacade.save_error + "\n" + ex.Message, LabelFacade.sy_save, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                ErrorLogFacade.Log(ex);
-            }
-            if (dgvList.RowCount > 0) RowIndex = dgvList.CurrentRow.Index;
-            RefreshGrid(m.Id);
-            LockControls();
-            Cursor = Cursors.Default;
-            log.Message = "Saved. Id=" + m.Id + ", Code=" + txtCode.Text;
-            SessionLogFacade.Log(log);
-            IsDirty = false;
+            Save();
         }
 
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
@@ -505,7 +515,7 @@ namespace kBit.ERP.IC
                     return;
                 }
                 else
-                    if (MessageFacade.Show(msg + "\n" + MessageFacade.proceed_confirmation, MessageFacade.active_inactive, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+                    if (MessageFacade.Show(msg + "\r\n" + MessageFacade.proceed_confirmation, MessageFacade.active_inactive, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
                         return;
             }
             try
@@ -552,7 +562,7 @@ namespace kBit.ERP.IC
                 }
                 catch (Exception ex)
                 {
-                    MessageFacade.Show(MessageFacade.unlock_error + "\n" + ex.Message, LabelFacade.sy_unlock, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageFacade.Show(MessageFacade.unlock_error + "\r\n" + ex.Message, LabelFacade.sy_unlock, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     ErrorLogFacade.Log(ex);
                 }
                 if (dgvList.CurrentRow != null && !dgvList.CurrentRow.Selected)
@@ -575,7 +585,7 @@ namespace kBit.ERP.IC
                     return;
                 }
                 else
-                    if (MessageFacade.Show(msg + "\n" + MessageFacade.lock_currently, LabelFacade.sy_unlock, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
+                    if (MessageFacade.Show(msg + "\r\n" + MessageFacade.lock_override, LabelFacade.sy_unlock, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
                         SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Location, Type.Log_Lock, "Override lock. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
                     else
                         return;
@@ -589,7 +599,7 @@ namespace kBit.ERP.IC
             }
             catch (Exception ex)
             {
-                MessageFacade.Show(MessageFacade.lock_error + "\n" + ex.Message, LabelFacade.sy_lock, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageFacade.Show(MessageFacade.lock_error + "\r\n" + ex.Message, LabelFacade.sy_lock, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ErrorLogFacade.Log(ex);
             }
             SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_Lock, "Locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
@@ -670,7 +680,8 @@ namespace kBit.ERP.IC
                 switch (MessageFacade.Show(MessageFacade.save_confirmation, LabelFacade.sy_close, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
                 {
                     case System.Windows.Forms.DialogResult.Yes: // Save then close
-                        btnSave_Click(null, null);
+                        if (!Save())
+                            e.Cancel = true;
                         break;
                     case System.Windows.Forms.DialogResult.Cancel:
                         e.Cancel = true;
@@ -696,7 +707,7 @@ namespace kBit.ERP.IC
             if (txtCode.ReadOnly) return;
             if (LocationFacade.Exists(txtCode.Text.Trim()))
             {
-                MessageFacade.Show(MessageFacade.code_already_exists, LabelFacade.sy_location, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageFacade.Show(this, ref fMsg, LabelFacade.sy_msg_prefix + MessageFacade.code_already_exists, LabelFacade.sy_location);
             }
         }
 
@@ -745,12 +756,22 @@ namespace kBit.ERP.IC
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            new frmMsg().Show();
-            return;
             Cursor = Cursors.WaitCursor;
             Application.DoEvents();
             LocationFacade.Export();
             Cursor = Cursors.Default;
+        }
+
+        private void frmLocationList_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmLocationList_Deactivate(object sender, EventArgs e)
+        {
+            //fMsg.TopMost = false;
+            //fMsg.Update();
+            //fMsg.Activate();
         }
     }
 }

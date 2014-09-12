@@ -232,8 +232,12 @@ namespace kBit.ERP
             };
             if (sfd.ShowDialog() != DialogResult.OK) return result;
             var path = sfd.FileName;
+            var fileName = Path.GetFileName(path);
 
+            var fNotification = new frmNotification(string.Format(MessageFacade.export_exporting, fileName));
+            fNotification.Show();
             Application.DoEvents();
+
             StringBuilder sb = new StringBuilder();
             var dr = GetDataReader(sql);
             var sLine = "";
@@ -259,14 +263,21 @@ namespace kBit.ERP
 
             while (Util.IsFileLocked(path))   // Check if file is being used
             {
-                if (MessageBox.Show("'" + Path.GetFileName(path) + "' is being used by another process.\nPlease close it and try again.", "Export", MessageBoxButtons.RetryCancel, MessageBoxIcon.Question) == DialogResult.Cancel) return 0;
+                //todo: \r\n not work with KHM ??
+                if (MessageFacade.Show(string.Format(MessageFacade.file_being_used_try_again, fileName), LabelFacade.sy_export, MessageBoxButtons.RetryCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                {
+                    fNotification.Close();
+                    return 0;
+                }
                 continue;
             }
             using (var sw = new StreamWriter(path, false, Encoding.UTF8))   // Write to file  
             {
                 sw.Write(sb);
             }
+            fNotification.ShowMsg(string.Format(MessageFacade.export_opening, fileName));
             if (ConfigFacade.sy_export_open_file_after) System.Diagnostics.Process.Start(path);   // Open file
+            fNotification.Close();
             return result;
         }
 
