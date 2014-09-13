@@ -78,7 +78,7 @@ namespace kBit.ERP
 
         public static string EscapeNewLine(string value)
         {
-            return value.Replace(@"\\", @"\");
+            return value.Replace(@"\r\n", Environment.NewLine);
         }
     }
 

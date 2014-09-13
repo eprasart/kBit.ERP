@@ -90,6 +90,15 @@ namespace kBit.ERP.SYS
             Log(log);
         }
 
+        public static void Log(string message)
+        {
+            var log = new ErrorLog()
+            {
+                Message = message
+            };
+            Log(log);
+        }
+
         public static void Log(ErrorLog log)
         {
             Save(log);

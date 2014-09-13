@@ -1,12 +1,9 @@
-﻿/*TODO: 
- * msg => English and/or Khmer (use Noto font)  
-*/
-
-using System;
+﻿using System;
 using System.Windows.Forms;
 using kBit.ERP.SM;
 using kBit.ERP.SYS;
 using System.Text;
+using System.Drawing;
 
 namespace kBit.ERP.IC
 {
@@ -17,6 +14,13 @@ namespace kBit.ERP.IC
         bool IsExpand = false;
         bool IsDirty = false;
         bool IsIgnore = true;
+
+        StringFormat centerFormat = new StringFormat()
+        {
+            // right alignment might actually make more sense for numbers
+            Alignment = StringAlignment.Near,
+            LineAlignment = StringAlignment.Center
+        };
 
         frmMsg fMsg = null;
 
@@ -772,6 +776,33 @@ namespace kBit.ERP.IC
             //fMsg.TopMost = false;
             //fMsg.Update();
             //fMsg.Activate();
+        }
+
+        private void lblSearch_Click(object sender, EventArgs e)
+        {
+            txtFind.Focus();
+        }
+
+        private void txtFind_Enter(object sender, EventArgs e)
+        {
+            lblSearch.Visible = false;
+        }
+
+        private void txtFind_Leave(object sender, EventArgs e)
+        {
+            lblSearch.Visible = (txtFind.Text.Length == 0);
+        }
+
+        private void dgvList_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            e.PaintCells(e.ClipBounds, DataGridViewPaintParts.All);
+            e.PaintHeader(DataGridViewPaintParts.Background | DataGridViewPaintParts.Border | DataGridViewPaintParts.Focus
+                | DataGridViewPaintParts.SelectionBackground | DataGridViewPaintParts.ContentForeground);
+
+            var rowIdx = " " + (e.RowIndex + 1).ToString();
+
+            var headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, dgvList.RowHeadersWidth, e.RowBounds.Height);
+            e.Graphics.DrawString(rowIdx, this.Font, SystemBrushes.ControlText, headerBounds, centerFormat);
         }
     }
 }

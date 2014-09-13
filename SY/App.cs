@@ -1,8 +1,4 @@
-﻿/*TODO:
- * Option to auto switch keyboard to KH when in Unicode box
- * branch_code
-*/
-using System;
+﻿using System;
 using System.IO;
 using System.Windows.Forms;
 using System.Data;
@@ -62,7 +58,7 @@ namespace kBit.ERP.SYS
             }
 
             //Session            
-            session.Username = "Visal"; //todo: to be removed
+            session.Username = "Visal"; //todo: logged in user (to be removed)
             session.Branch_Code = "000";
             session.Machine_Name = Environment.MachineName;
             session.Machine_User_Name = Environment.UserName;

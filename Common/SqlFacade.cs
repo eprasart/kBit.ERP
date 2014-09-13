@@ -262,8 +262,7 @@ namespace kBit.ERP
             dr.Close();
 
             while (Util.IsFileLocked(path))   // Check if file is being used
-            {
-                //todo: \r\n not work with KHM ??
+            {                
                 if (MessageFacade.Show(string.Format(MessageFacade.file_being_used_try_again, fileName), LabelFacade.sy_export, MessageBoxButtons.RetryCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
                 {
                     fNotification.Close();
@@ -280,6 +279,5 @@ namespace kBit.ERP
             fNotification.Close();
             return result;
         }
-
     }
 }

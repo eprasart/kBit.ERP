@@ -272,7 +272,7 @@ namespace kBit.ERP.SYS
         public static string sy_button_ok;
         public static string sy_button_yes;
         public static string sy_button_no;
-
+        public static string sy_search_place_holder;
 
         public static void LoadSystemLabel()
         {
@@ -288,7 +288,7 @@ namespace kBit.ERP.SYS
             sy_new = GetLabel(Util.GetMemberName(() => sy_new));
             sy_save = GetLabel(Util.GetMemberName(() => sy_save));
             sy_unlock = GetLabel(Util.GetMemberName(() => sy_unlock));
-
+            sy_search_place_holder = GetLabel(Util.GetMemberName(() => sy_search_place_holder));
 
             // Buttons            
             sy_button_new = GetLabel(Util.GetMemberName(() => sy_button_new));
@@ -320,7 +320,10 @@ namespace kBit.ERP.SYS
         {
             var language = ConfigFacade.sy_language;
             var sql = SqlFacade.SqlSelect(TableName, "value", "code = lower(:code) and language = :language");
-            return SqlFacade.Connection.ExecuteScalar<string>(sql, new { code, language });
+            var label = SqlFacade.Connection.ExecuteScalar<string>(sql, new { code, language });
+            if (label == null)
+                ErrorLogFacade.Log("Label: code=" + code + " not exist");
+            return label;
         }
     }
 
@@ -410,14 +413,17 @@ namespace kBit.ERP.SYS
 
             export_exporting = GetMessage(Util.GetMemberName(() => export_exporting));
             export_opening = GetMessage(Util.GetMemberName(() => export_opening));
-            file_being_used_try_again =Util.EscapeNewLine( GetMessage(Util.GetMemberName(() => file_being_used_try_again)));
+            file_being_used_try_again = Util.EscapeNewLine(GetMessage(Util.GetMemberName(() => file_being_used_try_again)));
         }
 
         public static string GetMessage(string code)
         {
             var language = ConfigFacade.sy_language;
             var sql = SqlFacade.SqlSelect(TableName, "value", "code = lower(:code) and language = :language");
-            return SqlFacade.Connection.ExecuteScalar<string>(sql, new { code, language });
+            var message = SqlFacade.Connection.ExecuteScalar<string>(sql, new { code, language });
+            if (message == null)
+                ErrorLogFacade.Log("Message: code=" + code + " not exist");
+            return message;
         }
     }
 }
