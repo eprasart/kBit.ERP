@@ -15,15 +15,16 @@ namespace kBit.ERP.IC
         bool IsDirty = false;
         bool IsIgnore = true;
 
-        StringFormat centerFormat = new StringFormat()
+        frmMsg fMsg = null;
+        
+        StringFormat headerCellFormat = new StringFormat()
         {
             // right alignment might actually make more sense for numbers
             Alignment = StringAlignment.Near,
             LineAlignment = StringAlignment.Center
         };
 
-        frmMsg fMsg = null;
-
+        
         public frmLocationList()
         {
             InitializeComponent();
@@ -190,7 +191,7 @@ namespace kBit.ERP.IC
                     var m = LocationFacade.Select(Id);
                     txtCode.Text = m.Code;
                     txtDesc.Text = m.Description;
-                    cboType.SelectedIndex = m.Type == "P" ? 0 : 1;
+                    cboType.SelectedIndex = (m.Type != "L" ? 0 : 1);
                     txtAddress.Text = m.Address;
                     txtName.Text = m.Name;
                     txtPhone.Text = m.Phone;
@@ -293,6 +294,7 @@ namespace kBit.ERP.IC
             btnDelete.Text = LabelFacade.sy_button_delete;
             btnMode.Text = LabelFacade.sy_button_mode;
             btnExport.Text = LabelFacade.sy_export;
+            lblSearch.Text = LabelFacade.sy_search_place_holder;
             btnFind.Text = "     " + LabelFacade.sy_button_find;
             btnClear.Text = "     " + LabelFacade.sy_button_clear;
             btnFilter.Text = "     " + LabelFacade.sy_button_filter;
@@ -792,7 +794,7 @@ namespace kBit.ERP.IC
         {
             lblSearch.Visible = (txtFind.Text.Length == 0);
         }
-
+        
         private void dgvList_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
             e.PaintCells(e.ClipBounds, DataGridViewPaintParts.All);
@@ -802,7 +804,7 @@ namespace kBit.ERP.IC
             var rowIdx = " " + (e.RowIndex + 1).ToString();
 
             var headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, dgvList.RowHeadersWidth, e.RowBounds.Height);
-            e.Graphics.DrawString(rowIdx, this.Font, SystemBrushes.ControlText, headerBounds, centerFormat);
+            e.Graphics.DrawString(rowIdx, this.Font, SystemBrushes.ControlText, headerBounds, headerCellFormat);         
         }
     }
 }

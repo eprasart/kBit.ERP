@@ -102,7 +102,16 @@ namespace kBit.ERP.IC
         public static bool Exists(string Code, long Id = 0)
         {
             var sql = SqlFacade.SqlExists(TableName, "id <> :id and status <> :status and code = :code");
-            return SqlFacade.Connection.ExecuteScalar<bool>(sql, new { Id, Status = Type.RecordStatus_Deleted, Code });
+            var bExists = false;
+            try
+            {
+                bExists = SqlFacade.Connection.ExecuteScalar<bool>(sql, new { Id, Status = Type.RecordStatus_Deleted, Code });
+            }
+            catch (Exception ex)
+            {
+                MessageFacade.Show("Error while query\r\n" + ex.Message);
+            }
+            return bExists;
         }
 
         public static void Export()

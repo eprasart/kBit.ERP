@@ -143,6 +143,7 @@ namespace kBit.ERP.SYS
         static Config _sy_export_delimiter = new Config(Username, syPrefix + "export_delimiter", ",", "Export delimiter [,]");
         static Config _sy_export_open_file_after = new Config(Username, syPrefix + "export_open_file_after", "Y", "Open file after export. [Y]=Yes or N=No");
         static Config _sy_code_casing = new Config("", syPrefix + "code_casing", "U", "Code character casing. [U]=Upper, L=Lower or N=Normal");
+        static Config _sy_code_max_length = new Config("", syPrefix + "code_max_length", "15", "Maximum length of code [15]");
         static Config _sy_language = new Config(Username, syPrefix + "language", "ENG", "Language. e.g ENG or KHM");
 
         static Config _ic_location_spitter_distance = new Config(Username, LocationFacade.TableName + spliterDistance, "207", "Data grid splitter distance [228]");

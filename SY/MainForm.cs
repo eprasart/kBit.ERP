@@ -61,28 +61,28 @@ namespace kBit.ERP.SYS
 
         private void btnUser_Click(object sender, EventArgs e)
         {
-            //    Cursor = Cursors.WaitCursor;
-            //    if (App.fUserList == null || App.fUserList.IsDisposed == true)
-            //    {
-            //        App.fUserList = new SM.frmUserList();
-            //        App.fUserList.Show();
-            //    }
-            //    App.fUserList.Focus();
-            //    Cursor = Cursors.Default;
-            //    SM.SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "User List opened.");
+            Cursor = Cursors.WaitCursor;
+            if (App.fUserList == null || App.fUserList.IsDisposed == true)
+            {
+                App.fUserList = new SM.frmUserList();
+                App.fUserList.Show();
+            }
+            App.fUserList.Focus();
+            Cursor = Cursors.Default;
+            SM.SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "User List opened.");
         }
 
         private void btnAuditLog_Click(object sender, EventArgs e)
         {
-            //    Cursor = Cursors.WaitCursor;
-            //    SM.SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "Audit Log opened.");
-            //    if (App.fAuditLog == null || App.fAuditLog.IsDisposed == true)
-            //    {
-            //        App.fAuditLog = new SM.frmAuditLog();
-            //        App.fAuditLog.Show();
-            //    }
-            //    App.fAuditLog.Focus();
-            //    Cursor = Cursors.Default;
+            Cursor = Cursors.WaitCursor;
+            SM.SessionLogFacade.Log(Type.Priority_Information, Module, Type.Log_Open, "Audit Log opened.");
+            if (App.fAuditLog == null || App.fAuditLog.IsDisposed == true)
+            {
+                App.fAuditLog = new SM.frmAuditLog();
+                App.fAuditLog.Show();
+            }
+            App.fAuditLog.Focus();
+            Cursor = Cursors.Default;
         }
 
         private void frmMain_FormClosed(object sender, FormClosedEventArgs e)

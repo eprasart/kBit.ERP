@@ -295,7 +295,7 @@ namespace kBit.ERP.SM
         {
             mnuShow.Show(lblFilter, 0, 15);
         }
-
+        
         private void btnPwdReset_Click(object sender, EventArgs e)
         {
             SessionLogFacade.Log(Type.Priority_Caution, Module, Type.Log_ResetPwd, "Reset pwd clicked.");
