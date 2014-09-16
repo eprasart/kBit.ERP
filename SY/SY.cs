@@ -49,7 +49,7 @@ namespace kBit.ERP.SYS
         public Config(string username, string code, string defaultValue, string note)
         {
             Username = username;
-            Code = code;
+            Code = code.Substring(1); // skip the _
             Value = defaultValue;
             Note = note;
             Get();
@@ -137,14 +137,13 @@ namespace kBit.ERP.SYS
         static string location = "_location";
         static string size = "_size";
 
-
-        static Config _sy_select_limit = new Config("", syPrefix + "select_limit", "1000", "Maximum number of row [1000] display in data grid");
-        static Config _sy_toolbar_icon_display_type = new Config(Username, syPrefix + "toolbar_icon_display_type", "IT", "Icon display type. [IT]=ImageAndText, I=Image, T=Text");
-        static Config _sy_export_delimiter = new Config(Username, syPrefix + "export_delimiter", ",", "Export delimiter [,]");
-        static Config _sy_export_open_file_after = new Config(Username, syPrefix + "export_open_file_after", "Y", "Open file after export. [Y]=Yes or N=No");
-        static Config _sy_code_casing = new Config("", syPrefix + "code_casing", "U", "Code character casing. [U]=Upper, L=Lower or N=Normal");
-        static Config _sy_code_max_length = new Config("", syPrefix + "code_max_length", "15", "Maximum length of code [15]");
-        static Config _sy_language = new Config(Username, syPrefix + "language", "ENG", "Language. e.g ENG or KHM");
+        static Config _sy_select_limit = new Config("", Util.GetMemberName(() => _sy_select_limit), "1000", "Maximum number of row [1000] display in data grid");
+        static Config _sy_toolbar_icon_display_type = new Config(Username, Util.GetMemberName(() => _sy_toolbar_icon_display_type), "IT", "Icon display type. [IT]=ImageAndText, I=Image, T=Text");
+        static Config _sy_export_delimiter = new Config(Username, Util.GetMemberName(() => _sy_export_delimiter), ",", "Export delimiter [,]");
+        static Config _sy_export_open_file_after = new Config(Username, Util.GetMemberName(() => _sy_export_open_file_after), "Y", "Open file after export. [Y]=Yes or N=No");
+        static Config _sy_code_casing = new Config("", Util.GetMemberName(() => _sy_code_casing), "U", "Code character casing. [U]=Upper, L=Lower or N=Normal");
+        static Config _sy_code_max_length = new Config("", Util.GetMemberName(() => _sy_code_max_length), "15", "Maximum length of code [15]");
+        static Config _sy_language = new Config(Username, Util.GetMemberName(() => _sy_language), "ENG", "Language. e.g ENG or KHM");
 
         static Config _ic_location_spitter_distance = new Config(Username, LocationFacade.TableName + spliterDistance, "207", "Data grid splitter distance [228]");
         static Config _ic_location_window_state = new Config(Username, LocationFacade.TableName + window_state, "0", "Window state. Normal, Maximize and Minimize");
@@ -180,6 +179,12 @@ namespace kBit.ERP.SYS
         {
             get { return _sy_code_casing.Value; }
             set { _sy_export_open_file_after.Value = value; }
+        }
+
+        public static int sy_code_max_length
+        {
+            get { return _sy_code_max_length.ValueInt; }
+            set { _sy_code_max_length.Value = value.ToString(); }
         }
 
         public static string sy_language

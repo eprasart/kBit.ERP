@@ -267,6 +267,7 @@ namespace kBit.ERP.IC
                 splitContainer1.SplitterDistance = ConfigFacade.ic_location_splitter_distance;
 
                 SetCodeCasing();
+                txtCode.MaxLength = ConfigFacade.sy_code_max_length;
                 var lo = ConfigFacade.ic_location_location;
                 if (lo != new System.Drawing.Point(-1, -1))
                     Location = lo;
