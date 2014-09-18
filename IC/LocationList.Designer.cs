@@ -48,12 +48,31 @@
             this.btnFind = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnFilter = new System.Windows.Forms.Button();
+            this.dgvList = new kBit.UI.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPhone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFax = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtFind = new kBit.UI.TextBox(this.components);
             this.cboType = new System.Windows.Forms.ComboBox();
             this.lblCode = new System.Windows.Forms.Label();
+            this.glbNote = new kBit.UI.GroupLabel();
+            this.glbContact = new kBit.UI.GroupLabel();
+            this.glbLocation = new kBit.UI.GroupLabel();
             this.txtAddress = new System.Windows.Forms.TextBox();
+            this.txtName = new kBit.UI.TextBox(this.components);
+            this.txtEmail = new kBit.UI.TextBox(this.components);
+            this.txtFax = new kBit.UI.TextBox(this.components);
+            this.txtPhone = new kBit.UI.TextBox(this.components);
+            this.txtCode = new kBit.UI.TextBox(this.components);
             this.lblEmail = new System.Windows.Forms.Label();
             this.lblAddress = new System.Windows.Forms.Label();
             this.lblFax = new System.Windows.Forms.Label();
+            this.txtDesc = new kBit.UI.TextBox(this.components);
             this.lblPhone = new System.Windows.Forms.Label();
             this.lblType = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
@@ -63,32 +82,13 @@
             this.mnuShowA = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuShowI = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.dgvList = new kBit.UI.DataGridView();
-            this.txtFind = new kBit.UI.TextBox(this.components);
-            this.glbNote = new kBit.UI.GroupLabel();
-            this.glbContact = new kBit.UI.GroupLabel();
-            this.glbLocation = new kBit.UI.GroupLabel();
-            this.txtName = new kBit.UI.TextBox(this.components);
-            this.txtEmail = new kBit.UI.TextBox(this.components);
-            this.txtFax = new kBit.UI.TextBox(this.components);
-            this.txtPhone = new kBit.UI.TextBox(this.components);
-            this.txtCode = new kBit.UI.TextBox(this.components);
-            this.txtDesc = new kBit.UI.TextBox(this.components);
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPhone = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFax = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.mnuShow.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvList)).BeginInit();
+            this.mnuShow.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -319,159 +319,6 @@
             this.btnFilter.UseVisualStyleBackColor = true;
             this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
             // 
-            // cboType
-            // 
-            this.cboType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboType.Enabled = false;
-            this.cboType.FormattingEnabled = true;
-            this.cboType.Items.AddRange(new object[] {
-            "Physical",
-            "Logical"});
-            this.cboType.Location = new System.Drawing.Point(108, 105);
-            this.cboType.Name = "cboType";
-            this.cboType.Size = new System.Drawing.Size(260, 25);
-            this.cboType.TabIndex = 6;
-            // 
-            // lblCode
-            // 
-            this.lblCode.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCode.Location = new System.Drawing.Point(12, 43);
-            this.lblCode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblCode.Name = "lblCode";
-            this.lblCode.Size = new System.Drawing.Size(88, 17);
-            this.lblCode.TabIndex = 1;
-            this.lblCode.Text = "Code";
-            this.lblCode.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // txtAddress
-            // 
-            this.txtAddress.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAddress.Location = new System.Drawing.Point(108, 137);
-            this.txtAddress.Margin = new System.Windows.Forms.Padding(4);
-            this.txtAddress.Multiline = true;
-            this.txtAddress.Name = "txtAddress";
-            this.txtAddress.ReadOnly = true;
-            this.txtAddress.Size = new System.Drawing.Size(260, 42);
-            this.txtAddress.TabIndex = 8;
-            this.txtAddress.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
-            // 
-            // lblEmail
-            // 
-            this.lblEmail.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEmail.Location = new System.Drawing.Point(405, 142);
-            this.lblEmail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(88, 17);
-            this.lblEmail.TabIndex = 15;
-            this.lblEmail.Text = "Email";
-            this.lblEmail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblAddress
-            // 
-            this.lblAddress.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAddress.Location = new System.Drawing.Point(12, 140);
-            this.lblAddress.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblAddress.Name = "lblAddress";
-            this.lblAddress.Size = new System.Drawing.Size(88, 17);
-            this.lblAddress.TabIndex = 7;
-            this.lblAddress.Text = "Address";
-            this.lblAddress.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblFax
-            // 
-            this.lblFax.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFax.Location = new System.Drawing.Point(405, 109);
-            this.lblFax.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblFax.Name = "lblFax";
-            this.lblFax.Size = new System.Drawing.Size(88, 17);
-            this.lblFax.TabIndex = 13;
-            this.lblFax.Text = "Fax";
-            this.lblFax.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblPhone
-            // 
-            this.lblPhone.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPhone.Location = new System.Drawing.Point(408, 76);
-            this.lblPhone.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblPhone.Name = "lblPhone";
-            this.lblPhone.Size = new System.Drawing.Size(85, 17);
-            this.lblPhone.TabIndex = 11;
-            this.lblPhone.Text = "Phone";
-            this.lblPhone.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblType
-            // 
-            this.lblType.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblType.Location = new System.Drawing.Point(12, 109);
-            this.lblType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblType.Name = "lblType";
-            this.lblType.Size = new System.Drawing.Size(88, 17);
-            this.lblType.TabIndex = 5;
-            this.lblType.Text = "Type";
-            this.lblType.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblName
-            // 
-            this.lblName.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblName.Location = new System.Drawing.Point(396, 43);
-            this.lblName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(97, 17);
-            this.lblName.TabIndex = 9;
-            this.lblName.Text = "Name";
-            this.lblName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblDescription
-            // 
-            this.lblDescription.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescription.Location = new System.Drawing.Point(12, 75);
-            this.lblDescription.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(88, 17);
-            this.lblDescription.TabIndex = 3;
-            this.lblDescription.Text = "Description";
-            this.lblDescription.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // txtNote
-            // 
-            this.txtNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtNote.Location = new System.Drawing.Point(12, 224);
-            this.txtNote.Margin = new System.Windows.Forms.Padding(4);
-            this.txtNote.Multiline = true;
-            this.txtNote.Name = "txtNote";
-            this.txtNote.ReadOnly = true;
-            this.txtNote.Size = new System.Drawing.Size(747, 299);
-            this.txtNote.TabIndex = 18;
-            this.txtNote.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
-            // 
-            // mnuShow
-            // 
-            this.mnuShow.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuShowA,
-            this.mnuShowI});
-            this.mnuShow.Name = "contextMenuStrip1";
-            this.mnuShow.Size = new System.Drawing.Size(148, 48);
-            // 
-            // mnuShowA
-            // 
-            this.mnuShowA.Checked = true;
-            this.mnuShowA.CheckOnClick = true;
-            this.mnuShowA.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.mnuShowA.Name = "mnuShowA";
-            this.mnuShowA.Size = new System.Drawing.Size(147, 22);
-            this.mnuShowA.Text = "Show Active";
-            this.mnuShowA.CheckedChanged += new System.EventHandler(this.mnuShow_CheckedChanged);
-            // 
-            // mnuShowI
-            // 
-            this.mnuShowI.CheckOnClick = true;
-            this.mnuShowI.Name = "mnuShowI";
-            this.mnuShowI.Size = new System.Drawing.Size(147, 22);
-            this.mnuShowI.Text = "Show Inactive";
-            this.mnuShowI.CheckedChanged += new System.EventHandler(this.mnuShow_CheckedChanged);
-            // 
             // dgvList
             // 
             this.dgvList.AllowUserToAddRows = false;
@@ -508,15 +355,83 @@
             this.dgvList.MultiSelect = false;
             this.dgvList.Name = "dgvList";
             this.dgvList.ReadOnly = true;
+            this.dgvList.RowHeadersVisible = false;
             this.dgvList.RowHeadersWidth = 35;
             this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvList.ShowEditingIcon = false;
             this.dgvList.Size = new System.Drawing.Size(223, 480);
             this.dgvList.TabIndex = 1;
             this.dgvList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellDoubleClick);
-            this.dgvList.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvList_RowPostPaint);
             this.dgvList.SelectionChanged += new System.EventHandler(this.dgvList_SelectionChanged);
             this.dgvList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvList_KeyDown);
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "Id";
+            this.Column1.HeaderText = "Id";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Visible = false;
+            // 
+            // colCode
+            // 
+            this.colCode.DataPropertyName = "code";
+            this.colCode.HeaderText = "Code";
+            this.colCode.Name = "colCode";
+            this.colCode.ReadOnly = true;
+            this.colCode.Width = 66;
+            // 
+            // colDescription
+            // 
+            this.colDescription.DataPropertyName = "description";
+            this.colDescription.HeaderText = "Description";
+            this.colDescription.Name = "colDescription";
+            this.colDescription.ReadOnly = true;
+            this.colDescription.Width = 101;
+            // 
+            // colName
+            // 
+            this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colName.DataPropertyName = "Desc2";
+            this.colName.HeaderText = "Contact Name";
+            this.colName.Name = "colName";
+            this.colName.ReadOnly = true;
+            this.colName.Width = 118;
+            // 
+            // colPhone
+            // 
+            this.colPhone.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colPhone.DataPropertyName = "phone";
+            this.colPhone.HeaderText = "Phone";
+            this.colPhone.Name = "colPhone";
+            this.colPhone.ReadOnly = true;
+            this.colPhone.Width = 72;
+            // 
+            // colFax
+            // 
+            this.colFax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colFax.DataPropertyName = "fax";
+            this.colFax.HeaderText = "Fax";
+            this.colFax.Name = "colFax";
+            this.colFax.ReadOnly = true;
+            this.colFax.Width = 55;
+            // 
+            // colEmail
+            // 
+            this.colEmail.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colEmail.DataPropertyName = "email";
+            this.colEmail.HeaderText = "Email";
+            this.colEmail.Name = "colEmail";
+            this.colEmail.ReadOnly = true;
+            this.colEmail.Width = 67;
+            // 
+            // colAddress
+            // 
+            this.colAddress.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colAddress.DataPropertyName = "address";
+            this.colAddress.HeaderText = "Address";
+            this.colAddress.Name = "colAddress";
+            this.colAddress.ReadOnly = true;
             // 
             // txtFind
             // 
@@ -535,6 +450,30 @@
             this.txtFind.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             this.txtFind.Leave += new System.EventHandler(this.txtFind_Leave);
             // 
+            // cboType
+            // 
+            this.cboType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboType.Enabled = false;
+            this.cboType.FormattingEnabled = true;
+            this.cboType.Items.AddRange(new object[] {
+            "Physical",
+            "Logical"});
+            this.cboType.Location = new System.Drawing.Point(108, 105);
+            this.cboType.Name = "cboType";
+            this.cboType.Size = new System.Drawing.Size(260, 25);
+            this.cboType.TabIndex = 6;
+            // 
+            // lblCode
+            // 
+            this.lblCode.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCode.Location = new System.Drawing.Point(12, 43);
+            this.lblCode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCode.Name = "lblCode";
+            this.lblCode.Size = new System.Drawing.Size(88, 17);
+            this.lblCode.TabIndex = 1;
+            this.lblCode.Text = "Code";
+            this.lblCode.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // glbNote
             // 
             this.glbNote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -544,7 +483,7 @@
             this.glbNote.Location = new System.Drawing.Point(12, 195);
             this.glbNote.Margin = new System.Windows.Forms.Padding(4, 12, 4, 4);
             this.glbNote.Name = "glbNote";
-            this.glbNote.Size = new System.Drawing.Size(747, 21);
+            this.glbNote.Size = new System.Drawing.Size(745, 21);
             this.glbNote.TabIndex = 17;
             this.glbNote.TabStop = false;
             // 
@@ -569,6 +508,18 @@
             this.glbLocation.Size = new System.Drawing.Size(356, 21);
             this.glbLocation.TabIndex = 0;
             this.glbLocation.TabStop = false;
+            // 
+            // txtAddress
+            // 
+            this.txtAddress.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAddress.Location = new System.Drawing.Point(108, 137);
+            this.txtAddress.Margin = new System.Windows.Forms.Padding(4);
+            this.txtAddress.Multiline = true;
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.ReadOnly = true;
+            this.txtAddress.Size = new System.Drawing.Size(260, 42);
+            this.txtAddress.TabIndex = 8;
+            this.txtAddress.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
             // 
             // txtName
             // 
@@ -632,6 +583,39 @@
             this.txtCode.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
             this.txtCode.Leave += new System.EventHandler(this.txtCode_Leave);
             // 
+            // lblEmail
+            // 
+            this.lblEmail.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEmail.Location = new System.Drawing.Point(405, 142);
+            this.lblEmail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblEmail.Name = "lblEmail";
+            this.lblEmail.Size = new System.Drawing.Size(88, 17);
+            this.lblEmail.TabIndex = 15;
+            this.lblEmail.Text = "Email";
+            this.lblEmail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblAddress
+            // 
+            this.lblAddress.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAddress.Location = new System.Drawing.Point(12, 140);
+            this.lblAddress.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAddress.Name = "lblAddress";
+            this.lblAddress.Size = new System.Drawing.Size(88, 17);
+            this.lblAddress.TabIndex = 7;
+            this.lblAddress.Text = "Address";
+            this.lblAddress.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblFax
+            // 
+            this.lblFax.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFax.Location = new System.Drawing.Point(405, 109);
+            this.lblFax.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFax.Name = "lblFax";
+            this.lblFax.Size = new System.Drawing.Size(88, 17);
+            this.lblFax.TabIndex = 13;
+            this.lblFax.Text = "Fax";
+            this.lblFax.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // txtDesc
             // 
             this.txtDesc.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -644,69 +628,89 @@
             this.txtDesc.TabOnEnter = true;
             this.txtDesc.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
             // 
-            // Column1
+            // lblPhone
             // 
-            this.Column1.DataPropertyName = "Id";
-            this.Column1.HeaderText = "Id";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Visible = false;
+            this.lblPhone.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPhone.Location = new System.Drawing.Point(408, 76);
+            this.lblPhone.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPhone.Name = "lblPhone";
+            this.lblPhone.Size = new System.Drawing.Size(85, 17);
+            this.lblPhone.TabIndex = 11;
+            this.lblPhone.Text = "Phone";
+            this.lblPhone.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // colCode
+            // lblType
             // 
-            this.colCode.DataPropertyName = "code";
-            this.colCode.HeaderText = "Code";
-            this.colCode.Name = "colCode";
-            this.colCode.ReadOnly = true;
-            this.colCode.Width = 66;
+            this.lblType.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblType.Location = new System.Drawing.Point(12, 109);
+            this.lblType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblType.Name = "lblType";
+            this.lblType.Size = new System.Drawing.Size(88, 17);
+            this.lblType.TabIndex = 5;
+            this.lblType.Text = "Type";
+            this.lblType.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // colDescription
+            // lblName
             // 
-            this.colDescription.DataPropertyName = "description";
-            this.colDescription.HeaderText = "Description";
-            this.colDescription.Name = "colDescription";
-            this.colDescription.ReadOnly = true;
-            this.colDescription.Width = 101;
+            this.lblName.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblName.Location = new System.Drawing.Point(396, 43);
+            this.lblName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(97, 17);
+            this.lblName.TabIndex = 9;
+            this.lblName.Text = "Name";
+            this.lblName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // colName
+            // lblDescription
             // 
-            this.colName.DataPropertyName = "Desc2";
-            this.colName.HeaderText = "Contact Name";
-            this.colName.Name = "colName";
-            this.colName.ReadOnly = true;
-            this.colName.Width = 118;
+            this.lblDescription.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDescription.Location = new System.Drawing.Point(12, 75);
+            this.lblDescription.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDescription.Name = "lblDescription";
+            this.lblDescription.Size = new System.Drawing.Size(88, 17);
+            this.lblDescription.TabIndex = 3;
+            this.lblDescription.Text = "Description";
+            this.lblDescription.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // colPhone
+            // txtNote
             // 
-            this.colPhone.DataPropertyName = "phone";
-            this.colPhone.HeaderText = "Phone";
-            this.colPhone.Name = "colPhone";
-            this.colPhone.ReadOnly = true;
-            this.colPhone.Width = 72;
+            this.txtNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtNote.Location = new System.Drawing.Point(12, 224);
+            this.txtNote.Margin = new System.Windows.Forms.Padding(4);
+            this.txtNote.Multiline = true;
+            this.txtNote.Name = "txtNote";
+            this.txtNote.ReadOnly = true;
+            this.txtNote.Size = new System.Drawing.Size(745, 299);
+            this.txtNote.TabIndex = 18;
+            this.txtNote.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
             // 
-            // colFax
+            // mnuShow
             // 
-            this.colFax.DataPropertyName = "fax";
-            this.colFax.HeaderText = "Fax";
-            this.colFax.Name = "colFax";
-            this.colFax.ReadOnly = true;
-            this.colFax.Width = 55;
+            this.mnuShow.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuShowA,
+            this.mnuShowI});
+            this.mnuShow.Name = "contextMenuStrip1";
+            this.mnuShow.Size = new System.Drawing.Size(148, 48);
             // 
-            // colEmail
+            // mnuShowA
             // 
-            this.colEmail.DataPropertyName = "email";
-            this.colEmail.HeaderText = "Email";
-            this.colEmail.Name = "colEmail";
-            this.colEmail.ReadOnly = true;
-            this.colEmail.Width = 67;
+            this.mnuShowA.Checked = true;
+            this.mnuShowA.CheckOnClick = true;
+            this.mnuShowA.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.mnuShowA.Name = "mnuShowA";
+            this.mnuShowA.Size = new System.Drawing.Size(147, 22);
+            this.mnuShowA.Text = "Show Active";
+            this.mnuShowA.CheckedChanged += new System.EventHandler(this.mnuShow_CheckedChanged);
             // 
-            // colAddress
+            // mnuShowI
             // 
-            this.colAddress.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colAddress.DataPropertyName = "address";
-            this.colAddress.HeaderText = "Address";
-            this.colAddress.Name = "colAddress";
-            this.colAddress.ReadOnly = true;
+            this.mnuShowI.CheckOnClick = true;
+            this.mnuShowI.Name = "mnuShowI";
+            this.mnuShowI.Size = new System.Drawing.Size(147, 22);
+            this.mnuShowI.Text = "Show Inactive";
+            this.mnuShowI.CheckedChanged += new System.EventHandler(this.mnuShow_CheckedChanged);
             // 
             // frmLocationList
             // 
@@ -734,8 +738,8 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.mnuShow.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvList)).EndInit();
+            this.mnuShow.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

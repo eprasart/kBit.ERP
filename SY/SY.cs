@@ -124,18 +124,20 @@ namespace kBit.ERP.SYS
         {
             if (!Changed) return;
             var sql = SqlFacade.SqlUpdate(TableName, "value", "", "id = :id");
-            SqlFacade.Connection.Execute(sql, new { Value, Id });
+            try
+            {
+                SqlFacade.Connection.Execute(sql, new { Value, Id });
+            }
+            catch (Exception ex)
+            {
+                ErrorLogFacade.LogToFile(ex,"sql='" + sql +"')");
+            }
         }
     }
 
     static class ConfigFacade
     {
-        static string syPrefix = "sy_";
         static string Username = App.session.Username;
-        static string spliterDistance = "_splitter_distance";
-        static string window_state = "_window_state";
-        static string location = "_location";
-        static string size = "_size";
 
         static Config _sy_select_limit = new Config("", Util.GetMemberName(() => _sy_select_limit), "1000", "Maximum number of row [1000] display in data grid");
         static Config _sy_toolbar_icon_display_type = new Config(Username, Util.GetMemberName(() => _sy_toolbar_icon_display_type), "IT", "Icon display type. [IT]=ImageAndText, I=Image, T=Text");
@@ -145,11 +147,10 @@ namespace kBit.ERP.SYS
         static Config _sy_code_max_length = new Config("", Util.GetMemberName(() => _sy_code_max_length), "15", "Maximum length of code [15]");
         static Config _sy_language = new Config(Username, Util.GetMemberName(() => _sy_language), "ENG", "Language. e.g ENG or KHM");
 
-        static Config _ic_location_spitter_distance = new Config(Username, LocationFacade.TableName + spliterDistance, "207", "Data grid splitter distance [228]");
-        static Config _ic_location_window_state = new Config(Username, LocationFacade.TableName + window_state, "0", "Window state. Normal, Maximize and Minimize");
-        static Config _ic_location_location = new Config(Username, LocationFacade.TableName + location, "-1, -1", "Window location");
-        static Config _ic_location_size = new Config(Username, LocationFacade.TableName + size, "1024, 601", "Form size [1024, 601]");
-
+        static Config _ic_location_spitter_distance = new Config(Username, Util.GetMemberName(() => _ic_location_spitter_distance), "207", "Data grid splitter distance [228]");
+        static Config _ic_location_window_state = new Config(Username, Util.GetMemberName(() => _ic_location_window_state), "0", "Window state. Normal, Maximize and Minimize");
+        static Config _ic_location_location = new Config(Username, Util.GetMemberName(() => _ic_location_location), "-1, -1", "Window location");
+        static Config _ic_location_size = new Config(Username, Util.GetMemberName(() => _ic_location_size), "1024, 601", "Form size [1024, 601]");
 
         public static int sy_select_limit
         {
@@ -370,7 +371,7 @@ namespace kBit.ERP.SYS
             var fMsg = new frmMsg(msg, title, buttons, icon, defaultButton);
             fMsg.Text = title;
             DialogResult dResult = DialogResult.OK;
-            if (buttons == MessageBoxButtons.OK)
+            if (buttons == MessageBoxButtons.OK && icon == MessageBoxIcon.Information)
                 fMsg.Show();
             else
                 dResult = fMsg.ShowDialog();

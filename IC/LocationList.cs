@@ -16,7 +16,7 @@ namespace kBit.ERP.IC
         bool IsIgnore = true;
 
         frmMsg fMsg = null;
-        
+
         StringFormat headerCellFormat = new StringFormat()
         {
             // right alignment might actually make more sense for numbers
@@ -24,7 +24,7 @@ namespace kBit.ERP.IC
             LineAlignment = StringAlignment.Center
         };
 
-        
+
         public frmLocationList()
         {
             InitializeComponent();
@@ -51,6 +51,7 @@ namespace kBit.ERP.IC
             }
             catch (Exception ex)
             {
+                Cursor = Cursors.Default;
                 MessageFacade.Show(MessageFacade.data_retrieve_error + "\r\n" + ex.Message, LabelFacade.sy_location, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ErrorLogFacade.Log(ex);
                 return;
@@ -286,39 +287,46 @@ namespace kBit.ERP.IC
         {
             var prefix = "ic_location_";
 
-            btnNew.Text = LabelFacade.sy_button_new;
-            btnCopy.Text = LabelFacade.sy_button_copy;
-            btnUnlock.Text = LabelFacade.sy_button_unlock;
-            btnSave.Text = LabelFacade.sy_button_save;
-            btnSaveNew.Text = LabelFacade.sy_button_save_new;
-            btnActive.Text = LabelFacade.sy_button_inactive;
-            btnDelete.Text = LabelFacade.sy_button_delete;
-            btnMode.Text = LabelFacade.sy_button_mode;
-            btnExport.Text = LabelFacade.sy_export;
-            lblSearch.Text = LabelFacade.sy_search_place_holder;
-            btnFind.Text = "     " + LabelFacade.sy_button_find;
-            btnClear.Text = "     " + LabelFacade.sy_button_clear;
-            btnFilter.Text = "     " + LabelFacade.sy_button_filter;
+            try
+            {
+                btnNew.Text = LabelFacade.sy_button_new;
+                btnCopy.Text = LabelFacade.sy_button_copy;
+                btnUnlock.Text = LabelFacade.sy_button_unlock;
+                btnSave.Text = LabelFacade.sy_button_save;
+                btnSaveNew.Text = LabelFacade.sy_button_save_new;
+                btnActive.Text = LabelFacade.sy_button_inactive;
+                btnDelete.Text = LabelFacade.sy_button_delete;
+                btnMode.Text = LabelFacade.sy_button_mode;
+                btnExport.Text = LabelFacade.sy_export;
+                lblSearch.Text = LabelFacade.sy_search_place_holder;
+                btnFind.Text = "     " + LabelFacade.sy_button_find;
+                btnClear.Text = "     " + LabelFacade.sy_button_clear;
+                btnFilter.Text = "     " + LabelFacade.sy_button_filter;
 
-            colCode.HeaderText = LabelFacade.GetLabel(prefix + "code");
-            lblCode.Text = "* " + colCode.HeaderText;
-            lblDescription.Text = LabelFacade.GetLabel(prefix + "description");
-            colDescription.HeaderText = lblDescription.Text;
-            lblType.Text = LabelFacade.GetLabel(prefix + "type");
-            lblAddress.Text = LabelFacade.GetLabel(prefix + "address");
-            colAddress.HeaderText = lblAddress.Text;
-            lblName.Text = LabelFacade.GetLabel(prefix + "name");
-            colName.HeaderText = lblName.Text;
-            lblPhone.Text = LabelFacade.GetLabel(prefix + "phone");
-            colPhone.HeaderText = lblPhone.Text;
-            lblFax.Text = LabelFacade.GetLabel(prefix + "fax");
-            colFax.HeaderText = lblFax.Text;
-            lblEmail.Text = LabelFacade.GetLabel(prefix + "email");
-            colEmail.HeaderText = lblEmail.Text;
-            glbLocation.Caption = LabelFacade.GetLabel(prefix + "location");
-            glbContact.Caption = LabelFacade.GetLabel(prefix + "contact");
-            glbNote.Caption = LabelFacade.GetLabel(prefix + "note");
-
+                colCode.HeaderText = LabelFacade.GetLabel(prefix + "code");
+                lblCode.Text = "* " + colCode.HeaderText;
+                lblDescription.Text = LabelFacade.GetLabel(prefix + "description");
+                colDescription.HeaderText = lblDescription.Text;
+                lblType.Text = LabelFacade.GetLabel(prefix + "type");
+                lblAddress.Text = LabelFacade.GetLabel(prefix + "address");
+                colAddress.HeaderText = lblAddress.Text;
+                lblName.Text = LabelFacade.GetLabel(prefix + "name");
+                colName.HeaderText = lblName.Text;
+                lblPhone.Text = LabelFacade.GetLabel(prefix + "phone");
+                colPhone.HeaderText = lblPhone.Text;
+                lblFax.Text = LabelFacade.GetLabel(prefix + "fax");
+                colFax.HeaderText = lblFax.Text;
+                lblEmail.Text = LabelFacade.GetLabel(prefix + "email");
+                colEmail.HeaderText = lblEmail.Text;
+                glbLocation.Caption = LabelFacade.GetLabel(prefix + "location");
+                glbContact.Caption = LabelFacade.GetLabel(prefix + "contact");
+                glbNote.Caption = LabelFacade.GetLabel(prefix + "note");
+            }
+            catch (Exception ex)
+            {
+                ErrorLogFacade.Log(ex, "SetLabels");
+                MessageFacade.Show("error load lbl" + "\r\n" + ex.Message, LabelFacade.sy_location, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private bool Save()
@@ -795,17 +803,17 @@ namespace kBit.ERP.IC
         {
             lblSearch.Visible = (txtFind.Text.Length == 0);
         }
-        
-        private void dgvList_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
-        {
-            e.PaintCells(e.ClipBounds, DataGridViewPaintParts.All);
-            e.PaintHeader(DataGridViewPaintParts.Background | DataGridViewPaintParts.Border | DataGridViewPaintParts.Focus
-                | DataGridViewPaintParts.SelectionBackground | DataGridViewPaintParts.ContentForeground);
 
-            var rowIdx = " " + (e.RowIndex + 1).ToString();
+        //private void dgvList_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        //{
+        //e.PaintCells(e.ClipBounds, DataGridViewPaintParts.All);
+        //e.PaintHeader(DataGridViewPaintParts.Background | DataGridViewPaintParts.Border | DataGridViewPaintParts.Focus
+        //    | DataGridViewPaintParts.SelectionBackground | DataGridViewPaintParts.ContentForeground);
 
-            var headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, dgvList.RowHeadersWidth, e.RowBounds.Height);
-            e.Graphics.DrawString(rowIdx, this.Font, SystemBrushes.ControlText, headerBounds, headerCellFormat);         
-        }
+        //var rowIdx = " " + (e.RowIndex + 1).ToString();
+
+        //var headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, dgvList.RowHeadersWidth, e.RowBounds.Height);
+        //e.Graphics.DrawString(rowIdx, this.Font, SystemBrushes.ControlText, headerBounds, headerCellFormat);         
+        //}
     }
 }
