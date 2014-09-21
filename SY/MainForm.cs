@@ -44,7 +44,7 @@ namespace kBit.ERP.SYS
 
         private void btnLocation_Click(object sender, EventArgs e)
         {
-            if (!SM.Privilege.CanAccess("IC_LOC", "V"))
+            if (!SM.Privilege.CanAccess("IC_LOC", "V")) // todo: not hard code
             {
                 MessageBox.Show("You don't have the privilege to access this function.");
                 return;

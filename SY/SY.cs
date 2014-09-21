@@ -130,7 +130,7 @@ namespace kBit.ERP.SYS
             }
             catch (Exception ex)
             {
-                ErrorLogFacade.LogToFile(ex,"sql='" + sql +"')");
+                ErrorLogFacade.LogToFile(ex, "sql='" + sql + "')");
             }
         }
     }
@@ -211,13 +211,21 @@ namespace kBit.ERP.SYS
         public static Point ic_location_location
         {
             get { return _ic_location_location.ValuePoint; }
-            set { _ic_location_location.Value = value.ToString(); }
+            set
+            {
+                var val = Util.RemoveCharacters(value.ToString(), "{}XY= ");
+                _ic_location_location.Value = val;
+            }
         }
 
         public static Size ic_location_size
         {
             get { return _ic_location_size.ValueSize; }
-            set { _ic_location_size.Value = value.ToString(); }
+            set 
+            {
+                var val = Util.RemoveCharacters(value.ToString().ToUpper(), "{}WIDTHEG= ");
+                _ic_location_size.Value = val; 
+            }
         }
 
 

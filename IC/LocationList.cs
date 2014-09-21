@@ -286,7 +286,6 @@ namespace kBit.ERP.IC
         private void SetLabels()
         {
             var prefix = "ic_location_";
-
             try
             {
                 btnNew.Text = LabelFacade.sy_button_new;
