@@ -221,10 +221,10 @@ namespace kBit.ERP.SYS
         public static Size ic_location_size
         {
             get { return _ic_location_size.ValueSize; }
-            set 
+            set
             {
                 var val = Util.RemoveCharacters(value.ToString().ToUpper(), "{}WIDTHEG= ");
-                _ic_location_size.Value = val; 
+                _ic_location_size.Value = val;
             }
         }
 
@@ -347,21 +347,24 @@ namespace kBit.ERP.SYS
         const string TableName = "sy_message";
 
         public static string active_inactive;
-        public static string active_inactive_error;
-        public static string data_retrieve_error;
+        public static string error_active_inactive;
+        public static string error_retrieve_data;
 
         public static string delete_confirmation;
-        public static string delete_error;
+        public static string error_delete;
         public static string delete_locked;
         public static string lock_currently;
-        public static string lock_error;
+        public static string error_lock;
         public static string lock_override;
         public static string privilege_no_access;
         public static string proceed_confirmation;
-        public static string record_load_error;
+        public static string error_load_record;
         public static string save_confirmation;
-        public static string save_error;
-        public static string unlock_error;
+        public static string error_save;
+        public static string error_unlock;
+        public static string error_load_form;
+        public static string error_query;
+        public static string error_export;
 
         public static string code_already_exists;
         public static string code_not_empty;
@@ -405,20 +408,23 @@ namespace kBit.ERP.SYS
         {
             //todo: reload when language changed
             active_inactive = GetMessage(Util.GetMemberName(() => active_inactive));
-            active_inactive_error = GetMessage(Util.GetMemberName(() => active_inactive_error));
-            data_retrieve_error = GetMessage(Util.GetMemberName(() => data_retrieve_error));
+            error_active_inactive = GetMessage(Util.GetMemberName(() => error_active_inactive));
+            error_retrieve_data = GetMessage(Util.GetMemberName(() => error_retrieve_data));
             delete_confirmation = GetMessage(Util.GetMemberName(() => delete_confirmation));
-            delete_error = GetMessage(Util.GetMemberName(() => delete_error));
+            error_delete = GetMessage(Util.GetMemberName(() => error_delete));
             delete_locked = GetMessage(Util.GetMemberName(() => delete_locked));
             lock_currently = GetMessage(Util.GetMemberName(() => lock_currently));
-            lock_error = GetMessage(Util.GetMemberName(() => lock_error));
+            error_lock = GetMessage(Util.GetMemberName(() => error_lock));
             lock_override = GetMessage(Util.GetMemberName(() => lock_override));
             privilege_no_access = GetMessage(Util.GetMemberName(() => privilege_no_access));
             proceed_confirmation = GetMessage(Util.GetMemberName(() => proceed_confirmation));
-            record_load_error = GetMessage(Util.GetMemberName(() => record_load_error));
+            error_load_record = GetMessage(Util.GetMemberName(() => error_load_record));
             save_confirmation = GetMessage(Util.GetMemberName(() => save_confirmation));
-            save_error = GetMessage(Util.GetMemberName(() => save_error));
-            unlock_error = GetMessage(Util.GetMemberName(() => unlock_error));
+            error_save = GetMessage(Util.GetMemberName(() => error_save));
+            error_unlock = GetMessage(Util.GetMemberName(() => error_unlock));
+            error_load_form = GetMessage(Util.GetMemberName(() => error_load_form));
+            error_query = GetMessage(Util.GetMemberName(() => error_query));
+            error_export = GetMessage(Util.GetMemberName(() => error_export));
 
             code_already_exists = GetMessage(Util.GetMemberName(() => code_already_exists));
             code_not_empty = GetMessage(Util.GetMemberName(() => code_not_empty));

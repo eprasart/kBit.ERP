@@ -239,30 +239,39 @@ namespace kBit.ERP
             Application.DoEvents();
 
             StringBuilder sb = new StringBuilder();
-            var dr = GetDataReader(sql);
-            var sLine = "";
-            if (!dr.HasRows) return 1;  // No record
-            for (int i = 0; i < dr.FieldCount; i++) // Column headers
+            try
             {
-                sLine += dr.GetName(i);
-                if (i < dr.FieldCount - 1) sLine += ConfigFacade.sy_export_delimiter;
-            }
-            sb.AppendLine(sLine);
+                var dr = GetDataReader(sql);
 
-            while (dr.Read())   // Rows
-            {
-                sLine = "";
-                for (int i = 0; i < dr.FieldCount; i++)
+                var sLine = "";
+                if (!dr.HasRows) return 1;  // No record
+                for (int i = 0; i < dr.FieldCount; i++) // Column headers
                 {
-                    sLine += "\"" + dr[i].ToString() + "\"";
+                    sLine += dr.GetName(i);
                     if (i < dr.FieldCount - 1) sLine += ConfigFacade.sy_export_delimiter;
                 }
                 sb.AppendLine(sLine);
-            }
-            dr.Close();
 
+                while (dr.Read())   // Rows
+                {
+                    sLine = "";
+                    for (int i = 0; i < dr.FieldCount; i++)
+                    {
+                        sLine += "\"" + dr[i].ToString() + "\"";
+                        if (i < dr.FieldCount - 1) sLine += ConfigFacade.sy_export_delimiter;
+                    }
+                    sb.AppendLine(sLine);
+                }
+                dr.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageFacade.Show(MessageFacade.error_export + "\r\n" + ex.Message, LabelFacade.sy_export, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorLogFacade.Log(ex);
+                return -1;
+            }
             while (Util.IsFileLocked(path))   // Check if file is being used
-            {                
+            {
                 if (MessageFacade.Show(string.Format(MessageFacade.file_being_used_try_again, fileName), LabelFacade.sy_export, MessageBoxButtons.RetryCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
                 {
                     fNotification.Close();

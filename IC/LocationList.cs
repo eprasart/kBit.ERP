@@ -52,7 +52,7 @@ namespace kBit.ERP.IC
             catch (Exception ex)
             {
                 Cursor = Cursors.Default;
-                MessageFacade.Show(MessageFacade.data_retrieve_error + "\r\n" + ex.Message, LabelFacade.sy_location, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageFacade.Show(MessageFacade.error_retrieve_data + "\r\n" + ex.Message, LabelFacade.sy_location, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ErrorLogFacade.Log(ex);
                 return;
             }
@@ -206,7 +206,7 @@ namespace kBit.ERP.IC
                 }
                 catch (Exception ex)
                 {
-                    MessageFacade.Show(MessageFacade.record_load_error + "\r\n" + ex.Message, LabelFacade.sy_location, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageFacade.Show(MessageFacade.error_load_record + "\r\n" + ex.Message, LabelFacade.sy_location, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     SYS.ErrorLogFacade.Log(ex);
                 }
             else    // when delete all => disable buttons and clear all controls
@@ -286,46 +286,38 @@ namespace kBit.ERP.IC
         private void SetLabels()
         {
             var prefix = "ic_location_";
-            try
-            {
-                btnNew.Text = LabelFacade.sy_button_new;
-                btnCopy.Text = LabelFacade.sy_button_copy;
-                btnUnlock.Text = LabelFacade.sy_button_unlock;
-                btnSave.Text = LabelFacade.sy_button_save;
-                btnSaveNew.Text = LabelFacade.sy_button_save_new;
-                btnActive.Text = LabelFacade.sy_button_inactive;
-                btnDelete.Text = LabelFacade.sy_button_delete;
-                btnMode.Text = LabelFacade.sy_button_mode;
-                btnExport.Text = LabelFacade.sy_export;
-                lblSearch.Text = LabelFacade.sy_search_place_holder;
-                btnFind.Text = "     " + LabelFacade.sy_button_find;
-                btnClear.Text = "     " + LabelFacade.sy_button_clear;
-                btnFilter.Text = "     " + LabelFacade.sy_button_filter;
+            btnNew.Text = LabelFacade.sy_button_new;
+            btnCopy.Text = LabelFacade.sy_button_copy;
+            btnUnlock.Text = LabelFacade.sy_button_unlock;
+            btnSave.Text = LabelFacade.sy_button_save;
+            btnSaveNew.Text = LabelFacade.sy_button_save_new;
+            btnActive.Text = LabelFacade.sy_button_inactive;
+            btnDelete.Text = LabelFacade.sy_button_delete;
+            btnMode.Text = LabelFacade.sy_button_mode;
+            btnExport.Text = LabelFacade.sy_export;
+            lblSearch.Text = LabelFacade.sy_search_place_holder;
+            btnFind.Text = "     " + LabelFacade.sy_button_find;
+            btnClear.Text = "     " + LabelFacade.sy_button_clear;
+            btnFilter.Text = "     " + LabelFacade.sy_button_filter;
 
-                colCode.HeaderText = LabelFacade.GetLabel(prefix + "code");
-                lblCode.Text = "* " + colCode.HeaderText;
-                lblDescription.Text = LabelFacade.GetLabel(prefix + "description");
-                colDescription.HeaderText = lblDescription.Text;
-                lblType.Text = LabelFacade.GetLabel(prefix + "type");
-                lblAddress.Text = LabelFacade.GetLabel(prefix + "address");
-                colAddress.HeaderText = lblAddress.Text;
-                lblName.Text = LabelFacade.GetLabel(prefix + "name");
-                colName.HeaderText = lblName.Text;
-                lblPhone.Text = LabelFacade.GetLabel(prefix + "phone");
-                colPhone.HeaderText = lblPhone.Text;
-                lblFax.Text = LabelFacade.GetLabel(prefix + "fax");
-                colFax.HeaderText = lblFax.Text;
-                lblEmail.Text = LabelFacade.GetLabel(prefix + "email");
-                colEmail.HeaderText = lblEmail.Text;
-                glbLocation.Caption = LabelFacade.GetLabel(prefix + "location");
-                glbContact.Caption = LabelFacade.GetLabel(prefix + "contact");
-                glbNote.Caption = LabelFacade.GetLabel(prefix + "note");
-            }
-            catch (Exception ex)
-            {
-                ErrorLogFacade.Log(ex, "SetLabels");
-                MessageFacade.Show("error load lbl" + "\r\n" + ex.Message, LabelFacade.sy_location, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            colCode.HeaderText = LabelFacade.GetLabel(prefix + "code");
+            lblCode.Text = "* " + colCode.HeaderText;
+            lblDescription.Text = LabelFacade.GetLabel(prefix + "description");
+            colDescription.HeaderText = lblDescription.Text;
+            lblType.Text = LabelFacade.GetLabel(prefix + "type");
+            lblAddress.Text = LabelFacade.GetLabel(prefix + "address");
+            colAddress.HeaderText = lblAddress.Text;
+            lblName.Text = LabelFacade.GetLabel(prefix + "name");
+            colName.HeaderText = lblName.Text;
+            lblPhone.Text = LabelFacade.GetLabel(prefix + "phone");
+            colPhone.HeaderText = lblPhone.Text;
+            lblFax.Text = LabelFacade.GetLabel(prefix + "fax");
+            colFax.HeaderText = lblFax.Text;
+            lblEmail.Text = LabelFacade.GetLabel(prefix + "email");
+            colEmail.HeaderText = lblEmail.Text;
+            glbLocation.Caption = LabelFacade.GetLabel(prefix + "location");
+            glbContact.Caption = LabelFacade.GetLabel(prefix + "contact");
+            glbNote.Caption = LabelFacade.GetLabel(prefix + "note");
         }
 
         private bool Save()
@@ -360,7 +352,7 @@ namespace kBit.ERP.IC
             }
             catch (Exception ex)
             {
-                MessageFacade.Show(MessageFacade.save_error + "\r\n" + ex.Message, LabelFacade.sy_save, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageFacade.Show(MessageFacade.error_save + "\r\n" + ex.Message, LabelFacade.sy_save, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ErrorLogFacade.Log(ex);
             }
             if (dgvList.RowCount > 0) RowIndex = dgvList.CurrentRow.Index;
@@ -376,12 +368,20 @@ namespace kBit.ERP.IC
         private void frmLocationList_Load(object sender, EventArgs e)
         {
             Icon = Properties.Resources.Icon;
-            dgvList.ShowLessColumns(true);
-            SetSettings();
-            SetLabels();
-            SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_Open, "Opened");
-            RefreshGrid();
-            LoadData();
+            try
+            {
+                dgvList.ShowLessColumns(true);
+                SetSettings();
+                SetLabels();
+                SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_Open, "Opened");
+                RefreshGrid();
+                LoadData();
+            }
+            catch (Exception ex)
+            {
+                ErrorLogFacade.Log(ex, "Form_Load");
+                MessageFacade.Show(MessageFacade.error_load_form + "\r\n" + ex.Message, LabelFacade.sy_location, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnNew_Click(object sender, EventArgs e)
@@ -433,40 +433,48 @@ namespace kBit.ERP.IC
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            var Id = dgvList.Id;
-            if (Id == 0) return;
-            // If referenced
-            //todo: check if exist in ic_item
-            // If locked
-            var lInfo = LocationFacade.GetLock(Id);
-            string msg = "";
-            if (lInfo.Locked)
-            {
-                msg = string.Format(MessageFacade.delete_locked, lInfo.Lock_By, lInfo.Lock_At);
-                if (!Privilege.CanAccess(Type.Function_IC_Location, "O"))
-                {
-                    MessageFacade.Show(msg, LabelFacade.sy_delete, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Location, Type.Log_Delete, "Cannot delete. Currently locked by '" + lInfo.Lock_By + "' since '" + lInfo.Lock_At + "' . Id=" + dgvList.Id + ", Code=" + txtCode.Text);
-                    return;
-                }
-            }
-            // Delete
-            msg = MessageFacade.delete_confirmation;
-            if (lInfo.Locked) msg = string.Format(MessageFacade.lock_currently, lInfo.Lock_By, lInfo.Lock_At) + "'\n" + msg;
-            if (MessageFacade.Show(msg, LabelFacade.sy_delete, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
-                return;
             try
             {
-                LocationFacade.SetStatus(Id, Type.RecordStatus_Deleted);
+                var Id = dgvList.Id;
+                if (Id == 0) return;
+                // If referenced
+                //todo: check if exist in ic_item
+                // If locked
+                var lInfo = LocationFacade.GetLock(Id);
+                string msg = "";
+                if (lInfo.Locked)
+                {
+                    msg = string.Format(MessageFacade.delete_locked, lInfo.Lock_By, lInfo.Lock_At);
+                    if (!Privilege.CanAccess(Type.Function_IC_Location, "O"))
+                    {
+                        MessageFacade.Show(msg, LabelFacade.sy_delete, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Location, Type.Log_Delete, "Cannot delete. Currently locked by '" + lInfo.Lock_By + "' since '" + lInfo.Lock_At + "' . Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+                        return;
+                    }
+                }
+                // Delete
+                msg = MessageFacade.delete_confirmation;
+                if (lInfo.Locked) msg = string.Format(MessageFacade.lock_currently, lInfo.Lock_By, lInfo.Lock_At) + "'\n" + msg;
+                if (MessageFacade.Show(msg, LabelFacade.sy_delete, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.No)
+                    return;
+                try
+                {
+                    LocationFacade.SetStatus(Id, Type.RecordStatus_Deleted);
+                }
+                catch (Exception ex)
+                {
+                    MessageFacade.Show(MessageFacade.error_delete + "\r\n" + ex.Message, LabelFacade.sy_delete, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    ErrorLogFacade.Log(ex);
+                }
+                RefreshGrid();
+                // log
+                SessionLogFacade.Log(Type.Priority_Warning, Type.Module_IC_Location, Type.Log_Delete, "Deleted. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
             }
             catch (Exception ex)
             {
-                MessageFacade.Show(MessageFacade.delete_error + ".\n" + ex.Message, LabelFacade.sy_delete, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageFacade.Show(MessageFacade.error_delete + "\r\n" + ex.Message, LabelFacade.sy_delete, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ErrorLogFacade.Log(ex);
             }
-            RefreshGrid();
-            // log
-            SessionLogFacade.Log(Type.Priority_Warning, Type.Module_IC_Location, Type.Log_Delete, "Deleted. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
         }
 
         private void btnCopy_Click(object sender, EventArgs e)
@@ -538,7 +546,7 @@ namespace kBit.ERP.IC
             }
             catch (Exception ex)
             {
-                MessageFacade.Show(MessageFacade.active_inactive_error + ex.Message, MessageFacade.active_inactive, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageFacade.Show(MessageFacade.error_active_inactive + ex.Message, MessageFacade.active_inactive, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ErrorLogFacade.Log(ex);
             }
             RefreshGrid();
@@ -576,8 +584,9 @@ namespace kBit.ERP.IC
                 }
                 catch (Exception ex)
                 {
-                    MessageFacade.Show(MessageFacade.unlock_error + "\r\n" + ex.Message, LabelFacade.sy_unlock, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageFacade.Show(MessageFacade.error_unlock + "\r\n" + ex.Message, LabelFacade.sy_unlock, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     ErrorLogFacade.Log(ex);
+                    return;
                 }
                 if (dgvList.CurrentRow != null && !dgvList.CurrentRow.Selected)
                     dgvList.CurrentRow.Selected = true;
@@ -588,33 +597,43 @@ namespace kBit.ERP.IC
             }
             // Unlock
             if (Id == 0) return;
-            var lInfo = LocationFacade.GetLock(Id);
-
-            if (lInfo.Locked) // Check if record is locked
+            try
             {
-                string msg = string.Format(MessageFacade.lock_currently, lInfo.Lock_By, lInfo.Lock_At);
-                if (!Privilege.CanAccess(Type.Function_IC_Location, "O"))
+                var lInfo = LocationFacade.GetLock(Id);
+
+                if (lInfo.Locked) // Check if record is locked
                 {
-                    MessageFacade.Show(msg, LabelFacade.sy_unlock, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-                else
-                    if (MessageFacade.Show(msg + "\r\n" + MessageFacade.lock_override, LabelFacade.sy_unlock, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
-                        SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Location, Type.Log_Lock, "Override lock. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
-                    else
+                    string msg = string.Format(MessageFacade.lock_currently, lInfo.Lock_By, lInfo.Lock_At);
+                    if (!Privilege.CanAccess(Type.Function_IC_Location, "O"))
+                    {
+                        MessageFacade.Show(msg, LabelFacade.sy_unlock, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
+                    }
+                    else
+                        if (MessageFacade.Show(msg + "\r\n" + MessageFacade.lock_override, LabelFacade.sy_unlock, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
+                            SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Location, Type.Log_Lock, "Override lock. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+                        else
+                            return;
+                }
+                txtDesc.SelectionStart = txtDesc.Text.Length;
+                txtDesc.Focus();
+                LockControls(false);
             }
-            txtDesc.SelectionStart = txtDesc.Text.Length;
-            txtDesc.Focus();
-            LockControls(false);
+            catch (Exception ex)
+            {
+                MessageFacade.Show(MessageFacade.error_unlock + "\r\n" + ex.Message, LabelFacade.sy_unlock, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorLogFacade.Log(ex);
+                return;
+            }
             try
             {
                 LocationFacade.Lock(dgvList.Id, txtCode.Text);
             }
             catch (Exception ex)
             {
-                MessageFacade.Show(MessageFacade.lock_error + "\r\n" + ex.Message, LabelFacade.sy_lock, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageFacade.Show(MessageFacade.error_lock + "\r\n" + ex.Message, LabelFacade.sy_lock, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ErrorLogFacade.Log(ex);
+                return;
             }
             SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Location, Type.Log_Lock, "Locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
             btnUnlock.ToolTipText = "Cancel (Esc or Ctrl+L)";

@@ -6,6 +6,7 @@ using Npgsql;
 using Dapper;
 using kBit.ERP.SYS;
 using kBit.ERP.SM;
+using System.Windows.Forms;
 
 namespace kBit.ERP.IC
 {
@@ -109,7 +110,8 @@ namespace kBit.ERP.IC
             }
             catch (Exception ex)
             {
-                MessageFacade.Show("Error while query\r\n" + ex.Message);
+                MessageFacade.Show(MessageFacade.error_query + "\r\n" + ex.Message, LabelFacade.sy_location, MessageBoxButtons.OK, MessageBoxIcon.Error); 
+                ErrorLogFacade.Log(ex, "Exists");                
             }
             return bExists;
         }
