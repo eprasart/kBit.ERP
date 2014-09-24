@@ -483,7 +483,7 @@
             this.glbNote.Location = new System.Drawing.Point(12, 195);
             this.glbNote.Margin = new System.Windows.Forms.Padding(4, 12, 4, 4);
             this.glbNote.Name = "glbNote";
-            this.glbNote.Size = new System.Drawing.Size(745, 21);
+            this.glbNote.Size = new System.Drawing.Size(749, 21);
             this.glbNote.TabIndex = 17;
             this.glbNote.TabStop = false;
             // 
@@ -682,7 +682,7 @@
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
             this.txtNote.ReadOnly = true;
-            this.txtNote.Size = new System.Drawing.Size(745, 299);
+            this.txtNote.Size = new System.Drawing.Size(749, 299);
             this.txtNote.TabIndex = 18;
             this.txtNote.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
             // 
@@ -725,7 +725,7 @@
             this.MinimumSize = new System.Drawing.Size(1024, 370);
             this.Name = "frmLocationList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Location";
+            this.Text = "IC Location";
             this.Deactivate += new System.EventHandler(this.frmLocationList_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmLocationList_FormClosing);
             this.Load += new System.EventHandler(this.frmLocationList_Load);
