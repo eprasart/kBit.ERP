@@ -58,23 +58,23 @@
             this.colEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtFind = new kBit.UI.TextBox(this.components);
+            this.cboType = new System.Windows.Forms.ComboBox();
             this.lblCode = new System.Windows.Forms.Label();
             this.glbNote = new kBit.UI.GroupLabel();
             this.glbContact = new kBit.UI.GroupLabel();
             this.glbLocation = new kBit.UI.GroupLabel();
+            this.txtAddress = new System.Windows.Forms.TextBox();
             this.txtName = new kBit.UI.TextBox(this.components);
-            this.textBox2 = new kBit.UI.TextBox(this.components);
             this.txtEmail = new kBit.UI.TextBox(this.components);
-            this.textBox1 = new kBit.UI.TextBox(this.components);
             this.txtFax = new kBit.UI.TextBox(this.components);
             this.txtPhone = new kBit.UI.TextBox(this.components);
-            this.label2 = new System.Windows.Forms.Label();
             this.txtCode = new kBit.UI.TextBox(this.components);
-            this.label1 = new System.Windows.Forms.Label();
             this.lblEmail = new System.Windows.Forms.Label();
+            this.lblAddress = new System.Windows.Forms.Label();
             this.lblFax = new System.Windows.Forms.Label();
             this.txtDesc = new kBit.UI.TextBox(this.components);
             this.lblPhone = new System.Windows.Forms.Label();
+            this.lblType = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
             this.lblDescription = new System.Windows.Forms.Label();
             this.txtNote = new System.Windows.Forms.TextBox();
@@ -239,23 +239,23 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.cboType);
             this.splitContainer1.Panel2.Controls.Add(this.lblCode);
             this.splitContainer1.Panel2.Controls.Add(this.glbNote);
             this.splitContainer1.Panel2.Controls.Add(this.glbContact);
             this.splitContainer1.Panel2.Controls.Add(this.glbLocation);
+            this.splitContainer1.Panel2.Controls.Add(this.txtAddress);
             this.splitContainer1.Panel2.Controls.Add(this.txtName);
-            this.splitContainer1.Panel2.Controls.Add(this.textBox2);
             this.splitContainer1.Panel2.Controls.Add(this.txtEmail);
-            this.splitContainer1.Panel2.Controls.Add(this.textBox1);
             this.splitContainer1.Panel2.Controls.Add(this.txtFax);
             this.splitContainer1.Panel2.Controls.Add(this.txtPhone);
-            this.splitContainer1.Panel2.Controls.Add(this.label2);
             this.splitContainer1.Panel2.Controls.Add(this.txtCode);
-            this.splitContainer1.Panel2.Controls.Add(this.label1);
             this.splitContainer1.Panel2.Controls.Add(this.lblEmail);
+            this.splitContainer1.Panel2.Controls.Add(this.lblAddress);
             this.splitContainer1.Panel2.Controls.Add(this.lblFax);
             this.splitContainer1.Panel2.Controls.Add(this.txtDesc);
             this.splitContainer1.Panel2.Controls.Add(this.lblPhone);
+            this.splitContainer1.Panel2.Controls.Add(this.lblType);
             this.splitContainer1.Panel2.Controls.Add(this.lblName);
             this.splitContainer1.Panel2.Controls.Add(this.lblDescription);
             this.splitContainer1.Panel2.Controls.Add(this.txtNote);
@@ -355,13 +355,13 @@
             this.dgvList.MultiSelect = false;
             this.dgvList.Name = "dgvList";
             this.dgvList.ReadOnly = true;
+            this.dgvList.RowHeadersVisible = false;
             this.dgvList.RowHeadersWidth = 35;
             this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvList.ShowEditingIcon = false;
             this.dgvList.Size = new System.Drawing.Size(223, 480);
             this.dgvList.TabIndex = 1;
             this.dgvList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellDoubleClick);
-            this.dgvList.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvList_RowPostPaint);
             this.dgvList.SelectionChanged += new System.EventHandler(this.dgvList_SelectionChanged);
             this.dgvList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvList_KeyDown);
             // 
@@ -375,7 +375,6 @@
             // 
             // colCode
             // 
-            this.colCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colCode.DataPropertyName = "code";
             this.colCode.HeaderText = "Code";
             this.colCode.Name = "colCode";
@@ -384,7 +383,6 @@
             // 
             // colDescription
             // 
-            this.colDescription.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colDescription.DataPropertyName = "description";
             this.colDescription.HeaderText = "Description";
             this.colDescription.Name = "colDescription";
@@ -452,10 +450,23 @@
             this.txtFind.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             this.txtFind.Leave += new System.EventHandler(this.txtFind_Leave);
             // 
+            // cboType
+            // 
+            this.cboType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboType.Enabled = false;
+            this.cboType.FormattingEnabled = true;
+            this.cboType.Items.AddRange(new object[] {
+            "Physical",
+            "Logical"});
+            this.cboType.Location = new System.Drawing.Point(108, 105);
+            this.cboType.Name = "cboType";
+            this.cboType.Size = new System.Drawing.Size(260, 25);
+            this.cboType.TabIndex = 6;
+            // 
             // lblCode
             // 
             this.lblCode.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCode.Location = new System.Drawing.Point(49, 43);
+            this.lblCode.Location = new System.Drawing.Point(12, 43);
             this.lblCode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCode.Name = "lblCode";
             this.lblCode.Size = new System.Drawing.Size(88, 17);
@@ -469,21 +480,21 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.glbNote.Caption = "Note";
             this.glbNote.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.glbNote.Location = new System.Drawing.Point(12, 394);
+            this.glbNote.Location = new System.Drawing.Point(12, 195);
             this.glbNote.Margin = new System.Windows.Forms.Padding(4, 12, 4, 4);
             this.glbNote.Name = "glbNote";
-            this.glbNote.Size = new System.Drawing.Size(747, 21);
+            this.glbNote.Size = new System.Drawing.Size(748, 21);
             this.glbNote.TabIndex = 17;
             this.glbNote.TabStop = false;
             // 
             // glbContact
             // 
-            this.glbContact.Caption = "General Ledger Accounts";
+            this.glbContact.Caption = "Contact";
             this.glbContact.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.glbContact.Location = new System.Drawing.Point(12, 125);
+            this.glbContact.Location = new System.Drawing.Point(421, 11);
             this.glbContact.Margin = new System.Windows.Forms.Padding(4, 12, 4, 4);
             this.glbContact.Name = "glbContact";
-            this.glbContact.Size = new System.Drawing.Size(393, 21);
+            this.glbContact.Size = new System.Drawing.Size(340, 21);
             this.glbContact.TabIndex = 7;
             this.glbContact.TabStop = false;
             // 
@@ -498,10 +509,22 @@
             this.glbLocation.TabIndex = 0;
             this.glbLocation.TabStop = false;
             // 
+            // txtAddress
+            // 
+            this.txtAddress.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAddress.Location = new System.Drawing.Point(108, 137);
+            this.txtAddress.Margin = new System.Windows.Forms.Padding(4);
+            this.txtAddress.Multiline = true;
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.ReadOnly = true;
+            this.txtAddress.Size = new System.Drawing.Size(260, 42);
+            this.txtAddress.TabIndex = 8;
+            this.txtAddress.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
+            // 
             // txtName
             // 
             this.txtName.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtName.Location = new System.Drawing.Point(145, 154);
+            this.txtName.Location = new System.Drawing.Point(501, 40);
             this.txtName.Margin = new System.Windows.Forms.Padding(4);
             this.txtName.Name = "txtName";
             this.txtName.ReadOnly = true;
@@ -510,22 +533,10 @@
             this.txtName.TabOnEnter = true;
             this.txtName.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
             // 
-            // textBox2
-            // 
-            this.textBox2.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(145, 319);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(260, 25);
-            this.textBox2.TabIndex = 16;
-            this.textBox2.TabOnEnter = true;
-            this.textBox2.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
-            // 
             // txtEmail
             // 
             this.txtEmail.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEmail.Location = new System.Drawing.Point(145, 253);
+            this.txtEmail.Location = new System.Drawing.Point(501, 139);
             this.txtEmail.Margin = new System.Windows.Forms.Padding(4);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.ReadOnly = true;
@@ -534,22 +545,10 @@
             this.txtEmail.TabOnEnter = true;
             this.txtEmail.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
             // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(145, 286);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(260, 25);
-            this.textBox1.TabIndex = 14;
-            this.textBox1.TabOnEnter = true;
-            this.textBox1.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
-            // 
             // txtFax
             // 
             this.txtFax.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFax.Location = new System.Drawing.Point(145, 220);
+            this.txtFax.Location = new System.Drawing.Point(501, 106);
             this.txtFax.Margin = new System.Windows.Forms.Padding(4);
             this.txtFax.Name = "txtFax";
             this.txtFax.ReadOnly = true;
@@ -561,7 +560,7 @@
             // txtPhone
             // 
             this.txtPhone.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPhone.Location = new System.Drawing.Point(145, 187);
+            this.txtPhone.Location = new System.Drawing.Point(501, 73);
             this.txtPhone.Margin = new System.Windows.Forms.Padding(4);
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.ReadOnly = true;
@@ -570,22 +569,11 @@
             this.txtPhone.TabOnEnter = true;
             this.txtPhone.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
             // 
-            // label2
-            // 
-            this.label2.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(5, 322);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(132, 17);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "Internal Usage";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // txtCode
             // 
             this.txtCode.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCode.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCode.Location = new System.Drawing.Point(145, 40);
+            this.txtCode.Location = new System.Drawing.Point(108, 40);
             this.txtCode.Margin = new System.Windows.Forms.Padding(4);
             this.txtCode.Name = "txtCode";
             this.txtCode.ReadOnly = true;
@@ -595,43 +583,43 @@
             this.txtCode.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
             this.txtCode.Leave += new System.EventHandler(this.txtCode_Leave);
             // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(5, 289);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(132, 17);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Damaged Goods";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // lblEmail
             // 
             this.lblEmail.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEmail.Location = new System.Drawing.Point(5, 256);
+            this.lblEmail.Location = new System.Drawing.Point(405, 142);
             this.lblEmail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(132, 17);
+            this.lblEmail.Size = new System.Drawing.Size(88, 17);
             this.lblEmail.TabIndex = 15;
-            this.lblEmail.Text = "Cost Variance";
+            this.lblEmail.Text = "Email";
             this.lblEmail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblAddress
+            // 
+            this.lblAddress.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAddress.Location = new System.Drawing.Point(12, 140);
+            this.lblAddress.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAddress.Name = "lblAddress";
+            this.lblAddress.Size = new System.Drawing.Size(88, 17);
+            this.lblAddress.TabIndex = 7;
+            this.lblAddress.Text = "Address";
+            this.lblAddress.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblFax
             // 
             this.lblFax.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFax.Location = new System.Drawing.Point(5, 223);
+            this.lblFax.Location = new System.Drawing.Point(405, 109);
             this.lblFax.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFax.Name = "lblFax";
-            this.lblFax.Size = new System.Drawing.Size(132, 17);
+            this.lblFax.Size = new System.Drawing.Size(88, 17);
             this.lblFax.TabIndex = 13;
-            this.lblFax.Text = "Cost of Goods Sold";
+            this.lblFax.Text = "Fax";
             this.lblFax.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // txtDesc
             // 
             this.txtDesc.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDesc.Location = new System.Drawing.Point(501, 40);
+            this.txtDesc.Location = new System.Drawing.Point(108, 73);
             this.txtDesc.Margin = new System.Windows.Forms.Padding(4);
             this.txtDesc.Name = "txtDesc";
             this.txtDesc.ReadOnly = true;
@@ -643,29 +631,40 @@
             // lblPhone
             // 
             this.lblPhone.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPhone.Location = new System.Drawing.Point(5, 190);
+            this.lblPhone.Location = new System.Drawing.Point(408, 76);
             this.lblPhone.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPhone.Name = "lblPhone";
-            this.lblPhone.Size = new System.Drawing.Size(132, 17);
+            this.lblPhone.Size = new System.Drawing.Size(85, 17);
             this.lblPhone.TabIndex = 11;
-            this.lblPhone.Text = "Returns";
+            this.lblPhone.Text = "Phone";
             this.lblPhone.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblType
+            // 
+            this.lblType.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblType.Location = new System.Drawing.Point(12, 109);
+            this.lblType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblType.Name = "lblType";
+            this.lblType.Size = new System.Drawing.Size(88, 17);
+            this.lblType.TabIndex = 5;
+            this.lblType.Text = "Type";
+            this.lblType.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblName
             // 
             this.lblName.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblName.Location = new System.Drawing.Point(5, 157);
+            this.lblName.Location = new System.Drawing.Point(396, 43);
             this.lblName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(132, 17);
+            this.lblName.Size = new System.Drawing.Size(97, 17);
             this.lblName.TabIndex = 9;
-            this.lblName.Text = "Sales";
+            this.lblName.Text = "Name";
             this.lblName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblDescription
             // 
             this.lblDescription.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescription.Location = new System.Drawing.Point(405, 42);
+            this.lblDescription.Location = new System.Drawing.Point(12, 75);
             this.lblDescription.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(88, 17);
@@ -678,12 +677,12 @@
             this.txtNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtNote.Location = new System.Drawing.Point(12, 423);
+            this.txtNote.Location = new System.Drawing.Point(12, 224);
             this.txtNote.Margin = new System.Windows.Forms.Padding(4);
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
             this.txtNote.ReadOnly = true;
-            this.txtNote.Size = new System.Drawing.Size(747, 100);
+            this.txtNote.Size = new System.Drawing.Size(748, 299);
             this.txtNote.TabIndex = 18;
             this.txtNote.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
             // 
@@ -766,8 +765,10 @@
         private System.Windows.Forms.Label lblCode;
         private kBit.UI.GroupLabel glbContact;
         private kBit.UI.GroupLabel glbLocation;
+        private System.Windows.Forms.TextBox txtAddress;
         private kBit.UI.TextBox txtCode;
         private System.Windows.Forms.Label lblEmail;
+        private System.Windows.Forms.Label lblAddress;
         private System.Windows.Forms.Label lblFax;
         private kBit.UI.TextBox txtDesc;
         private System.Windows.Forms.Label lblPhone;
@@ -782,6 +783,13 @@
         private System.Windows.Forms.ToolStripButton btnMode;
         private System.Windows.Forms.ToolStripButton btnExport;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private UI.TextBox txtFind;
+        private System.Windows.Forms.Button btnFind;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Button btnFilter;
+        private System.Windows.Forms.ComboBox cboType;
+        private System.Windows.Forms.Label lblType;
+        private System.Windows.Forms.Label lblSearch;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDescription;
@@ -789,16 +797,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colPhone;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFax;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEmail;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colAddress;
-        private UI.TextBox txtFind;
-        private System.Windows.Forms.Button btnFind;
-        private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.Button btnFilter;
-        private System.Windows.Forms.Label lblSearch;
-        private UI.TextBox textBox2;
-        private UI.TextBox textBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;        
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAddress;        
     }
 }
 

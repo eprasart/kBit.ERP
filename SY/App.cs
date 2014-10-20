@@ -19,6 +19,8 @@ namespace kBit.ERP.SYS
         public static Session session = new Session();
 
         public static IC.frmLocationList fLocationList;
+        public static IC.frmCategoryList fCategoryList;
+
         public static SM.frmUserList fUserList;
         public static SM.frmAuditLog fAuditLog;
 

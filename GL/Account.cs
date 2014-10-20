@@ -91,10 +91,10 @@ namespace kBit.ERP.GL
             else
                 txtCode.ReadOnly = l;
             txtDesc.ReadOnly = l;
-            cboType.Enabled = !l;
-            txtAddress.ReadOnly = l;
-            txtName.ReadOnly = l;
-            txtPhone.ReadOnly = l;
+            cboNormalBalance.Enabled = !l;
+            txtStructureCode.ReadOnly = l;
+            txtStructureCodeDesc.ReadOnly = l;
+            txtGroup.ReadOnly = l;
             txtFax.ReadOnly = l;
             txtEmail.ReadOnly = l;
             txtNote.ReadOnly = l;
@@ -148,10 +148,10 @@ namespace kBit.ERP.GL
                 sMsg.AppendLine(LabelFacade.sy_msg_prefix + MessageFacade.code_already_exists);
                 cFocus = txtCode;
             }
-            if (cboType.SelectedIndex == -1)
+            if (cboNormalBalance.SelectedIndex == -1)
             {
                 sMsg.AppendLine(LabelFacade.sy_msg_prefix + MessageFacade.location_type_not_empty);
-                if (cFocus == null) cFocus = cboType;
+                if (cFocus == null) cFocus = cboNormalBalance;
             }
             if (txtEmail.Text.Length > 0 && !Util.IsEmailValid(txtEmail.Text))
             {
@@ -173,9 +173,9 @@ namespace kBit.ERP.GL
             txtCode.Text = "";
             txtCode.Focus();
             txtDesc.Text = "";
-            txtAddress.Text = "";
-            txtName.Text = "";
-            txtPhone.Text = "";
+            txtStructureCode.Text = "";
+            txtStructureCodeDesc.Text = "";
+            txtGroup.Text = "";
             txtFax.Text = "";
             txtEmail.Text = "";
             txtNote.Text = "";
@@ -191,10 +191,10 @@ namespace kBit.ERP.GL
                     var m = AccountFacade.Select(Id);
                     txtCode.Text = m.Code;
                     txtDesc.Text = m.Description;
-                    cboType.SelectedIndex = (m.Type != "L" ? 0 : 1);
-                    txtAddress.Text = m.Address;
-                    txtName.Text = m.Name;
-                    txtPhone.Text = m.Phone;
+                    cboNormalBalance.SelectedIndex = (m.Type != "L" ? 0 : 1);
+                    txtStructureCode.Text = m.Address;
+                    txtStructureCodeDesc.Text = m.Name;
+                    txtGroup.Text = m.Phone;
                     txtFax.Text = m.Fax;
                     txtEmail.Text = m.Email;
                     txtNote.Text = m.Note;
@@ -303,15 +303,15 @@ namespace kBit.ERP.GL
             lblCode.Text = "* " + colCode.HeaderText;
             lblDescription.Text = LabelFacade.GetLabel(prefix + "description");
             colDescription.HeaderText = lblDescription.Text;
-            lblType.Text = LabelFacade.GetLabel(prefix + "type");
+            lblGroup.Text = LabelFacade.GetLabel(prefix + "type");
             lblAddress.Text = LabelFacade.GetLabel(prefix + "address");
             colAddress.HeaderText = lblAddress.Text;
-            lblName.Text = LabelFacade.GetLabel(prefix + "name");
-            colName.HeaderText = lblName.Text;
-            lblPhone.Text = LabelFacade.GetLabel(prefix + "phone");
-            colPhone.HeaderText = lblPhone.Text;
-            lblFax.Text = LabelFacade.GetLabel(prefix + "fax");
-            colFax.HeaderText = lblFax.Text;
+            lblStructureCode.Text = LabelFacade.GetLabel(prefix + "name");
+            colName.HeaderText = lblStructureCode.Text;
+            lblType.Text = LabelFacade.GetLabel(prefix + "phone");
+            colPhone.HeaderText = lblType.Text;
+            lblPostToAccount.Text = LabelFacade.GetLabel(prefix + "fax");
+            colFax.HeaderText = lblPostToAccount.Text;
             lblEmail.Text = LabelFacade.GetLabel(prefix + "email");
             colEmail.HeaderText = lblEmail.Text;
             glbLocation.Caption = LabelFacade.GetLabel(prefix + "location");
@@ -328,10 +328,10 @@ namespace kBit.ERP.GL
             m.Id = Id;
             m.Code = txtCode.Text.Trim();
             m.Description = txtDesc.Text;
-            m.Type = cboType.Text.Substring(0, 1);
-            m.Address = txtAddress.Text;
-            m.Name = txtName.Text;
-            m.Phone = txtPhone.Text;
+            m.Type = cboNormalBalance.Text.Substring(0, 1);
+            m.Address = txtStructureCode.Text;
+            m.Name = txtStructureCodeDesc.Text;
+            m.Phone = txtGroup.Text;
             m.Fax = txtFax.Text;
             m.Email = txtEmail.Text;
             m.Note = txtNote.Text;
