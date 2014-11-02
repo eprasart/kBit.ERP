@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace kBit.ERP.IC
 {
-    public partial class frmCategoryList : Form
+    public partial class frmUnitMeasureList : Form
     {
         long Id = 0;
         int RowIndex = 0;   // Current gird selected row
@@ -24,7 +24,7 @@ namespace kBit.ERP.IC
             LineAlignment = StringAlignment.Center
         };
 
-        public frmCategoryList()
+        public frmUnitMeasureList()
         {
             InitializeComponent();
         }
@@ -276,7 +276,7 @@ namespace kBit.ERP.IC
             lblCode.Text = "* " + colCode.HeaderText;
             lblDescription.Text = LabelFacade.GetLabel(prefix + "description");
             colDescription.HeaderText = lblDescription.Text;
-            glbCategory.Caption = LabelFacade.GetLabel(prefix + "category");
+            glbUnitMeasure.Caption = LabelFacade.GetLabel(prefix + "category");
             glbNote.Caption = LabelFacade.GetLabel(prefix + "note");
         }
 

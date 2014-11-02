@@ -44,7 +44,7 @@ namespace kBit.ERP.SYS
 
         private void btnLocation_Click(object sender, EventArgs e)
         {
-            if (!SM.Privilege.CanAccess("IC_LOC", "V")) // todo: not hard code
+            if (!SM.Privilege.CanAccess("ICLOC", "V")) // todo: not hard code
             {
                 MessageBox.Show("You don't have the privilege to access this function.");
                 return;
@@ -92,7 +92,24 @@ namespace kBit.ERP.SYS
 
         private void btnCategory_Click(object sender, EventArgs e)
         {
-            if (!SM.Privilege.CanAccess("IC_CAT", "V")) // todo: not hard code
+            if (!SM.Privilege.CanAccess("ICCAT", "V")) // todo: not hard code
+            {
+                MessageBox.Show("You don't have the privilege to access this function.");
+                return;
+            }
+            Cursor = Cursors.WaitCursor;
+            if (App.fCategoryList == null || App.fCategoryList.IsDisposed == true)
+            {
+                App.fCategoryList = new IC.frmCategoryList();
+                App.fCategoryList.Show();
+            }
+            App.fCategoryList.Focus();
+            Cursor = Cursors.Default;
+        }
+
+        private void btnUnitMeasure_Click(object sender, EventArgs e)
+        {
+            if (!SM.Privilege.CanAccess("ICCAT", "V")) // todo: not hard code
             {
                 MessageBox.Show("You don't have the privilege to access this function.");
                 return;

@@ -40,11 +40,13 @@ namespace kBit
 
         // Module
         public static readonly string Module_IC_Location = "IC Location";
+        public static readonly string Module_IC_Category = "IC Category";
         public static readonly string Module_IC_Item = "IC Item";
 
         // Function name
         public static readonly string Function_IC_Location = "ICLOC";
         public static readonly string Function_IC_Item = "ICITM";
+        public static readonly string Function_IC_Category = "ICCAT";
 
         // Privilege    //todo: privilege codes
         public static readonly string Privilege_New = "N";  // New, Copy, Save
