@@ -34,7 +34,7 @@ namespace kBit.ERP.SYS
             {
                 if (_value != value && value != null)
                 {
-                    _value = value.ToUpper();
+                    _value = value;
                     Changed = true;
                 }
             }
@@ -76,7 +76,7 @@ namespace kBit.ERP.SYS
             get
             {
                 if (Value == "") return new Point(-1, -1);
-                Value = Util.RemoveCharacters(Value, "{}XY= "); // X Y
+                Value = Util.RemoveCharacters(Value.ToUpper(), "{}XY= "); // X Y
                 string[] coords = Value.Split(',');
                 return new Point(int.Parse(coords[0]), int.Parse(coords[1]));
             }
@@ -87,7 +87,7 @@ namespace kBit.ERP.SYS
             get
             {
                 if (Value == "") return new Size(-1, -1);
-                Value = Util.RemoveCharacters(Value, "{}WIDTHEG= ");    // WIDTH HEIGH
+                Value = Util.RemoveCharacters(Value.ToUpper(), "{}WIDTHEG= ");    // WIDTH HEIGH
                 string[] coords = Value.Split(',');
                 return new Size(int.Parse(coords[0]), int.Parse(coords[1]));
             }
@@ -104,7 +104,7 @@ namespace kBit.ERP.SYS
             var sWhere = "code ~* :code";
             if (Username.Length > 0)
                 sWhere = "username ~* :username and " + sWhere;
-            var sql = SqlFacade.SqlSelect(TableName, "id, upper(value) as value", sWhere);
+            var sql = SqlFacade.SqlSelect(TableName, "id, value as value", sWhere);
 
             Config result = null;
             if (Username.Length > 0)
@@ -157,6 +157,20 @@ namespace kBit.ERP.SYS
         static Config _ic_category_location = new Config(Username, Util.GetMemberName(() => _ic_category_location), "-1, -1", "Window location");
         static Config _ic_category_size = new Config(Username, Util.GetMemberName(() => _ic_category_size), "1024, 601", "Form size [1024, 601]");
 
+        static Config _ic_unit_measure_spitter_distance = new Config(Username, Util.GetMemberName(() => _ic_unit_measure_spitter_distance), "207", "Data grid splitter distance [228]");
+        static Config _ic_unit_measure_window_state = new Config(Username, Util.GetMemberName(() => _ic_unit_measure_window_state), "0", "Window state. Normal, Maximize and Minimize");
+        static Config _ic_unit_measure_location = new Config(Username, Util.GetMemberName(() => _ic_unit_measure_location), "-1, -1", "Window location");
+        static Config _ic_unit_measure_size = new Config(Username, Util.GetMemberName(() => _ic_unit_measure_size), "1024, 601", "Form size [1024, 601]");
+
+        // SQL export
+        static Config _sy_sql_export_location = new Config("", Util.GetMemberName(() => _sy_sql_export_location),
+            "id \"Id\", branch_code \"Branch Code\", code \"Code\", description \"Description\", type \"Type\", address \"Address\", name \"Contact Name\", phone \"Phone\", fax \"Fax\", " +
+            "email \"Email\", note \"Note\", status \"Status\", insert_by \"Inserted By\", insert_at \"Inserted At\", change_by \"Changed By\", change_at \"Changed At\"", "");
+        static Config _sy_sql_export_category = new Config("", Util.GetMemberName(() => _sy_sql_export_category),
+            "id \"Id\", code \"Code\", description \"Description\", note \"Note\", status \"Status\", insert_by \"Inserted By\", insert_at \"Inserted At\", change_by \"Changed By\", change_at \"Changed At\"", "");
+        static Config _sy_sql_export_unit_measure = new Config("", Util.GetMemberName(() => _sy_sql_export_unit_measure),
+                    "id \"Id\", code \"Code\", default_factor \"Defaault Factor\", description \"Description\", note \"Note\", status \"Status\", insert_by \"Inserted By\", insert_at \"Inserted At\", change_by \"Changed By\", change_at \"Changed At\"", "");
+
 
         public static int sy_select_limit
         {
@@ -199,7 +213,6 @@ namespace kBit.ERP.SYS
             get { return _sy_language.Value; }
             set { _sy_language.Value = value; }
         }
-
 
         // ic_location
         public static int ic_location_splitter_distance
@@ -267,6 +280,58 @@ namespace kBit.ERP.SYS
             }
         }
 
+        // ic_unit_measure
+        public static int ic_unit_measure_splitter_distance
+        {
+            get { return _ic_unit_measure_spitter_distance.ValueInt; }
+            set { _ic_unit_measure_spitter_distance.Value = value.ToString(); }
+        }
+
+        public static int ic_unit_measure_window_state
+        {
+            get { return _ic_unit_measure_window_state.ValueInt; }
+            set { _ic_unit_measure_window_state.Value = value.ToString(); }
+        }
+
+        public static Point ic_unit_measure_location
+        {
+            get { return _ic_unit_measure_location.ValuePoint; }
+            set
+            {
+                var val = Util.RemoveCharacters(value.ToString(), "{}XY= ");
+                _ic_unit_measure_location.Value = val;
+            }
+        }
+
+        public static Size ic_unit_measure_size
+        {
+            get { return _ic_unit_measure_size.ValueSize; }
+            set
+            {
+                var val = Util.RemoveCharacters(value.ToString().ToUpper(), "{}WIDTHEG= ");
+                _ic_unit_measure_size.Value = val;
+            }
+        }
+
+        // SQL Export
+        public static string sy_sql_export_category
+        {
+            get { return _sy_sql_export_category.Value; }
+            set { _sy_sql_export_category.Value = value; }
+        }
+
+        public static string sy_sql_export_location
+        {
+            get { return _sy_sql_export_location.Value; }
+            set { _sy_sql_export_location.Value = value; }
+        }
+
+        public static string sy_sql_export_unit_measure
+        {
+            get { return _sy_sql_export_unit_measure.Value; }
+            set { _sy_sql_export_unit_measure.Value = value; }
+        }
+
         // Save configs back to table
         public static void SaveAll()
         {
@@ -281,7 +346,16 @@ namespace kBit.ERP.SYS
             _ic_location_location.Save();
             _ic_location_size.Save();
 
+            _ic_category_spitter_distance.Save();
+            _ic_category_window_state.Save();
+            _ic_category_location.Save();
+            _ic_category_size.Save();
 
+            _ic_unit_measure_spitter_distance.Save();
+            _ic_unit_measure_window_state.Save();
+            _ic_unit_measure_location.Save();
+            _ic_unit_measure_size.Save();
+            //todo: repeated; should loop thru all auto.
         }
     }
 
@@ -292,12 +366,13 @@ namespace kBit.ERP.SYS
         public static readonly string sy_msg_prefix = "- ";
 
         public static string sy_location;
-        public static string sy_category; 
+        public static string sy_category;
+        public static string sy_unit_measure;
 
         public static string sy_cancel;
         public static string sy_close;
         public static string sy_copy;
-        public static string sy_delete;                
+        public static string sy_delete;
 
         public static string sy_lock;
         public static string sy_new;
@@ -340,7 +415,7 @@ namespace kBit.ERP.SYS
             sy_cancel = GetLabel(Util.GetMemberName(() => sy_cancel));
             sy_close = GetLabel(Util.GetMemberName(() => sy_close));
             sy_copy = GetLabel(Util.GetMemberName(() => sy_copy));
-            sy_delete = GetLabel(Util.GetMemberName(() => sy_delete));            
+            sy_delete = GetLabel(Util.GetMemberName(() => sy_delete));
             sy_lock = GetLabel(Util.GetMemberName(() => sy_lock));
             sy_new = GetLabel(Util.GetMemberName(() => sy_new));
             sy_save = GetLabel(Util.GetMemberName(() => sy_save));

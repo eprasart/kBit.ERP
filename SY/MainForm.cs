@@ -115,12 +115,12 @@ namespace kBit.ERP.SYS
                 return;
             }
             Cursor = Cursors.WaitCursor;
-            if (App.fCategoryList == null || App.fCategoryList.IsDisposed == true)
+            if (App.fUnitMeasureList == null || App.fUnitMeasureList.IsDisposed == true)
             {
-                App.fCategoryList = new IC.frmCategoryList();
-                App.fCategoryList.Show();
+                App.fUnitMeasureList = new IC.frmUnitMeasureList();
+                App.fUnitMeasureList.Show();
             }
-            App.fCategoryList.Focus();
+            App.fUnitMeasureList.Focus();
             Cursor = Cursors.Default;
         }
     }

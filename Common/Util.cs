@@ -80,7 +80,17 @@ namespace kBit.ERP
         {
             return value.Replace(@"\r\n", Environment.NewLine);
         }
+
+        public static bool IsInteger(string value)
+        {
+            int isNumber = 0;
+            return int.TryParse(value, out isNumber);
+        }
+
+        public static bool IsDecimal(string value)
+        {
+            decimal isNumber = 0;
+            return decimal.TryParse(value, out isNumber);
+        }
     }
-
-
 }

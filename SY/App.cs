@@ -20,6 +20,7 @@ namespace kBit.ERP.SYS
 
         public static IC.frmLocationList fLocationList;
         public static IC.frmCategoryList fCategoryList;
+        public static IC.frmUnitMeasureList fUnitMeasureList;
 
         public static SM.frmUserList fUserList;
         public static SM.frmAuditLog fAuditLog;
@@ -46,7 +47,7 @@ namespace kBit.ERP.SYS
 
                 fSplash.ShowMsg("Connecting to the database ...");
                 SqlFacade.OpenConnection(); // Database connection: open/test
-                
+
                 fSplash.ShowMsg("Ensuring database setup ...");
                 SqlFacade.EnsureDBSetup();  // Create tables if not exist
             }
@@ -87,12 +88,12 @@ namespace kBit.ERP.SYS
 
         private static void LoadSettings()
         {
-            setting.Path = Path.Combine(Application.StartupPath, "setting.ini");            
+            setting.Path = Path.Combine(Application.StartupPath, "setting.ini");
             try
             {
                 SqlFacade.ConnectionString = setting.Get("ConnectionString", @"server=localhost;uid=erp;pwd=erp");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
