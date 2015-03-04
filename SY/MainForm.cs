@@ -31,7 +31,7 @@ namespace kBit.ERP.SYS
         private void button1_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            new IC.frmLocationList().Show();
+            new IC.frmLocation().Show();
             Cursor = Cursors.Default;
         }
 
@@ -50,12 +50,12 @@ namespace kBit.ERP.SYS
                 return;
             }
             Cursor = Cursors.WaitCursor;
-            if (App.fLocationList == null || App.fLocationList.IsDisposed == true)
+            if (App.fLocation == null || App.fLocation.IsDisposed == true)
             {
-                App.fLocationList = new IC.frmLocationList();
-                App.fLocationList.Show();
+                App.fLocation = new IC.frmLocation();
+                App.fLocation.Show();
             }
-            App.fLocationList.Focus();
+            App.fLocation.Focus();
             Cursor = Cursors.Default;
         }
 
@@ -98,12 +98,12 @@ namespace kBit.ERP.SYS
                 return;
             }
             Cursor = Cursors.WaitCursor;
-            if (App.fCategoryList == null || App.fCategoryList.IsDisposed == true)
+            if (App.fCategory == null || App.fCategory.IsDisposed == true)
             {
-                App.fCategoryList = new IC.frmCategoryList();
-                App.fCategoryList.Show();
+                App.fCategory = new IC.frmCategory();
+                App.fCategory.Show();
             }
-            App.fCategoryList.Focus();
+            App.fCategory.Focus();
             Cursor = Cursors.Default;
         }
 
@@ -115,12 +115,34 @@ namespace kBit.ERP.SYS
                 return;
             }
             Cursor = Cursors.WaitCursor;
-            if (App.fUnitMeasureList == null || App.fUnitMeasureList.IsDisposed == true)
+            if (App.fUnitMeasure == null || App.fUnitMeasure.IsDisposed == true)
             {
-                App.fUnitMeasureList = new IC.frmUnitMeasureList();
-                App.fUnitMeasureList.Show();
+                App.fUnitMeasure = new IC.frmUnitMeasure();
+                App.fUnitMeasure.Show();
             }
-            App.fUnitMeasureList.Focus();
+            App.fUnitMeasure.Focus();
+            Cursor = Cursors.Default;
+        }
+
+        private void btnLabelMessage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnItem_Click(object sender, EventArgs e)
+        {
+            if (!SM.Privilege.CanAccess("ICITM", "V"))
+            {
+                MessageBox.Show("You don't have the privilege to access this function.");
+                return;
+            }
+            Cursor = Cursors.WaitCursor;
+            if (App.fItem == null || App.fItem.IsDisposed == true)
+            {
+                App.fItem = new IC.frmItem();
+                App.fItem.Show();
+            }
+            App.fItem.Focus();
             Cursor = Cursors.Default;
         }
     }

@@ -1,6 +1,6 @@
 ﻿namespace kBit.ERP.IC
 {
-    partial class frmCategory
+    partial class frmItem
     {
         /// <summary>
         /// Required designer variable.
@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnNew = new System.Windows.Forms.ToolStripButton();
             this.btnCopy = new System.Windows.Forms.ToolStripButton();
@@ -51,11 +52,27 @@
             this.dgvList = new kBit.UI.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtFind = new kBit.UI.TextBox(this.components);
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblFactor = new System.Windows.Forms.Label();
             this.lblCode = new System.Windows.Forms.Label();
             this.glbNote = new kBit.UI.GroupLabel();
-            this.glbCategory = new kBit.UI.GroupLabel();
+            this.glbUnitMeasure = new kBit.UI.GroupLabel();
+            this.textBox4 = new kBit.UI.TextBox(this.components);
+            this.textBox3 = new kBit.UI.TextBox(this.components);
+            this.textBox2 = new kBit.UI.TextBox(this.components);
+            this.textBox1 = new kBit.UI.TextBox(this.components);
+            this.txtFactor = new kBit.UI.TextBox(this.components);
             this.txtCode = new kBit.UI.TextBox(this.components);
             this.txtDesc = new kBit.UI.TextBox(this.components);
             this.lblDescription = new System.Windows.Forms.Label();
@@ -221,9 +238,24 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.checkBox5);
+            this.splitContainer1.Panel2.Controls.Add(this.checkBox4);
+            this.splitContainer1.Panel2.Controls.Add(this.checkBox3);
+            this.splitContainer1.Panel2.Controls.Add(this.checkBox2);
+            this.splitContainer1.Panel2.Controls.Add(this.checkBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.button2);
+            this.splitContainer1.Panel2.Controls.Add(this.button1);
+            this.splitContainer1.Panel2.Controls.Add(this.label2);
+            this.splitContainer1.Panel2.Controls.Add(this.label1);
+            this.splitContainer1.Panel2.Controls.Add(this.lblFactor);
             this.splitContainer1.Panel2.Controls.Add(this.lblCode);
             this.splitContainer1.Panel2.Controls.Add(this.glbNote);
-            this.splitContainer1.Panel2.Controls.Add(this.glbCategory);
+            this.splitContainer1.Panel2.Controls.Add(this.glbUnitMeasure);
+            this.splitContainer1.Panel2.Controls.Add(this.textBox4);
+            this.splitContainer1.Panel2.Controls.Add(this.textBox3);
+            this.splitContainer1.Panel2.Controls.Add(this.textBox2);
+            this.splitContainer1.Panel2.Controls.Add(this.textBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.txtFactor);
             this.splitContainer1.Panel2.Controls.Add(this.txtCode);
             this.splitContainer1.Panel2.Controls.Add(this.txtDesc);
             this.splitContainer1.Panel2.Controls.Add(this.lblDescription);
@@ -293,8 +325,8 @@
             this.dgvList.AllowUserToAddRows = false;
             this.dgvList.AllowUserToDeleteRows = false;
             this.dgvList.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Honeydew;
-            this.dgvList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Honeydew;
+            this.dgvList.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -304,15 +336,16 @@
             this.dgvList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.colCode,
+            this.colName,
             this.colDescription});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Teal;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvList.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Teal;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvList.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgvList.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.dgvList.Location = new System.Drawing.Point(1, 51);
             this.dgvList.Margin = new System.Windows.Forms.Padding(4);
@@ -345,13 +378,26 @@
             this.colCode.ReadOnly = true;
             this.colCode.Width = 66;
             // 
+            // colName
+            // 
+            this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colName.DataPropertyName = "default_factor";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "N0";
+            dataGridViewCellStyle5.NullValue = null;
+            this.colName.DefaultCellStyle = dataGridViewCellStyle5;
+            this.colName.HeaderText = "Default Factor";
+            this.colName.Name = "colName";
+            this.colName.ReadOnly = true;
+            this.colName.Width = 116;
+            // 
             // colDescription
             // 
-            this.colDescription.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colDescription.DataPropertyName = "description";
             this.colDescription.HeaderText = "Description";
             this.colDescription.Name = "colDescription";
             this.colDescription.ReadOnly = true;
+            this.colDescription.Width = 101;
             // 
             // txtFind
             // 
@@ -370,10 +416,112 @@
             this.txtFind.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             this.txtFind.Leave += new System.EventHandler(this.txtFind_Leave);
             // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Location = new System.Drawing.Point(608, 151);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(90, 21);
+            this.checkBox5.TabIndex = 10;
+            this.checkBox5.Text = "Kitting item";
+            this.checkBox5.UseVisualStyleBackColor = true;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(608, 124);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(93, 21);
+            this.checkBox4.TabIndex = 10;
+            this.checkBox4.Text = "Lot number";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(608, 97);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(110, 21);
+            this.checkBox3.TabIndex = 10;
+            this.checkBox3.Text = "Serial number";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(608, 70);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(77, 21);
+            this.checkBox2.TabIndex = 10;
+            this.checkBox2.Text = "Sellable";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(608, 43);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(89, 21);
+            this.checkBox1.TabIndex = 10;
+            this.checkBox1.Text = "Stock Item";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Image = global::kBit.ERP.Properties.Resources.Search;
+            this.button2.Location = new System.Drawing.Point(259, 138);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(27, 27);
+            this.button2.TabIndex = 9;
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Image = global::kBit.ERP.Properties.Resources.Search;
+            this.button1.Location = new System.Drawing.Point(259, 105);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(27, 27);
+            this.button1.TabIndex = 9;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(12, 142);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(136, 17);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Unit of measure";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(12, 109);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(136, 17);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Category";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblFactor
+            // 
+            this.lblFactor.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFactor.Location = new System.Drawing.Point(185, 30);
+            this.lblFactor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFactor.Name = "lblFactor";
+            this.lblFactor.Size = new System.Drawing.Size(136, 17);
+            this.lblFactor.TabIndex = 3;
+            this.lblFactor.Text = "Default factor";
+            this.lblFactor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblFactor.Visible = false;
+            // 
             // lblCode
             // 
             this.lblCode.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCode.Location = new System.Drawing.Point(12, 43);
+            this.lblCode.Location = new System.Drawing.Point(77, 43);
             this.lblCode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCode.Name = "lblCode";
             this.lblCode.Size = new System.Drawing.Size(71, 17);
@@ -387,29 +535,101 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.glbNote.Caption = "Note";
             this.glbNote.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.glbNote.Location = new System.Drawing.Point(12, 81);
+            this.glbNote.Location = new System.Drawing.Point(12, 187);
             this.glbNote.Margin = new System.Windows.Forms.Padding(4, 12, 4, 4);
             this.glbNote.Name = "glbNote";
-            this.glbNote.Size = new System.Drawing.Size(747, 21);
-            this.glbNote.TabIndex = 17;
+            this.glbNote.Size = new System.Drawing.Size(740, 21);
+            this.glbNote.TabIndex = 7;
             this.glbNote.TabStop = false;
             // 
-            // glbCategory
+            // glbUnitMeasure
             // 
-            this.glbCategory.Caption = "Category";
-            this.glbCategory.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.glbCategory.Location = new System.Drawing.Point(12, 11);
-            this.glbCategory.Margin = new System.Windows.Forms.Padding(4, 12, 4, 4);
-            this.glbCategory.Name = "glbCategory";
-            this.glbCategory.Size = new System.Drawing.Size(749, 21);
-            this.glbCategory.TabIndex = 0;
-            this.glbCategory.TabStop = false;
+            this.glbUnitMeasure.Caption = "Item";
+            this.glbUnitMeasure.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.glbUnitMeasure.Location = new System.Drawing.Point(12, 11);
+            this.glbUnitMeasure.Margin = new System.Windows.Forms.Padding(4, 12, 4, 4);
+            this.glbUnitMeasure.Name = "glbUnitMeasure";
+            this.glbUnitMeasure.Size = new System.Drawing.Size(749, 21);
+            this.glbUnitMeasure.TabIndex = 0;
+            this.glbUnitMeasure.TabStop = false;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox4.Location = new System.Drawing.Point(289, 140);
+            this.textBox4.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
+            this.textBox4.Size = new System.Drawing.Size(220, 25);
+            this.textBox4.TabIndex = 4;
+            this.textBox4.TabOnEnter = true;
+            this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBox4.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
+            this.textBox4.Leave += new System.EventHandler(this.txtCode_Leave);
+            // 
+            // textBox3
+            // 
+            this.textBox3.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox3.Location = new System.Drawing.Point(156, 139);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
+            this.textBox3.Size = new System.Drawing.Size(100, 25);
+            this.textBox3.TabIndex = 4;
+            this.textBox3.TabOnEnter = true;
+            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBox3.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
+            this.textBox3.Leave += new System.EventHandler(this.txtCode_Leave);
+            // 
+            // textBox2
+            // 
+            this.textBox2.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox2.Location = new System.Drawing.Point(289, 107);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
+            this.textBox2.Size = new System.Drawing.Size(220, 25);
+            this.textBox2.TabIndex = 4;
+            this.textBox2.TabOnEnter = true;
+            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBox2.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
+            this.textBox2.Leave += new System.EventHandler(this.txtCode_Leave);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(156, 106);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(100, 25);
+            this.textBox1.TabIndex = 4;
+            this.textBox1.TabOnEnter = true;
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBox1.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
+            this.textBox1.Leave += new System.EventHandler(this.txtCode_Leave);
+            // 
+            // txtFactor
+            // 
+            this.txtFactor.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFactor.Location = new System.Drawing.Point(329, 27);
+            this.txtFactor.Margin = new System.Windows.Forms.Padding(4);
+            this.txtFactor.Name = "txtFactor";
+            this.txtFactor.ReadOnly = true;
+            this.txtFactor.Size = new System.Drawing.Size(260, 25);
+            this.txtFactor.TabIndex = 4;
+            this.txtFactor.TabOnEnter = true;
+            this.txtFactor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.toolTip1.SetToolTip(this.txtFactor, "Default conversion factor");
+            this.txtFactor.Visible = false;
+            this.txtFactor.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
+            this.txtFactor.Leave += new System.EventHandler(this.txtCode_Leave);
             // 
             // txtCode
             // 
             this.txtCode.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCode.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCode.Location = new System.Drawing.Point(91, 40);
+            this.txtCode.Location = new System.Drawing.Point(156, 40);
             this.txtCode.Margin = new System.Windows.Forms.Padding(4);
             this.txtCode.Name = "txtCode";
             this.txtCode.ReadOnly = true;
@@ -422,23 +642,23 @@
             // txtDesc
             // 
             this.txtDesc.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDesc.Location = new System.Drawing.Point(501, 40);
+            this.txtDesc.Location = new System.Drawing.Point(156, 73);
             this.txtDesc.Margin = new System.Windows.Forms.Padding(4);
             this.txtDesc.Name = "txtDesc";
             this.txtDesc.ReadOnly = true;
-            this.txtDesc.Size = new System.Drawing.Size(260, 25);
-            this.txtDesc.TabIndex = 4;
+            this.txtDesc.Size = new System.Drawing.Size(353, 25);
+            this.txtDesc.TabIndex = 6;
             this.txtDesc.TabOnEnter = true;
             this.txtDesc.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
             // 
             // lblDescription
             // 
             this.lblDescription.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescription.Location = new System.Drawing.Point(405, 42);
+            this.lblDescription.Location = new System.Drawing.Point(60, 75);
             this.lblDescription.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(88, 17);
-            this.lblDescription.TabIndex = 3;
+            this.lblDescription.TabIndex = 5;
             this.lblDescription.Text = "Description";
             this.lblDescription.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -447,13 +667,13 @@
             this.txtNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtNote.Location = new System.Drawing.Point(12, 110);
+            this.txtNote.Location = new System.Drawing.Point(12, 216);
             this.txtNote.Margin = new System.Windows.Forms.Padding(4);
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
             this.txtNote.ReadOnly = true;
-            this.txtNote.Size = new System.Drawing.Size(747, 413);
-            this.txtNote.TabIndex = 18;
+            this.txtNote.Size = new System.Drawing.Size(740, 307);
+            this.txtNote.TabIndex = 8;
             this.txtNote.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
             // 
             // mnuShow
@@ -482,7 +702,7 @@
             this.mnuShowI.Text = "Show Inactive";
             this.mnuShowI.CheckedChanged += new System.EventHandler(this.mnuShow_CheckedChanged);
             // 
-            // frmCategory
+            // frmItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -493,11 +713,11 @@
             this.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(1024, 370);
-            this.Name = "frmCategory";
+            this.Name = "frmItem";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "IC Category";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCategoryList_FormClosing);
-            this.Load += new System.EventHandler(this.frmCategoryList_Load);
+            this.Text = "IC Item";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmUnitMeasureList_FormClosing);
+            this.Load += new System.EventHandler(this.frmUnitMeasureList_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -531,7 +751,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuShowI;
         private kBit.UI.DataGridView dgvList;
         private System.Windows.Forms.Label lblCode;
-        private kBit.UI.GroupLabel glbCategory;
+        private kBit.UI.GroupLabel glbUnitMeasure;
         private kBit.UI.TextBox txtCode;
         private kBit.UI.TextBox txtDesc;
         private System.Windows.Forms.Label lblDescription;
@@ -545,9 +765,25 @@
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnFilter;
         private System.Windows.Forms.Label lblSearch;
+        private System.Windows.Forms.Label lblFactor;
+        private UI.TextBox txtFactor;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCode;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDescription;        
+        private System.Windows.Forms.DataGridViewTextBoxColumn colName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDescription;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label1;
+        private UI.TextBox textBox1;
+        private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label2;
+        private UI.TextBox textBox4;
+        private UI.TextBox textBox3;
+        private UI.TextBox textBox2;        
     }
 }
 

@@ -84,11 +84,17 @@
     <Compile Include="Common\Security.cs" />
     <Compile Include="Common\Setting.cs" />
     <Compile Include="GL\GL.cs" />
-    <Compile Include="IC\UnitMesaure.cs">
+    <Compile Include="IC\ItemList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="IC\UnitMesaure.Designer.cs">
-      <DependentUpon>UnitMesaure.cs</DependentUpon>
+    <Compile Include="IC\ItemList.Designer.cs">
+      <DependentUpon>ItemList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IC\UnitMesaureList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IC\UnitMesaureList.Designer.cs">
+      <DependentUpon>UnitMesaureList.cs</DependentUpon>
     </Compile>
     <Compile Include="IC\IC.cs" />
     <Compile Include="IC\CategoryList.cs">
@@ -164,8 +170,11 @@
     <Compile Include="SY\Splash.Designer.cs">
       <DependentUpon>Splash.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="IC\UnitMesaure.resx">
-      <DependentUpon>UnitMesaure.cs</DependentUpon>
+    <EmbeddedResource Include="IC\ItemList.resx">
+      <DependentUpon>ItemList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IC\UnitMesaureList.resx">
+      <DependentUpon>UnitMesaureList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IC\CategoryList.resx">
       <DependentUpon>CategoryList.cs</DependentUpon>

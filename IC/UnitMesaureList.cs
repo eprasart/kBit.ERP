@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace kBit.ERP.IC
 {
-    public partial class frmUnitMeasureList : Form
+    public partial class frmUnitMeasure : Form
     {
         long Id = 0;
         int RowIndex = 0;   // Current gird selected row
@@ -24,7 +24,7 @@ namespace kBit.ERP.IC
             LineAlignment = StringAlignment.Center
         };
 
-        public frmUnitMeasureList()
+        public frmUnitMeasure()
         {
             InitializeComponent();
         }
@@ -145,7 +145,7 @@ namespace kBit.ERP.IC
             }
             if (!Util.IsDecimal(txtFactor.Text)) // Factor
             {
-                sMsg.AppendLine(LabelFacade.sy_msg_prefix + MessageFacade.code_already_exists);
+                sMsg.AppendLine(LabelFacade.sy_msg_prefix + MessageFacade.location_factor_not_number);
                 cFocus = txtFactor;
             }
             if (sMsg.Length > 0)
@@ -685,7 +685,7 @@ namespace kBit.ERP.IC
             }
             if (e.Cancel) return;
             IsDirty = false;
-            if (btnUnlock.Text == "Cance&l")
+            if (btnUnlock.Text ==LabelFacade.sy_button_cancel)
                 btnUnlock_Click(null, null);
 
             // Set config values

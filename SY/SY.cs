@@ -410,6 +410,7 @@ namespace kBit.ERP.SYS
 
             sy_location = GetLabel(Util.GetMemberName(() => sy_location));
             sy_category = GetLabel(Util.GetMemberName(() => sy_category));
+            sy_unit_measure = GetLabel(Util.GetMemberName(() => sy_unit_measure));
 
             // sy
             sy_cancel = GetLabel(Util.GetMemberName(() => sy_cancel));
@@ -488,6 +489,7 @@ namespace kBit.ERP.SYS
 
         public static string email_not_valid;
         public static string location_type_not_empty;
+        public static string location_factor_not_number;
 
         public static string export_exporting;
         public static string export_opening;
@@ -548,6 +550,7 @@ namespace kBit.ERP.SYS
 
             email_not_valid = GetMessage(Util.GetMemberName(() => email_not_valid));
             location_type_not_empty = GetMessage(Util.GetMemberName(() => location_type_not_empty));
+            location_factor_not_number = GetMessage(Util.GetMemberName(() => location_factor_not_number));
 
             export_exporting = GetMessage(Util.GetMemberName(() => export_exporting));
             export_opening = GetMessage(Util.GetMemberName(() => export_opening));

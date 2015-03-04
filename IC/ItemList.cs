@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace kBit.ERP.IC
 {
-    public partial class frmCategory : Form
+    public partial class frmItem : Form
     {
         long Id = 0;
         int RowIndex = 0;   // Current gird selected row
@@ -24,7 +24,7 @@ namespace kBit.ERP.IC
             LineAlignment = StringAlignment.Center
         };
 
-        public frmCategory()
+        public frmItem()
         {
             InitializeComponent();
         }
@@ -46,12 +46,12 @@ namespace kBit.ERP.IC
             if (dgvList.SelectedRows.Count > 0) RowIndex = dgvList.SelectedRows[0].Index;
             try
             {
-                dgvList.DataSource = CategoryFacade.GetDataTable(txtFind.Text, GetStatus());
+                dgvList.DataSource = UnitMeasureFacade.GetDataTable(txtFind.Text, GetStatus());
             }
             catch (Exception ex)
             {
                 Cursor = Cursors.Default;
-                MessageFacade.Show(MessageFacade.error_retrieve_data + "\r\n" + ex.Message, LabelFacade.sy_category, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageFacade.Show(MessageFacade.error_retrieve_data + "\r\n" + ex.Message, LabelFacade.sy_unit_measure, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ErrorLogFacade.Log(ex);
                 return;
             }
@@ -90,6 +90,7 @@ namespace kBit.ERP.IC
                 txtCode.ReadOnly = true;
             else
                 txtCode.ReadOnly = l;
+            txtFactor.ReadOnly = l;
             txtDesc.ReadOnly = l;
             txtNote.ReadOnly = l;
 
@@ -137,15 +138,19 @@ namespace kBit.ERP.IC
                 sMsg.AppendLine(LabelFacade.sy_msg_prefix + MessageFacade.code_not_empty);
                 cFocus = txtCode;
             }
-            else if (CategoryFacade.Exists(Code, Id))
+            else if (UnitMeasureFacade.Exists(Code, Id))
             {
                 sMsg.AppendLine(LabelFacade.sy_msg_prefix + MessageFacade.code_already_exists);
                 cFocus = txtCode;
             }
+            if (!Util.IsDecimal(txtFactor.Text)) // Factor
+            {
+                sMsg.AppendLine(LabelFacade.sy_msg_prefix + MessageFacade.location_factor_not_number);
+                cFocus = txtFactor;
+            }
             if (sMsg.Length > 0)
             {
                 MessageFacade.Show(this, ref fMsg, sMsg.ToString(), LabelFacade.sy_save);
-                //fMsg.Show(sMsg.ToString(), LabelFacade.sy_save, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);                
                 cFocus.Focus();
                 return false;
             }
@@ -167,18 +172,19 @@ namespace kBit.ERP.IC
             if (Id != 0)
                 try
                 {
-                    var m = CategoryFacade.Select(Id);
+                    var m = UnitMeasureFacade.Select(Id);
                     txtCode.Text = m.Code;
+                    txtFactor.Text = m.Default_Factor.ToString();
                     txtDesc.Text = m.Description;
                     txtNote.Text = m.Note;
                     SetStatus(m.Status);
                     LockControls();
                     IsDirty = false;
-                    SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Category, Type.Log_View, "View. Id=" + m.Id + ", Code=" + m.Code);
+                    SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Unit_Measure, Type.Log_View, "View. Id=" + m.Id + ", Code=" + m.Code);
                 }
                 catch (Exception ex)
                 {
-                    MessageFacade.Show(MessageFacade.error_load_record + "\r\n" + ex.Message, LabelFacade.sy_category, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageFacade.Show(MessageFacade.error_load_record + "\r\n" + ex.Message, LabelFacade.sy_unit_measure, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     SYS.ErrorLogFacade.Log(ex);
                 }
             else    // when delete all => disable buttons and clear all controls
@@ -237,17 +243,17 @@ namespace kBit.ERP.IC
             try
             {
                 SetIconDisplayType(ConfigFacade.sy_toolbar_icon_display_type);
-                splitContainer1.SplitterDistance = ConfigFacade.ic_category_splitter_distance;
+                splitContainer1.SplitterDistance = ConfigFacade.ic_unit_measure_splitter_distance;
 
                 SetCodeCasing();
                 txtCode.MaxLength = ConfigFacade.sy_code_max_length;
-                var lo = ConfigFacade.ic_category_location;
+                var lo = ConfigFacade.ic_unit_measure_location;
                 if (lo != new System.Drawing.Point(-1, -1))
                     Location = lo;
-                var si = ConfigFacade.ic_category_size;
+                var si = ConfigFacade.ic_unit_measure_size;
                 if (si != new System.Drawing.Size(-1, -1))
                     Size = si;
-                WindowState = (FormWindowState)ConfigFacade.ic_category_window_state;
+                WindowState = (FormWindowState)ConfigFacade.ic_unit_measure_window_state;
             }
             catch (Exception ex)
             {
@@ -257,7 +263,7 @@ namespace kBit.ERP.IC
 
         private void SetLabels()
         {
-            var prefix = "ic_category_";
+            var prefix = "ic_item_";
             btnNew.Text = LabelFacade.sy_button_new;
             btnCopy.Text = LabelFacade.sy_button_copy;
             btnUnlock.Text = LabelFacade.sy_button_unlock;
@@ -272,22 +278,24 @@ namespace kBit.ERP.IC
             btnClear.Text = "     " + LabelFacade.sy_button_clear;
             btnFilter.Text = "     " + LabelFacade.sy_button_filter;
 
-            colCode.HeaderText = LabelFacade.GetLabel(prefix + "code");
+            colCode.HeaderText = LabelFacade.GetLabel(prefix + "code") ?? colCode.HeaderText;
             lblCode.Text = "* " + colCode.HeaderText;
-            lblDescription.Text = LabelFacade.GetLabel(prefix + "description");
+            lblFactor.Text = LabelFacade.GetLabel(prefix + "default_factor")??lblFactor.Text;
+            lblDescription.Text = LabelFacade.GetLabel(prefix + "description") ?? lblDescription.Text ;
             colDescription.HeaderText = lblDescription.Text;
-            glbCategory.Caption = LabelFacade.GetLabel(prefix + "category");
-            glbNote.Caption = LabelFacade.GetLabel(prefix + "note");
+            glbUnitMeasure.Caption = LabelFacade.GetLabel(prefix + "unit_measure") ?? glbUnitMeasure.Caption;
+            glbNote.Caption = LabelFacade.GetLabel(prefix + "note") ?? glbNote.Caption;
         }
 
         private bool Save()
         {
             if (!IsValidated()) return false;
             Cursor = Cursors.WaitCursor;
-            var m = new Category();
-            var log = new SessionLog { Module = Type.Module_IC_Category };
+            var m = new UnitMeasure();
+            var log = new SessionLog { Module = Type.Module_IC_Unit_Measure };
             m.Id = Id;
             m.Code = txtCode.Text.Trim();
+            m.Default_Factor = double.Parse(txtFactor.Text);
             m.Description = txtDesc.Text;
             m.Note = txtNote.Text;
             if (m.Id == 0)
@@ -302,7 +310,7 @@ namespace kBit.ERP.IC
             }
             try
             {
-                m.Id = CategoryFacade.Save(m);
+                m.Id = UnitMeasureFacade.Save(m);
             }
             catch (Exception ex)
             {
@@ -319,7 +327,7 @@ namespace kBit.ERP.IC
             return true;
         }
 
-        private void frmCategoryList_Load(object sender, EventArgs e)
+        private void frmUnitMeasureList_Load(object sender, EventArgs e)
         {
             Icon = Properties.Resources.Icon;
             try
@@ -327,23 +335,23 @@ namespace kBit.ERP.IC
                 dgvList.ShowLessColumns(true);
                 SetSettings();
                 SetLabels();
-                SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Category, Type.Log_Open, "Opened");
+                SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Unit_Measure, Type.Log_Open, "Opened");
                 RefreshGrid();
                 LoadData();
             }
             catch (Exception ex)
             {
                 ErrorLogFacade.Log(ex, "Form_Load");
-                MessageFacade.Show(MessageFacade.error_load_form + "\r\n" + ex.Message, LabelFacade.sy_category, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageFacade.Show(MessageFacade.error_load_form + "\r\n" + ex.Message, LabelFacade.sy_unit_measure, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-            if (!Privilege.CanAccess(Type.Function_IC_Category, Type.Privilege_New))
+            if (!Privilege.CanAccess(Type.Function_IC_Unit_Measure, Type.Privilege_New))
             {
                 MessageFacade.Show(MessageFacade.privilege_no_access, LabelFacade.sy_new, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Category, Type.Log_NoAccess, "New: No access");
+                SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Unit_Measure, Type.Log_NoAccess, "New: No access");
                 return;
             }
             if (IsExpand) picExpand_Click(sender, e);
@@ -354,7 +362,7 @@ namespace kBit.ERP.IC
             LockControls(false);
 
             if (dgvList.CurrentRow != null) RowIndex = dgvList.CurrentRow.Index;
-            SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Category, Type.Log_New, "New clicked");
+            SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Unit_Measure, Type.Log_New, "New clicked");
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -379,7 +387,7 @@ namespace kBit.ERP.IC
 
         private void btnSaveNew_Click(object sender, EventArgs e)
         {
-            SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Category, Type.Log_SaveAndNew, "Saved and new. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+            SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Unit_Measure, Type.Log_SaveAndNew, "Saved and new. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
             btnSave_Click(sender, e);
             if (btnSaveNew.Enabled) return;
             btnNew_Click(sender, e);
@@ -394,15 +402,15 @@ namespace kBit.ERP.IC
                 // If referenced
                 //todo: check if exist in ic_item
                 // If locked
-                var lInfo = CategoryFacade.GetLock(Id);
+                var lInfo = UnitMeasureFacade.GetLock(Id);
                 string msg = "";
                 if (lInfo.Locked)
                 {
                     msg = string.Format(MessageFacade.delete_locked, lInfo.Lock_By, lInfo.Lock_At);
-                    if (!Privilege.CanAccess(Type.Function_IC_Category, "O"))
+                    if (!Privilege.CanAccess(Type.Function_IC_Unit_Measure, "O"))
                     {
                         MessageFacade.Show(msg, LabelFacade.sy_delete, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Category, Type.Log_Delete, "Cannot delete. Currently locked by '" + lInfo.Lock_By + "' since '" + lInfo.Lock_At + "' . Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+                        SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Unit_Measure, Type.Log_Delete, "Cannot delete. Currently locked by '" + lInfo.Lock_By + "' since '" + lInfo.Lock_At + "' . Id=" + dgvList.Id + ", Code=" + txtCode.Text);
                         return;
                     }
                 }
@@ -413,7 +421,7 @@ namespace kBit.ERP.IC
                     return;
                 try
                 {
-                    CategoryFacade.SetStatus(Id, Type.RecordStatus_Deleted);
+                    UnitMeasureFacade.SetStatus(Id, Type.RecordStatus_Deleted);
                 }
                 catch (Exception ex)
                 {
@@ -422,7 +430,7 @@ namespace kBit.ERP.IC
                 }
                 RefreshGrid();
                 // log
-                SessionLogFacade.Log(Type.Priority_Warning, Type.Module_IC_Category, Type.Log_Delete, "Deleted. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+                SessionLogFacade.Log(Type.Priority_Warning, Type.Module_IC_Unit_Measure, Type.Log_Delete, "Deleted. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
             }
             catch (Exception ex)
             {
@@ -433,17 +441,17 @@ namespace kBit.ERP.IC
 
         private void btnCopy_Click(object sender, EventArgs e)
         {
-            if (!Privilege.CanAccess(Type.Function_IC_Category, Type.Privilege_New))
+            if (!Privilege.CanAccess(Type.Function_IC_Unit_Measure, Type.Privilege_New))
             {
                 MessageFacade.Show(MessageFacade.privilege_no_access, LabelFacade.sy_copy, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Category, Type.Log_NoAccess, "Copy: No access");
+                SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Unit_Measure, Type.Log_NoAccess, "Copy: No access");
                 return;
             }
             Id = 0;
             if (IsExpand) picExpand_Click(sender, e);
             txtCode.Focus();
             LockControls(false);
-            SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Category, Type.Log_Copy, "Copy from Id=" + dgvList.Id + "Code=" + txtCode.Text);
+            SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Unit_Measure, Type.Log_Copy, "Copy from Id=" + dgvList.Id + "Code=" + txtCode.Text);
             IsDirty = false;
         }
 
@@ -457,7 +465,7 @@ namespace kBit.ERP.IC
             }
             else
             {
-                splitContainer1.SplitterDistance = ConfigFacade.ic_category_splitter_distance;
+                splitContainer1.SplitterDistance = ConfigFacade.ic_unit_measure_splitter_distance;
                 splitContainer1.FixedPanel = FixedPanel.Panel1;
             }
             dgvList.ShowLessColumns(IsExpand);
@@ -481,11 +489,11 @@ namespace kBit.ERP.IC
             //todo: check if already used in ic_item
 
             //If locked
-            var lInfo = CategoryFacade.GetLock(Id);
+            var lInfo = UnitMeasureFacade.GetLock(Id);
             if (lInfo.Locked)
             {
                 string msg = string.Format(MessageFacade.lock_currently, lInfo.Lock_By, lInfo.Lock_At);
-                if (!Privilege.CanAccess(Type.Function_IC_Category, "O"))
+                if (!Privilege.CanAccess(Type.Function_IC_Unit_Measure, "O"))
                 {
                     MessageFacade.Show(msg, MessageFacade.active_inactive, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
@@ -496,7 +504,7 @@ namespace kBit.ERP.IC
             }
             try
             {
-                CategoryFacade.SetStatus(Id, status);
+                UnitMeasureFacade.SetStatus(Id, status);
             }
             catch (Exception ex)
             {
@@ -504,15 +512,15 @@ namespace kBit.ERP.IC
                 ErrorLogFacade.Log(ex);
             }
             RefreshGrid();
-            SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Category, status == Type.RecordStatus_InActive ? Type.Log_Inactive : Type.Log_Active, "Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+            SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Unit_Measure, status == Type.RecordStatus_InActive ? Type.Log_Inactive : Type.Log_Active, "Id=" + dgvList.Id + ", Code=" + txtCode.Text);
         }
 
         private void btnUnlock_Click(object sender, EventArgs e)
         {
-            if (!Privilege.CanAccess(Type.Function_IC_Category, Type.Privilege_Update))
+            if (!Privilege.CanAccess(Type.Function_IC_Unit_Measure, Type.Privilege_Update))
             {
                 MessageFacade.Show(MessageFacade.privilege_no_access, LabelFacade.sy_button_unlock, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Category, Type.Log_NoAccess, "Copy: No access");
+                SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Unit_Measure, Type.Log_NoAccess, "Copy: No access");
                 return;
             }
             if (IsExpand) picExpand_Click(sender, e);
@@ -534,7 +542,7 @@ namespace kBit.ERP.IC
                 dgvList.Focus();
                 try
                 {
-                    CategoryFacade.ReleaseLock(dgvList.Id);
+                    UnitMeasureFacade.ReleaseLock(dgvList.Id);
                 }
                 catch (Exception ex)
                 {
@@ -544,7 +552,7 @@ namespace kBit.ERP.IC
                 }
                 if (dgvList.CurrentRow != null && !dgvList.CurrentRow.Selected)
                     dgvList.CurrentRow.Selected = true;
-                SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Category, Type.Log_Unlock, "Unlock cancel. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+                SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Unit_Measure, Type.Log_Unlock, "Unlock cancel. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
                 btnUnlock.ToolTipText = "Unlock (Ctrl+L)";
                 IsDirty = false;
                 return;
@@ -553,19 +561,19 @@ namespace kBit.ERP.IC
             if (Id == 0) return;
             try
             {
-                var lInfo = CategoryFacade.GetLock(Id);
+                var lInfo = UnitMeasureFacade.GetLock(Id);
 
                 if (lInfo.Locked) // Check if record is locked
                 {
                     string msg = string.Format(MessageFacade.lock_currently, lInfo.Lock_By, lInfo.Lock_At);
-                    if (!Privilege.CanAccess(Type.Function_IC_Category, "O"))
+                    if (!Privilege.CanAccess(Type.Function_IC_Unit_Measure, "O"))
                     {
                         MessageFacade.Show(msg, LabelFacade.sy_unlock, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
                     else
                         if (MessageFacade.Show(msg + "\r\n" + MessageFacade.lock_override, LabelFacade.sy_unlock, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
-                            SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Category, Type.Log_Lock, "Override lock. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+                            SessionLogFacade.Log(Type.Priority_Caution, Type.Module_IC_Unit_Measure, Type.Log_Lock, "Override lock. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
                         else
                             return;
                 }
@@ -581,7 +589,7 @@ namespace kBit.ERP.IC
             }
             try
             {
-                CategoryFacade.Lock(dgvList.Id, txtCode.Text);
+                UnitMeasureFacade.Lock(dgvList.Id, txtCode.Text);
             }
             catch (Exception ex)
             {
@@ -589,7 +597,7 @@ namespace kBit.ERP.IC
                 ErrorLogFacade.Log(ex);
                 return;
             }
-            SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Category, Type.Log_Lock, "Locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
+            SessionLogFacade.Log(Type.Priority_Information, Type.Module_IC_Unit_Measure, Type.Log_Lock, "Locked. Id=" + dgvList.Id + ", Code=" + txtCode.Text);
             btnUnlock.ToolTipText = "Cancel (Esc or Ctrl+L)";
         }
 
@@ -660,7 +668,7 @@ namespace kBit.ERP.IC
             IsDirty = true;
         }
 
-        private void frmCategoryList_FormClosing(object sender, FormClosingEventArgs e)
+        private void frmUnitMeasureList_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (IsDirty)
             {
@@ -677,24 +685,24 @@ namespace kBit.ERP.IC
             }
             if (e.Cancel) return;
             IsDirty = false;
-            if (btnUnlock.Text == LabelFacade.sy_button_cancel)
+            if (btnUnlock.Text == "Cance&l")
                 btnUnlock_Click(null, null);
 
             // Set config values
             if (!IsExpand)
-                ConfigFacade.ic_category_splitter_distance = splitContainer1.SplitterDistance;
-            ConfigFacade.ic_category_location = Location;
-            ConfigFacade.ic_category_window_state = (int)WindowState;
-            if (WindowState == FormWindowState.Normal) ConfigFacade.ic_category_size = Size;
+                ConfigFacade.ic_unit_measure_splitter_distance = splitContainer1.SplitterDistance;
+            ConfigFacade.ic_unit_measure_location = Location;
+            ConfigFacade.ic_unit_measure_window_state = (int)WindowState;
+            if (WindowState == FormWindowState.Normal) ConfigFacade.ic_unit_measure_size = Size;
         }
 
         private void txtCode_Leave(object sender, EventArgs e)
         {
             // Check if entered code already exists
             if (txtCode.ReadOnly) return;
-            if (CategoryFacade.Exists(txtCode.Text.Trim()))
+            if (UnitMeasureFacade.Exists(txtCode.Text.Trim()))
             {
-                MessageFacade.Show(this, ref fMsg, LabelFacade.sy_msg_prefix + MessageFacade.code_already_exists, LabelFacade.sy_category);
+                MessageFacade.Show(this, ref fMsg, LabelFacade.sy_msg_prefix + MessageFacade.code_already_exists, LabelFacade.sy_unit_measure);
             }
         }
 
@@ -703,13 +711,13 @@ namespace kBit.ERP.IC
             splitContainer1.IsSplitterFixed = !IsExpand;
             if (!IsExpand)
             {
-                ConfigFacade.ic_category_splitter_distance = splitContainer1.SplitterDistance;
+                ConfigFacade.ic_unit_measure_splitter_distance = splitContainer1.SplitterDistance;
                 splitContainer1.SplitterDistance = splitContainer1.Size.Width;
                 splitContainer1.FixedPanel = FixedPanel.Panel2;
             }
             else
             {
-                splitContainer1.SplitterDistance = ConfigFacade.ic_category_splitter_distance;
+                splitContainer1.SplitterDistance = ConfigFacade.ic_unit_measure_splitter_distance;
                 splitContainer1.FixedPanel = FixedPanel.Panel1;
             }
             dgvList.ShowLessColumns(IsExpand);
@@ -745,7 +753,7 @@ namespace kBit.ERP.IC
         {
             Cursor = Cursors.WaitCursor;
             Application.DoEvents();
-            CategoryFacade.Export();
+            UnitMeasureFacade.Export();
             Cursor = Cursors.Default;
         }
 

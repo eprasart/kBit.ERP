@@ -1,6 +1,6 @@
 ﻿namespace kBit.ERP.IC
 {
-    partial class frmUnitMeasureList
+    partial class frmUnitMeasure
     {
         /// <summary>
         /// Required designer variable.
@@ -421,7 +421,7 @@
             this.glbNote.Location = new System.Drawing.Point(12, 147);
             this.glbNote.Margin = new System.Windows.Forms.Padding(4, 12, 4, 4);
             this.glbNote.Name = "glbNote";
-            this.glbNote.Size = new System.Drawing.Size(744, 21);
+            this.glbNote.Size = new System.Drawing.Size(743, 21);
             this.glbNote.TabIndex = 7;
             this.glbNote.TabStop = false;
             // 
@@ -498,7 +498,7 @@
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
             this.txtNote.ReadOnly = true;
-            this.txtNote.Size = new System.Drawing.Size(744, 347);
+            this.txtNote.Size = new System.Drawing.Size(743, 347);
             this.txtNote.TabIndex = 8;
             this.txtNote.TextChanged += new System.EventHandler(this.Dirty_TextChanged);
             // 
@@ -528,7 +528,7 @@
             this.mnuShowI.Text = "Show Inactive";
             this.mnuShowI.CheckedChanged += new System.EventHandler(this.mnuShow_CheckedChanged);
             // 
-            // frmUnitMeasureList
+            // frmUnitMeasure
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -539,7 +539,7 @@
             this.Font = new System.Drawing.Font("Noto Sans Khmer", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(1024, 370);
-            this.Name = "frmUnitMeasureList";
+            this.Name = "frmUnitMeasure";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "IC Unit of Measure";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmUnitMeasureList_FormClosing);

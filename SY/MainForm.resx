@@ -205,7 +205,7 @@
         rkJggg==
 </value>
   </data>
-  <data name="buttonFlat14.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnLabelMessage.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
         EwAACxMBAJqcGAAAAntJREFUSEvFlstrFEEQxveBhwRFCJ42wkZQRHPxEGFZNDvb070RMSdZlQ2GPExE
@@ -428,7 +428,7 @@
         RU5ErkJggg==
 </value>
   </data>
-  <data name="buttonFlat3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAABb5JREFUSEvd
         kllM1FcUxu9L0yVp0tTYRKtRqTa11FbTGluXh7ZWQUWrVhQHBiuIjMgi6zAgICqioFIXFgGVGZZhBrjs
